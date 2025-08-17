@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\farmer;
 
 use App\Models\ac_cropModel;
+use App\Http\Controllers\Controller;
 use App\Models\fieldModel;
 use App\Models\profileModel;
 use App\Models\User;
@@ -83,9 +84,13 @@ class farmerController extends Controller
         return redirect()->route('profile')->with('success', 'Profile created successfully.');
     }
 
+    public function crop()
+    {
+        return view('farmer.crop.crop');
+    }
     public function cropForm()
     {
-        return view('farmer.crop');
+        return view('farmer.crop.add');
     }
 
     public function cropStore(Request $request)
@@ -95,12 +100,16 @@ class farmerController extends Controller
         // return redirect()->route('farmer.crop')->with('success', 'Crop added successfully.');
     }
 
+    public function field()
+    {
+        return view('farmer.field.fields');
+    }
     public function fieldForm()
     {
         $userId = Auth::id();
         $user = User::where('id', $userId)->first();
         $profile = profileModel::where('email', $user->email)->first();
-        return view('farmer.fields', compact('profile'));
+        return view('farmer.field.add', compact('profile'));
     }
 
     public function fieldStore(Request $request)

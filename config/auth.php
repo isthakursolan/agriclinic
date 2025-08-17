@@ -35,13 +35,25 @@ return [
     |
     */
 
-    'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
+        'guards' => [
+            'web' => [
+                'driver' => 'session',
+                'provider' => 'users',
+            ],
         ],
-    ],
-
+    // 'guards' => array_merge([
+    //     'web' => [
+    //         'driver' => 'session',
+    //         'provider' => 'users',
+    //     ],
+    // ], collect(\App\Models\Role::all())->mapWithKeys(function ($role) {
+    //     return [
+    //         $role->name => [
+    //             'driver'   => 'session',
+    //             'provider' => 'users',
+    //         ]
+    //     ];
+    // })->toArray()),
     /*
     |--------------------------------------------------------------------------
     | User Providers
