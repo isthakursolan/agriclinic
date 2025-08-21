@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h3 class="mb-0">Admin Dashboard </h3>
+                    <h2 class="text-2xl font-bold mb-0">Admin Dashboard </h2>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
@@ -17,7 +17,50 @@
     </div>
     <div class="app-content">
         <div class="container-fluid">
-            <h1>Hello {{auth()->user()->name }}</h1>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3>Welcome, {{ Auth::user()->name }} 👨‍🌾</h3>
+                    <p class="text-muted">Here's an overview of  activities.</p>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card text-white bg-success mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title ">My Plots</h5><br/>
+                                    <p class="card-text"> 10 </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-white bg-warning mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Crops</h5><br/>
+                                    <p class="card-text"> 10 </p>
+                                    {{-- <p class="card-text">{{ $crops_count }}</p> --}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-white bg-info mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Test Requests</h5><br/>
+                                    <p class="card-text"> 10 </p>
+                                    {{-- <p class="card-text">{{ $tests_count }}</p> --}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-white bg-danger mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Pending Payments</h5><br/>
+                                    <p class="card-text"> 10 </p>
+                                    {{-- <p class="card-text">{{ $pending_payments }}</p> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 @endsection

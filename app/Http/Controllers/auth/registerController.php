@@ -23,12 +23,12 @@ class registerController extends Controller
             'contact' => ['required', 'digits:10', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
-        $user = profileModel::create([
+        profileModel::create([
             'fullname' => $request->name,
             'email' => $request->email,
             'contact' => $request->contact,
         ]);
-        User::create([
+        $user =User::create([
             'name' => $request->name,
             'email' => $request->email,
             'contact' => $request->contact,

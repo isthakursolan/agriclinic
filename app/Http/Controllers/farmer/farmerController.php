@@ -4,9 +4,16 @@ namespace App\Http\Controllers\farmer;
 
 use App\Models\ac_cropModel;
 use App\Http\Controllers\Controller;
+use App\Models\activecropModel;
+use App\Models\cropcatModel;
+use App\Models\cropModel;
+use App\Models\croptypeModel;
 use App\Models\fieldModel;
 use App\Models\profileModel;
+use App\Models\rootstockModel as ModelsRootstockModel;
 use App\Models\User;
+use App\Models\varietyModel;
+use App\Modes\rootstockModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,9 +32,8 @@ class farmerController extends Controller
     }
     public function profileForm()
     {
-        $userId = Auth::id();
-        $user = User::where('id', $userId)->first();
-        $profile = profileModel::where('email', $user->email)->first();
+        $id = session('id');
+        $profile = profileModel::where('id', $id)->first();
         return view('farmer.profile', compact('profile'));
     }
 
@@ -81,34 +87,93 @@ class farmerController extends Controller
             'technology_intervention' =>  $request->technology_intervention,
             'future_plans' =>  $request->future_plans,
         ]);
-        return redirect()->route('profile')->with('success', 'Profile created successfully.');
+        return redirect()->route('user.profile')->with('success', 'Profile created successfully.');
     }
 
     public function crop()
     {
-        return view('farmer.crop.crop');
+        $crops= activecropModel::where('farmer_id',session('id'))->get();
+        $plots= fieldModel::where('farmer_id',session('id'))->get();
+        return view('farmer.crop.crop',compact('crops','plots'));
     }
     public function cropForm()
     {
-        return view('farmer.crop.add');
+        $crops = cropModel::get();
+        $cropType = croptypeModel::get();
+        $farmer = profileModel::where('id', session('id'))->first();
+        $fields = fieldModel::where('farmer_id', session('id'))->get();
+        return view('farmer.crop.add', compact('crops', 'cropType', 'farmer', 'fields'));
+    }
+    public function getCropType($cropType)
+    {
+        $type = croptypeModel::where('id', $cropType)->first();
+        return response()->json($type->e_type);
+    }
+    public function getCropCat($cropCat)
+    {
+        $cat = cropcatModel::where('id', $cropCat)->first();
+        return response()->json($cat->e_cat);
+    }
+    // AJAX: Get varieties by crop id
+    public function getVarieties($cropId)
+    {
+        $variety = VarietyModel::where('crop', $cropId)->get();
+        return response()->json($variety);
     }
 
+    // AJAX: Get rootstocks by crop id
+    public function getRootstocks($cropId)
+    {
+        $rootstock = ModelsRootstockModel::where('crop', $cropId)->get();
+        return response()->json($rootstock);
+    }
     public function cropStore(Request $request)
     {
-        // ac_cropModel::create($validated);
+        // dd($request->all());
+        $request->validate([
+            'crop_cat' => 'required|string',
+            'variety' => 'nullable|string',
+            'rootstock' => 'nullable|string',
+            'sowing_date' => 'nullable|date',
+            'expected_harvest_date' => 'nullable|date',
+            'fertilizer_plan' => 'nullable|string',
+            'photo' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+            'description' => 'nullable|string'
+        ]);
 
-        // return redirect()->route('farmer.crop')->with('success', 'Crop added successfully.');
+        $photoPath = null;
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('crop_photos', 'public');
+        }
+
+        activecropModel::create([
+            'name' => $request->name,
+            'crop_cat' => $request->crop_cat,
+            'farmer_id' => Auth::id(),
+            'plot_id' => $request->plot_id,
+            'variety' => $request->variety,
+            'rootstock' => $request->rootstock,
+            'sowing_date' => $request->sowing_date,
+            'expected_harvest_date' => $request->expected_harvest_date,
+            'fertilizer_plan' => $request->fertilizer_plan,
+            'photo' => $photoPath,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('user.crop')->with('success', 'Crop added successfully!');
     }
 
     public function field()
     {
-        return view('farmer.field.fields');
+        $id = session('id');
+        $profile = profileModel::where('id', $id)->first();
+        $fields = fieldModel::where('farmer_id', $id)->get();
+        return view('farmer.field.fields', compact('profile', 'fields'));
     }
     public function fieldForm()
     {
-        $userId = Auth::id();
-        $user = User::where('id', $userId)->first();
-        $profile = profileModel::where('email', $user->email)->first();
+        $id = session('id');
+        $profile = profileModel::where('id', $id)->first();
         return view('farmer.field.add', compact('profile'));
     }
 
@@ -138,6 +203,6 @@ class farmerController extends Controller
         }
         fieldModel::create($validated);
 
-        return redirect()->route('farmer.field')->with('success', 'Field added successfully.');
+        return redirect()->view('farmer.field')->with('success', 'Field added successfully.');
     }
 }

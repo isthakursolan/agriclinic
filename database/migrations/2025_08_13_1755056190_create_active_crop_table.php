@@ -14,7 +14,7 @@ class CreateActiveCropTable extends Migration
 		$table->string('name',45);
 		$table->string('farmer_id',45);
 		$table->string('plot_id',45);
-		$table->string('type_of_crop',45);
+		$table->string('crop_cat',45);
 		$table->string('variety',45)->nullable();
 		$table->string('rootstock',45)->nullable() ;
 		$table->date('sowing_date')->nullable() ;
@@ -25,7 +25,7 @@ class CreateActiveCropTable extends Migration
 		$table->datetime('created_at')->nullable() ;
 		$table->datetime('updated_at')->nullable() ;
 		$table->primary('id');
-
+        $table->foreign('farmer_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

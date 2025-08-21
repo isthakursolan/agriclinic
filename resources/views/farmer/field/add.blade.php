@@ -8,7 +8,7 @@
                     <div class="card-header">
                         <h3 class="card-title"><i class="fas fa-map-marked-alt"></i> Register New Plot</h3>
                     </div>
-                    <form action="{{ route('field.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('user.field.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
                             <div class="row">
@@ -125,7 +125,7 @@
                         </div>
                         <div class="card-footer text-right">
                             <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Submit</button>
-                            <a href="{{ route('field') }}" class="btn btn-secondary">Cancel</a>
+                            <a href="{{ route('user.field') }}" class="btn btn-secondary">Cancel</a>
                         </div>
                     </form>
                 </div>

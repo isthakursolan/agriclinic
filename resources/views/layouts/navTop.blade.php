@@ -65,7 +65,7 @@
                     <a href="#" class="dropdown-item">
                         <div class="d-flex">
                             <div class="flex-shrink-0">
-                                <img src="{{ asset('adminlte/dist/assetsimg/user3-128x128.jpg') }}" alt="User Avatar"
+                                <img src="{{ asset('adminlte/dist/assets/img/user3-128x128.jpg') }}" alt="User Avatar"
                                     class="img-size-50 rounded-circle me-3" />
                             </div>
                             <div class="flex-grow-1">

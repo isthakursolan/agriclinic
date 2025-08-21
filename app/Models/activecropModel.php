@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ac_cropModel extends Model
+class activecropModel extends Model
 {
      use HasFactory;
-     protected $table = 'activecrop';
+     protected $table = 'active_crop';
 
     protected $fillable = [
         'name',
         'farmer_id',
         'plot_id',
-        'type_of_crop',
+        'crop_cat',
         'variety',
         'rootstock',
         'sowing_date',
@@ -23,4 +23,9 @@ class ac_cropModel extends Model
         'photo',
         'description',
     ];
+      // Relations
+    public function farmer()
+    {
+        return $this->belongsTo(User::class, 'farmer_id');
+    }
 }

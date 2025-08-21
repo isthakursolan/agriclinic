@@ -4,8 +4,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h2 class="text-2xl font-bold mb-0">Farmer Dashboard</h2>
-
+                    <h2 class="text-2xl font-bold mb-0">Consultant Dashboard </h2>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
@@ -16,13 +15,12 @@
             </div>
         </div>
     </div>
-
     <div class="app-content">
         <div class="container-fluid">
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h3>Welcome, {{ Auth::user()->name }} 👨‍🌾</h3>
-                    <p class="text-muted">Here’s an overview of your farming activities.</p>
+                    <p class="text-muted">Here's an overview of  activities.</p>
                     <div class="row">
                         <div class="col-md-3">
                             <div class="card text-white bg-success mb-3">
@@ -65,5 +63,4 @@
 
         </div>
     </div>
-
 @endsection

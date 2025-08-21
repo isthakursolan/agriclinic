@@ -8,7 +8,7 @@
                     <div class="card-header">
                         <h3 class="card-title"><i class="fas fa-map-marked-alt"></i> Update Profile</h3>
                     </div>
-                    <form action="{{ route('profile.store',$profile->id) }}" method="POST">
+                    <form action="{{ route('user.profile.store',$profile->id) }}" method="POST">
                         @csrf
                         <div class="card-body">
                             <div class="row">

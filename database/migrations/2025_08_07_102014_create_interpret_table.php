@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('parameter', 45)->nullable();
             $table->string('min', 45)->nullable();
             $table->string('max', 45)->nullable();
-            $table->string('interpretaion', 45)->nullable();
+            $table->string('interpretation', 45)->nullable();
             $table->string('color', 45)->nullable();
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
