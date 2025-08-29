@@ -17,4 +17,13 @@ class sampleTypeModel extends Model
         'buffer_size',
         'batch_prefix',
     ];
+     public function parameters()
+    {
+        return $this->hasMany(individualParameterModel::class, 'sample_type');
+    }
+
+    public function packages()
+    {
+        return $this->hasMany(packagesModel::class, 'sample_type');
+    }
 }

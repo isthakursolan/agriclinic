@@ -16,7 +16,7 @@
                                     <div class="form-group">
                                         <label for="farmer_id">Farmer</label>
                                         <input type="text"  class="form-control"
-                                            value="{{ old('fullname', $profile->fullname ?? '') }}" disabled>
+                                            value="{{ old('fullname', $profile->fullname ?? '') }}" readonly>
                                             <input type="text" name="farmer_id" value="{{ old('fullname', $profile->id ?? '') }}" hidden>
                                         {{-- <select class="form-control" name="farmer_id" required> --}}
                                             {{-- <option value="">Select Farmer</option>

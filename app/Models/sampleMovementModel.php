@@ -20,4 +20,13 @@ class sampleMovementModel extends Model
         'mode',
         'picture',
     ];
+     public function sample()
+    {
+        return $this->belongsTo(sampleModel::class, 'sample_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(profileModel::class, 'user_id');
+    }
 }

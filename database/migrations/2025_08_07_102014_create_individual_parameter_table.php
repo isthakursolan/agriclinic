@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('individual_parameter', function (Blueprint $table) {
             $table->integer('id', true)->unique('id_unique');
             $table->string('parameter', 100);
+            $table->string('symbol', 45);
             $table->string('reporting_time', 45)->nullable();
             $table->integer('price');
-            $table->string('sample_type', 45);
+            $table->integer('sample_type');
             $table->string('reading_type', 45)->nullable();
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();

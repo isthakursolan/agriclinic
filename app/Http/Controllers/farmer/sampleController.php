@@ -1,0 +1,102 @@
+<?php
+
+namespace App\Http\Controllers\farmer;
+
+use App\Http\Controllers\Controller;
+use App\Models\activecropModel;
+use App\Models\concernModel;
+use App\Models\cropModel;
+use App\Models\fieldModel;
+use App\Models\individualParameterModel;
+use App\Models\packagesModel;
+use App\Models\paymentsModel;
+use App\Models\profileModel;
+use App\Models\sampleModel;
+use App\Models\sampleTypeModel;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class sampleController extends Controller
+{
+    public function index()
+    {
+        $samples = SampleModel::where('farmer_id', session('id'))->get();
+        $field = fieldModel::get();
+        $crop = activecropModel::get();
+        $type = sampleTypeModel::get();
+        return view('farmer.sample.index', compact('samples', 'field', 'crop', 'type'));
+    }
+    public function create()
+    {
+        $profile = profileModel::where('id', session('id'))->first();
+        $sample_type = sampleTypeModel::get();
+        $field = fieldModel::where('farmer_id', session('id'))->get();
+        $crop = activecropModel::where('farmer_id', session('id'))->get();
+        return view('farmer.sample.create', compact('profile', 'sample_type', 'field', 'crop'));
+    }
+
+    public function getSampleTypeData($id)
+    {
+        $concerns = concernModel::where('sample_type', $id)->get();
+        // Get individual parameters for this sample type
+        $parameters = individualParameterModel::where('sample_type', $id)->get();
+
+        // Get packages and their parameters
+        $packages = packagesModel::where('sample_type', $id)
+            ->get()
+            ->map(function ($pkg) {
+                return [
+                    'id' => $pkg->id,
+                    'package_name' => $pkg->package_name,
+                    'parameters' => json_decode($pkg->parameters) ?? [],
+                    'price' => $pkg->price ?? 0,
+                    'time' => $pkg->reporting_time,
+                ];
+            });
+        return response()->json([
+            'concerns' => $concerns,
+            'parameters' => $parameters,
+            'packages' => $packages,
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        // dd($request->all());
+        $request->validate([
+            'sample_type' => 'required|exists:sample_type,id',
+            'packages' => 'nullable|exists:packages,id',
+            'parameters' => 'required|string', // JSON string from JS
+            'amount' => 'required|numeric'
+        ]);
+        // Decode parameters JSON
+        $parameters = json_decode($request->parameters, true) ?? [];
+        // Step 1: Create sample
+        $sample = sampleModel::create([
+            'farmer_id' => $request->farmer_id,
+            'field_id' => $request->field_id,
+            'crop_id' => $request->crop_id,
+            'sample_type' => $request->sample_type,
+            'collection_method' => $request->collection_method,
+            'package' => $request->packages,
+            'parameters' => $parameters, // store as JSON in DB
+            'quantity' => $request->quantity,
+            'amount' => $request->amount,
+            'concern' => $request->concern,
+            'sample_status' => 'pending',
+        ]);
+        return response()->json(['success' => true, 'sample' => $sample]);
+        // Step 4: Redirect **outside the transaction**
+        // return redirect()->route('user.payments.show')
+        //     ->with('success', 'Sample created successfully. Proceed to payment.');
+        // return redirect()->route('user.sample.create')
+        //     ->with('success', 'Sample created successfully. Proceed to payment.');
+    }
+    public function edit(sampleModel $sample)
+    {
+        return response()->json([
+            'success' => true,
+            'sample' => $sample
+        ]);
+    }
+}

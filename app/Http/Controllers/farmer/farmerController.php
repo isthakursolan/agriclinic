@@ -203,6 +203,6 @@ class farmerController extends Controller
         }
         fieldModel::create($validated);
 
-        return redirect()->view('farmer.field')->with('success', 'Field added successfully.');
+        return redirect()->route('user.field')->with('success', 'Field added successfully.');
     }
 }

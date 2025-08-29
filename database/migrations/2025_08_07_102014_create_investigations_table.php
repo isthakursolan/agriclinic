@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('investigations', function (Blueprint $table) {
             $table->integer('id', true)->unique('id_unique');
-            $table->string('sample_id', 45);
-            $table->string('parameter', 45)->nullable();
+            $table->integer('sample_id');
+            $table->integer('parameter')->nullable();
             $table->string('reading1', 45)->nullable();
             $table->string('reading2', 45)->nullable();
             $table->string('dilusion', 45)->nullable();

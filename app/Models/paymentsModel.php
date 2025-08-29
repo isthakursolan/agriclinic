@@ -15,8 +15,14 @@ class paymentsModel extends Model
         'amount',
         'sample_id',
         'transaction_id',
+        'no_of_samples',
+        'details',
         'confirm_payment',
         'mode',
         'status',
     ];
+      public function sample()
+    {
+        return $this->belongsTo(sampleModel::class, 'sample_id');
+    }
 }

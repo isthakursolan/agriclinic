@@ -93,9 +93,9 @@
                         </a>
                     </li>
                     <li class="nav-item menu-open">
-                        <a href="#" class="nav-link active">
+                        <a href="{{route('user.sample')}}" class="nav-link active">
                             <i class="nav-icon bi bi-circle"></i>
-                            <p>Test Requestss</p>
+                            <p>Requests Tests</p>
                         </a>
                     </li>
                     <li class="nav-item menu-open">

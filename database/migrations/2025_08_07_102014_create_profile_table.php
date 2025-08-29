@@ -15,8 +15,8 @@ class CreateProfileTable extends Migration
             $table->string('gender', 45)->nullable()->default('NULL');
             $table->string('id_type', 45)->nullable()->default('NULL');
             $table->string('id_no', 45)->nullable()->default('NULL');
-            $table->integer('contact',);
-            $table->integer('whatsapp',)->nullable()->default('NULL');
+            $table->bigInteger('contact');
+            $table->bigInteger('whatsapp')->nullable();
             $table->string('email', 100);
             $table->string('qualification', 45)->nullable()->default('NULL');
             $table->string('address', 100)->nullable()->default('NULL');
@@ -29,12 +29,12 @@ class CreateProfileTable extends Migration
             $table->string('land_area_cultivated', 45)->nullable()->default('NULL');
             $table->string('land_area_total', 45)->nullable()->default('NULL');
             $table->string('farming_since', 45)->nullable()->default('NULL');
-            $table->text('technology_intervention');
+            $table->text('technology_intervention')->nullable();
             $table->string('capital_investment', 45)->nullable()->default('NULL');
-            $table->text('future_plans');
-            $table->text('info_on_all_crops');
-            $table->datetime('created_at')->nullable()->default('NULL');
-            $table->datetime('updated_at')->nullable()->default('NULL');
+            $table->text('future_plans')->nullable();
+            $table->text('info_on_all_crops')->nullable();
+            $table->datetime('created_at')->nullable();
+            $table->datetime('updated_at')->nullable();
             $table->primary('id');
         });
     }

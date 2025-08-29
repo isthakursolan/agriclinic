@@ -11,17 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('test_category', function (Blueprint $table) {
             $table->integer('id', true)->unique('id_unique');
-            $table->date('date');
-            $table->decimal('amount', 8, 2);
-            $table->text('sample_id');
-            $table->integer('no_of_samples')->nullable();
-            $table->string('transaction_id', 45)->nullable();
-            $table->string('confirm_payment', 45)->nullable();
-            $table->string('mode', 45)->nullable();
-            $table->string('status', 45)->nullable();
-            $table->text('details')->nullable();
+            $table->string('test_cat');
+            $table->string('sub_cat')->nullable();
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
 
@@ -34,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('test_category');
     }
 };

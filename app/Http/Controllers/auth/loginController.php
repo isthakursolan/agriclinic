@@ -30,23 +30,25 @@ class loginController extends Controller
             $request->session()->put(['id'=> $profile->id]);
             // Route to role-specific views or reuse one view with conditional widgets
             if ($user->hasRole(['admin', 'superadmin'])) {
-                // return view('dashboards.admin', compact('user'));
                 return redirect()->route('admin.dashboard');
             }
             if ($user->hasRole('consultant')) {
-                return view('dashboards.consultant', compact('user'));
+                return redirect()->route('con.dashboard');
             }
-            if ($user->hasRole('lab_scientist') || $user->hasRole('analyst')) {
-                return view('dashboards.lab', compact('user'));
+            if ($user->hasRole('lab_scientist')) {
+                return redirect()->route('lab.dashboard');
+            }
+             if ( $user->hasRole('analyst')) {
+                return redirect()->route('analyst.dashboard');
             }
             if ($user->hasRole('accountant')) {
-                return view('dashboards.accountant', compact('user'));
+                return redirect()->route('acc.dashboard');
             }
             if ($user->hasRole('field_agent')) {
-                return view('dashboards.agent', compact('user'));
+                return redirect()->route('agent.dashboard');
             }
             if ($user->hasRole('front_office')) {
-                return view('dashboards.frontoffice', compact('user'));
+                return redirect()->route('front.dashboard');
             }
             if ($user->hasRole('farmer')) {
 

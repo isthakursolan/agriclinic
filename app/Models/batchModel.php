@@ -17,4 +17,8 @@ class batchModel extends Model
         'sample_no',
         'batch_status',
     ];
+     public function sampleType()
+    {
+        return $this->belongsTo(sampleTypeModel::class, 'sample_type');
+    }
 }

@@ -20,4 +20,13 @@ class investigationsModel extends Model
         'result',
         'interpretation',
     ];
+     public function sample()
+    {
+        return $this->belongsTo(sampleModel::class, 'sample_id');
+    }
+
+    public function parameter()
+    {
+        return $this->belongsTo(individualParameterModel::class, 'parameter_id');
+    }
 }
