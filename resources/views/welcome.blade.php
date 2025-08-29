@@ -146,7 +146,6 @@
             </div>
         </div>
     </section>
-
     <!-- Call to Action Section -->
     <section class="bg-green-700 text-white py-16 px-4 sm:px-6 lg:px-8">
         <div class="container mx-auto text-center">
