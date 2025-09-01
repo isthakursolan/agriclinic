@@ -48,4 +48,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+        // A User has one Profile
+    public function profile()
+    {
+        return $this->hasOne(ProfileModel::class, 'user_id');
+    }
+
 }

@@ -1,0 +1,102 @@
+/* sticky + scrollable on large screens */
+body {
+    /* background: linear-gradient(135deg, #e6f2ff, #f9f9f9); */
+    font-family: 'Source Sans 3', sans-serif;
+}
+
+.login-box {
+    max-width: 420px;
+}
+
+.login-logo a {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0d6efd;
+    text-decoration: none;
+}
+
+.login-logo a span {
+    color: #198754;
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+      .brand-title {
+        font-size: 28px;
+        font-weight: 800;
+        color: #28a745;
+        text-align: center;
+        letter-spacing: 1px;
+      }
+      .brand-subtitle {
+        font-size: 14px;
+        font-weight: 500;
+        color: #6c757d;
+        text-align: center;
+        margin-top: -5px;
+        margin-bottom: 15px;
+      }
+      .card-primary.card-outline {
+        border-top: 3px solid #28a745;
+      }
+      .btn-primary {
+        background-color: #28a745;
+        border-color: #28a745;
+      }
+      .btn-primary:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+      }
+
+.login-card-body {
+    padding: 2rem;
+}
+
+.form-control {
+    border-radius: 10px;
+}
+
+.btn-primary,
+.btn-google {
+    border-radius: 10px;
+}
+
+.login-box-msg {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    color: #555;
+}
+
+.btn-google {
+    background-color: #db4437;
+    color: #fff;
+    border: none;
+}
+
+.btn-google:hover {
+    background-color: #c1351d;
+    color: #fff;
+}
+
+.app-sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+/* smooth submenu animation */
+.nav-treeview {
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+}
+
+/* nicer active highlighting */
+.nav-link.active {
+    background: rgba(255, 255, 255, 0.08);
+    border-left: 3px solid #0d6efd;
+}

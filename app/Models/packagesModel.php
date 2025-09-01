@@ -19,7 +19,7 @@ class packagesModel extends Model
     ];
     public function sampleType()
     {
-        return $this->belongsTo(SampleTypeModel::class, 'sample_type_id');
+        return $this->belongsTo(SampleTypeModel::class, 'sample_type');
     }
     public function parameters()
     {

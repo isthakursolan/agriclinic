@@ -15,7 +15,9 @@
                             </a>
                         </div>
                     </div>
-
+                    @if (session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
                     <table id="myDataTable" class="display table table-bordered table-striped">
                         <thead>
                             <tr class="bg-info">

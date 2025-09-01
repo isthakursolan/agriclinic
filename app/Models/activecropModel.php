@@ -26,6 +26,12 @@ class activecropModel extends Model
       // Relations
     public function farmer()
     {
-        return $this->belongsTo(User::class, 'farmer_id');
+        return $this->belongsTo(profileModel::class, 'farmer_id');
+    }
+     public function crop() {
+        return $this->belongsTo(cropModel::class, 'crop_id');
+    }
+    public function plot() {
+        return $this->belongsTo(fieldModel::class, 'plot_id');
     }
 }

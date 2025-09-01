@@ -16,6 +16,6 @@ class croptypeModel extends Model
     ];
     public function crops()
     {
-        return $this->hasMany(cropModel::class, 'id');
+        return $this->hasMany(cropModel::class, 'type');
     }
 }

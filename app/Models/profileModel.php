@@ -12,6 +12,7 @@ class profileModel extends Model
 
     protected $fillable = [
         'id',
+        'user_id',
         'fullname',
         'username',
         'gender',
@@ -36,4 +37,8 @@ class profileModel extends Model
         'future_plans',
         'info_on_all_crops',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

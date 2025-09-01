@@ -22,16 +22,16 @@ class cropModel extends Model
     {
         return $this->belongsTo(croptypeModel::class, 'type');
     }
-    public function cropCat()
+    public function category()
     {
         return $this->belongsTo(cropcatModel::class, 'cat');
     }
      public function varieties()
     {
-        return $this->hasMany(varietyModel::class, 'id');
+        return $this->hasMany(varietyModel::class, 'crop');
     }
-     public function rootstock()
+     public function rootstocks()
     {
-        return $this->hasMany(rootstockModel::class, 'id');
+        return $this->hasMany(rootstockModel::class, 'crop');
     }
 }

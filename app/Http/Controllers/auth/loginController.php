@@ -23,11 +23,18 @@ class loginController extends Controller
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
+        $loginInput = $request->login;
+        $password = $request->password;
+        // Find the user by email, username, or contact
+        $user = User::where('email', $loginInput)
+            ->orWhere('username', $loginInput)
+            ->orWhere('contact', $loginInput)
+            ->first();
         if (Auth::attempt($request->only('email', 'password'))) {
-
+        // if ($user && Auth::attempt(['id' => $user->id, 'password' => $password])) {
             $user = Auth::user();
-            $profile = profileModel::where('email', $user->email)->first();
-            $request->session()->put(['id'=> $profile->id]);
+            $profile = profileModel::where('user_id', $user->id)->first();
+            $request->session()->put(['id' => $profile->id]);
             // Route to role-specific views or reuse one view with conditional widgets
             if ($user->hasRole(['admin', 'superadmin'])) {
                 return redirect()->route('admin.dashboard');
@@ -38,7 +45,7 @@ class loginController extends Controller
             if ($user->hasRole('lab_scientist')) {
                 return redirect()->route('lab.dashboard');
             }
-             if ( $user->hasRole('analyst')) {
+            if ($user->hasRole('analyst')) {
                 return redirect()->route('analyst.dashboard');
             }
             if ($user->hasRole('accountant')) {
@@ -72,6 +79,7 @@ class loginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/login');
+
+        return redirect('/login')->with('success', 'Logged out successfully.');
     }
 }

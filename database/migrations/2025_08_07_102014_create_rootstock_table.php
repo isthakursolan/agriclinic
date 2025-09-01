@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('rootstock', function (Blueprint $table) {
             $table->integer('id', true)->unique('id_unique');
-            $table->string('crop', 45)->nullable();
-            $table->string('rootstock', 100)->nullable();
+            $table->integer('crop');
+            $table->string('rootstock', 255);
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
 

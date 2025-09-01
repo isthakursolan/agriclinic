@@ -14,7 +14,7 @@ class rootstockModel extends Model
         'crop',
         'rootstock',
     ];
-     public function crop()
+     public function crops()
     {
         return $this->belongsTo(cropModel::class,'crop');
     }

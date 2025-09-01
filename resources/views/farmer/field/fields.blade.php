@@ -15,6 +15,9 @@
                             </a>
                         </div>
                     </div>
+                     @if (session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
 
                     <table id="myDataTable" class="display table table-bordered table-striped">
                         <thead>
@@ -34,9 +37,15 @@
                                     <td>{{ $field->source_of_irrigation }}</td>
                                     <td>{{ $field->soil_type }}</td>
                                     <td>
-                                        <a href="#" class="btn btn-warning">
-                                            Edit Field
-                                        </a>
+                                        <a href="{{ route('user.edit.field', $field->id) }}"
+                                            class="btn btn-sm btn-warning">Edit</a>
+                                        {{-- <form action="{{ route('user.field.destroy', $field->id) }}" method="get"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger"
+                                                onclick="return confirm('Are you sure?')">Delete</button>
+                                        </form> --}}
                                     </td>
                                 </tr>
                             @endforeach

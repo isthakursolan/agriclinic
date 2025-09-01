@@ -15,7 +15,9 @@
                             </a>
                         </div>
                     </div>
-
+                    @if (session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
                     <table id="myDataTable" class="display table table-bordered table-striped">
                         <thead>
                             <tr class="bg-info">
@@ -46,9 +48,17 @@
                                     <td>{{ $crop->sowing_date }}</td>
                                     <td>{{ $crop->expected_harvest_date }}</td>
                                     <td>
-                                        <a href="#" class="btn btn-warning">
-                                            Edit Field
+                                        <a href="{{ route('user.edit.crop', $crop->id) }}" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-edit"></i>Edit
                                         </a>
+                                        {{-- <form action="{{ route('user.crop.destroy', $crop->id) }}" method="get" style="display:inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Are you sure to delete this crop?')">
+                                            <i class="fas fa-trash"></i>Delete
+                                        </button>
+                                    </form> --}}
                                     </td>
                                 </tr>
                             @endforeach

@@ -14,7 +14,7 @@ class varietyModel extends Model
         'crop',
         'variety',
     ];
-     public function crop()
+     public function crops()
     {
         return $this->belongsTo(cropModel::class,'crop');
     }
