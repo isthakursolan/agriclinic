@@ -25,8 +25,10 @@ class SampleController extends Controller
 
     public function create()
     {
+        // Corrected code here (highlighted part)
         $farmers = User::role('farmer')->with(['profile', 'fields', 'activeCrops'])->get();
         $sampleTypes = sampleTypeModel::all();
+
         // Packages and Parameters will be loaded via AJAX
         return view('frontoffice.samples.create', compact('farmers', 'sampleTypes'));
     }

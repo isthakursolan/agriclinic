@@ -29,12 +29,10 @@
                             <p>Role Management</p>
                         </a>
                     </li>
-
-
                     <!-- Farmers -->
                     <li class="nav-item">
-                        <a href="{{ route('admin.farmers') }}"
-                            class="nav-link {{ request()->routeIs('admin.farmers*') ? 'active' : '' }}">
+                        <a href="{{ route('farmers') }}"
+                            class="nav-link {{ request()->routeIs('farmers*') ? 'active' : '' }}">
                             <i class="nav-icon bi bi-person-check"></i>
                             <p>Farmers</p>
                         </a>
@@ -160,7 +158,7 @@
                     </li>
                 @endrole
 
-                @role('farmers')
+                @role('farmer')
                     <li class="nav-item">
                         <a href="{{ route('user.profile') }}"
                             class="nav-link {{ request()->routeIs('user.profile*') ? 'active' : '' }}">
@@ -215,6 +213,14 @@
 
                     <!-- Farmers -->
                     <li class="nav-item">
+                        <a href="{{ route('farmers') }}"
+                            class="nav-link {{ request()->routeIs('farmers') ? 'active' : '' }}">
+                            <i class="nav-icon bi bi-people"></i>
+                            <p>Add Farmers</p>
+                        </a>
+                    </li>
+                    <!-- Farmers -->
+                    <li class="nav-item">
                         <a href="{{ route('agent.farmers') }}"
                             class="nav-link {{ request()->routeIs('agent.farmers') ? 'active' : '' }}">
                             <i class="nav-icon bi bi-people"></i>
@@ -251,6 +257,15 @@
                 @endrole
 
                 @role('consultant')
+                    <!-- Farmers -->
+                    <li class="nav-item">
+                        <a href="{{ route('farmers') }}"
+                            class="nav-link {{ request()->routeIs('admin.farmers*') ? 'active' : '' }}">
+                            <i class="nav-icon bi bi-person-check"></i>
+                            <p>Farmers</p>
+                        </a>
+                    </li>
+
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon bi bi-briefcase"></i>
@@ -338,17 +353,17 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview"
-                            style="{{ request()->is('frontoffice/farmers*') ? 'display:block;' : 'display:none;' }}">
+                            style="{{ request()->is('farmers*') ? 'display:block;' : 'display:none;' }}">
                             <li class="nav-item">
-                                <a href="{{ route('frontoffice.farmers.create') }}"
-                                    class="nav-link {{ request()->routeIs('frontoffice.farmers.create') ? 'active' : '' }}">
+                                <a href="{{ route('farmer.create') }}"
+                                    class="nav-link {{ request()->routeIs('farmers.create') ? 'active' : '' }}">
                                     <i class="bi bi-dot nav-icon"></i>
                                     <p>Add New Farmer</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('frontoffice.farmers.index') }}"
-                                    class="nav-link {{ request()->routeIs('frontoffice.farmers.index') ? 'active' : '' }}">
+                                <a href="{{ route('farmers') }}"
+                                    class="nav-link {{ request()->routeIs('farmers.index') ? 'active' : '' }}">
                                     <i class="bi bi-dot nav-icon"></i>
                                     <p>Manage Farmers</p>
                                 </a>
@@ -356,6 +371,13 @@
                         </ul>
                     </li>
 
+                     <li class="nav-item">
+                        <a href="{{ route('sample') }}"
+                            class="nav-link {{ request()->routeIs('sample') ? 'active' : '' }}">
+                            <i class="nav-icon bi bi-speedometer2"></i>
+                            <p>Create Samples</p>
+                        </a>
+                    </li>
                     <!-- Sample Management -->
                     <li class="nav-item {{ request()->is('frontoffice/samples*') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link {{ request()->is('frontoffice/samples*') ? 'active' : '' }}">
@@ -381,7 +403,7 @@
                                     <p>All Samples</p>
                                 </a>
                             </li>
-                             <li class="nav-item">
+                            <li class="nav-item">
                                 <a href="{{ route('frontoffice.payments.paid') }}"
                                     class="nav-link {{ request()->routeIs('frontoffice.payments.paid') ? 'active' : '' }}">
                                     <i class="bi bi-dot nav-icon"></i>
@@ -425,7 +447,8 @@
                     document.querySelectorAll('.nav-item.menu-open').forEach(function(
                         openItem) {
                         // Do not close the current parent if one of its children is active
-                        const isActive = openItem.querySelector('.nav-treeview .nav-link.active');
+                        const isActive = openItem.querySelector(
+                            '.nav-treeview .nav-link.active');
                         if (openItem !== parent && !isActive) {
                             openItem.classList.remove('menu-open');
                             const openSubmenu = openItem.querySelector('.nav-treeview');
@@ -447,7 +470,8 @@
                     } else {
                         parent.classList.remove('menu-open');
                         submenu.style.display = 'none'; // Hide submenu
-                        if (!this.parentElement.querySelector('.nav-treeview .nav-link.active')) {
+                        if (!this.parentElement.querySelector(
+                            '.nav-treeview .nav-link.active')) {
                             this.classList.remove('active');
                         }
                     }

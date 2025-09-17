@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\modules;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -13,12 +13,12 @@ class farmerController extends Controller
     public function farmerIndex()
     {
         $farmers = User::role('farmer')->with('profile')->get();
-        return view('admin.farmer.index', compact('farmers'));
+        return view('modules.farmer.index', compact('farmers'));
     }
 
     public function farmerCreate()
     {
-        return view('admin.farmer.create');
+        return view('modules.farmer.create');
     }
 
     public function farmerStore(Request $request)
@@ -70,13 +70,13 @@ class farmerController extends Controller
             // ... add other fields here
         ]);
 
-        return redirect()->route('admin.farmers')->with('success', 'Farmer created successfully');
+        return redirect()->route('modules.farmers')->with('success', 'Farmer created successfully');
     }
 
     public function farmerEdit($id)
     {
         $farmer = User::with('profile')->findOrFail($id);
-        return view('admin.farmer.edit', compact('farmer'));
+        return view('modules.farmer.edit', compact('farmer'));
     }
 
     public function farmerUpdate(Request $request, $id)
@@ -128,7 +128,7 @@ class farmerController extends Controller
 
         $profile->save();
 
-        return redirect()->route('admin.farmers')
+        return redirect()->route('modules.farmers')
             ->with('success', 'Farmer updated successfully.');
     }
 
@@ -140,6 +140,6 @@ class farmerController extends Controller
         }
         $user->delete();
 
-        return redirect()->route('admin.farmers')->with('success', 'Farmer deleted successfully!');
+        return redirect()->route('modules.farmers')->with('success', 'Farmer deleted successfully!');
     }
 }

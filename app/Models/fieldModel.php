@@ -76,4 +76,8 @@ class fieldModel extends Model
     {
         return $this->hasMany(activecropModel::class, 'plot_id'); // adjust foreign key if needed
     }
+    public function lastcrop()
+    {
+        return $this->hasOne(activecropModel::class, 'plot_id')->latestOfMany();
+    }
 }

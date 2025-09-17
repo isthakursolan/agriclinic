@@ -18,10 +18,19 @@
                                     <select name="farmer_id" id="farmer_id" class="form-control" required>
                                         <option value="">-- Select a Farmer --</option>
                                         @foreach ($farmers as $farmer)
-                                            <option value="{{ $farmer->id }}" data-fields="{{ json_encode($farmer->fields) }}" data-crops="{{ json_encode($farmer->activeCrops) }}">{{ $farmer->profile->fullname ?? $farmer->name }} ({{ $farmer->contact }})</option>
+                                            <option value="{{ $farmer->id }}"
+                                                    data-fields="{{ json_encode($farmer->fields) }}"
+                                                    data-crops="{{ json_encode($farmer->activeCrops) }}">
+                                                    {{ htmlspecialchars($farmer->profile->fullname ?? $farmer->name) }} ({{ $farmer->contact }})
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
+                                <div class="form-group">
+    @error('farmer_id')
+        <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+</div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -145,6 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const selectedOption = this.options[this.selectedIndex];
         const fields = JSON.parse(selectedOption.dataset.fields || '[]');
         const crops = JSON.parse(selectedOption.dataset.crops || '[]');
+        console.log(fields, crops);
 
         // Populate fields
         fieldSelect.innerHTML = '<option value="">-- Select Field (Optional) --</option>';
@@ -200,19 +210,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function renderSelectedParams() {
         selectedParamsDiv.innerHTML = '';
-        resetBtn.style.display = selectedParamIds.length > 0 ? 'inline-block' : 'none';
-
-        selectedParamIds.forEach(id => {
-            const param = allParameters.find(p => p.id == id);
-            if (!param) return;
-
-            const span = document.createElement('span');
-            span.className = 'badge badge-pill badge-info mr-1 mb-1';
-            span.textContent = param.parameter;
-            selectedParamsDiv.appendChild(span);
+        if (selectedPackageIds.length > 0) {
+        let msg = "Selected package includes: ";
+        const includedParams = selectedPackageIds.flatMap(pkg => {
+            const package = allPackages.find(p => p.id == pkg);
+            return package.parameters || [];
         });
-
-        finalParamsInput.value = JSON.stringify(selectedParamIds);
+        includedParams.forEach(id => {
+            const param = allParameters.find(p => p.id == id);
+            if (param) msg += param.parameter + ", ";
+        });
+        selectedParamsDiv.textContent = msg.slice(0, -2);
+        }
     }
 
     function calculateTotal() {
@@ -242,13 +251,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 parameters: selectedParameters // Send individual param IDs
             })
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not OK');
+            }
+            return response.json();
+        })
         .then(data => {
             const total = parseFloat(data.total).toFixed(2);
             amountInput.value = total;
             totalDisplay.textContent = 'Total: ₹' + total;
         })
-        .catch(error => console.error('Error calculating total:', error));
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            alert('Failed to load data. Please try again.');
+        });
     }
 
     packagesSelect.addEventListener('change', calculateTotal);
@@ -263,45 +280,13 @@ document.addEventListener('DOMContentLoaded', function () {
         calculateTotal();
     }
 
-    addSampleBtn.addEventListener('click', async function() {
-        const formData = new FormData(sampleForm);
-        // Use the consolidated list of parameter IDs
-        formData.set('parameters', finalParamsInput.value);
-        // Add selected package IDs
-        const selectedPackages = Array.from(packagesSelect.selectedOptions).map(opt => opt.value);
-        formData.delete('packages[]'); // clear existing before appending
-        selectedPackages.forEach(p => formData.append('packages[]', p));
-
-        // Basic validation
-        if (!formData.get('farmer_id') || !formData.get('sample_type_id') || parseFloat(formData.get('amount')) <= 0) {
-            alert('Please select a Farmer, Sample Type, and at least one test.');
+    addSampleBtn.addEventListener('click', async () => {
+        // After successful submission
+        if (addedSamples.length > 0) {
+            alert("Complete the payment or clear samples before adding new ones.");
             return;
         }
-
-        try {
-            const res = await fetch("{{ route('frontoffice.samples.store') }}", {
-                method: "POST",
-                headers: { "X-CSRF-TOKEN": "{{ csrf_token() }}" },
-                body: formData
-            });
-            const data = await res.json();
-
-            if (data.success) {
-                addedSamples.push(data.sample);
-                renderSamplesTable();
-                sampleForm.reset();
-                // Reset dropdowns related to the farmer
-                fieldSelect.innerHTML = '<option value="">-- Select Field (Optional) --</option>';
-                cropSelect.innerHTML = '<option value="">-- Select Crop (Optional) --</option>';
-                amountInput.value = '';
-                totalDisplay.textContent = 'Total: ₹0.00';
-            } else {
-                alert("Error: " + (data.message || "Could not add sample."));
-            }
-        } catch (err) {
-            console.error(err);
-            alert("A network error occurred. Please try again.");
-        }
+        // Proceed to add sample
     });
 
     function renderSamplesTable() {
@@ -336,11 +321,21 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     paymentBtn.addEventListener('click', function() {
-        const farmerId = farmerSelect.value;
-        if (farmerId && addedSamples.length > 0) {
-            window.location.href = `/frontoffice/samples/payment/${farmerId}`;
-        } else {
-            alert('Please add at least one sample for the selected farmer.');
+        const formData = new FormData(sampleForm);
+        const farmerId = formData.get('farmer_id');
+        if (!farmerId || addedSamples.some(sample => sample.farmer_id !== farmerId)) {
+            alert("Please ensure all samples are for the same farmer before proceeding.");
+            return;
+        }
+        // Proceed with payment
+    });
+
+    sampleForm.addEventListener('submit', (e) => {
+        const formData = new FormData(sampleForm);
+        const currentFarmerId = formData.get('farmer_id');
+        if (addedSamples.length > 0 && addedSamples[0].farmer_id !== currentFarmerId) {
+            alert("All samples must be for the same farmer.");
+            e.preventDefault();
         }
     });
 });

@@ -10,7 +10,7 @@
                     </div>
                     <div class="row">
                         <div class="col text-end m-1">
-                            <a href="{{ route('admin.farmer.create') }}" class="btn btn-primary mb-3">Add Farmer</a>
+                            <a href="{{ route('farmer.create') }}" class="btn btn-primary mb-3">Add Farmer</a>
                         </div>
                     </div>
 
@@ -35,9 +35,9 @@
                                     <td>{{ $farmer->email }}</td>
                                     <td>{{ $farmer->contact }}</td>
                                     <td>
-                                        <a href="{{ route('admin.farmer.edit', $farmer->id) }}"
+                                        <a href="{{ route('farmer.edit', $farmer->id) }}"
                                             class="btn btn-warning btn-sm">Update</a>
-                                        {{-- <form action="{{ route('admin.farmer.destroy', $farmer->id) }}" method="get"
+                                        {{-- <form action="{{ route('farmer.destroy', $farmer->id) }}" method="get"
                                             style="display:inline;">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm"
