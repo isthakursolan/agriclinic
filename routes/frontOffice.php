@@ -31,4 +31,18 @@ Route::middleware(['auth', 'role:front_office'])->prefix('frontoffice')->name('f
     // Payment/Paid Samples
     // Note: You will need to create a 'PaymentController' inside the 'app/Http/Controllers/frontoffice' directory.
     Route::get('/payments/paid', [FrontOfficePaymentController::class, 'paid'])->name('payments.paid');
+
+    // Accept samples
+    Route::get('/samples/accept', [FrontOfficeSampleController::class, 'acceptIndex'])->name('samples.accept');
+    Route::post('/samples/accept', [FrontOfficeSampleController::class, 'acceptSample'])->name('samples.accept.process');
+    // Reject sample
+    Route::post('/samples/reject/{id}', [FrontOfficeSampleController::class, 'rejectSample'])
+        ->name('samples.reject');
+    // Route::get('/create-batch', [FrontOfficeSampleController::class, 'createBatch'])->name('batches.create');
+    // Manually create batch route
+    Route::get('/all-batches', [FrontOfficeSampleController::class, 'allBatch'])->name('all-batches');
+    Route::get('/batches', [FrontOfficeSampleController::class, 'batch'])->name('batches');
+    Route::post('/batches/create', [FrontOfficeSampleController::class, 'createBatch'])->name('batches.create');
+
+
 });

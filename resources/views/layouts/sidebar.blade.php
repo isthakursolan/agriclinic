@@ -221,6 +221,14 @@
                     </li>
                     <!-- Farmers -->
                     <li class="nav-item">
+                        <a href="{{ route('agent.samples') }}"
+                            class="nav-link {{ request()->routeIs('agent.samples') ? 'active' : '' }}">
+                            <i class="nav-icon bi bi-people"></i>
+                            <p>Collect Samples</p>
+                        </a>
+                    </li>
+                    <!-- Farmers -->
+                    <li class="nav-item">
                         <a href="{{ route('agent.farmers') }}"
                             class="nav-link {{ request()->routeIs('agent.farmers') ? 'active' : '' }}">
                             <i class="nav-icon bi bi-people"></i>
@@ -371,15 +379,31 @@
                         </ul>
                     </li>
 
-                     <li class="nav-item">
+                    <li class="nav-item">
                         <a href="{{ route('sample') }}"
                             class="nav-link {{ request()->routeIs('sample') ? 'active' : '' }}">
                             <i class="nav-icon bi bi-speedometer2"></i>
                             <p>Create Samples</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('frontoffice.samples.accept') }}"
+                            class="nav-link {{ request()->routeIs('frontoffice.samples.accept') ? 'active' : '' }}">
+                            <i class="bi bi-speedometer nav-icon"></i>
+                            <p>Accept Samples</p>
+                        </a>
+                    </li>
+                    {{-- In Blade sidebar --}}
+                    <li class="nav-item">
+                        <a href="{{ route('frontoffice.all-batches') }}"
+                            class="nav-link {{ request()->routeIs('frontoffice.batches.create') ? 'active' : '' }}">
+                            <i class="bi bi-speedometer nav-icon"></i>
+                           <p> Batches</p>
+                        </a>
+                    </li>
+
                     <!-- Sample Management -->
-                    <li class="nav-item {{ request()->is('frontoffice/samples*') ? 'menu-open' : '' }}">
+                    {{-- <li class="nav-item {{ request()->is('frontoffice/samples*') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link {{ request()->is('frontoffice/samples*') ? 'active' : '' }}">
                             <i class="nav-icon bi bi-circle"></i>
                             <p>
@@ -418,16 +442,13 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> --}}
                 @endrole
 
             </ul>
         </nav>
     </div>
-</aside>
-
-
-<script>
+</aside <script>
     document.addEventListener('DOMContentLoaded', function() {
         const sidebar = document.querySelector('.app-sidebar .sidebar-wrapper');
         const menuItems = document.querySelectorAll('.nav-item > .nav-link');
@@ -471,7 +492,7 @@
                         parent.classList.remove('menu-open');
                         submenu.style.display = 'none'; // Hide submenu
                         if (!this.parentElement.querySelector(
-                            '.nav-treeview .nav-link.active')) {
+                                '.nav-treeview .nav-link.active')) {
                             this.classList.remove('active');
                         }
                     }

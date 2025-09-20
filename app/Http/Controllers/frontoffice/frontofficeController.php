@@ -25,6 +25,7 @@ class frontofficeController extends Controller
         // Recent Activities
         $recentSamples = sampleModel::with(['farmer', 'sampleType', 'payments'])
             ->orderBy('created_at', 'desc')
+            ->where('sample_status', '!=', 'accepted')
             ->limit(10)
             ->get();
 

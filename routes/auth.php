@@ -5,7 +5,6 @@ use App\Http\Controllers\admin\adminController;
 use App\Http\Controllers\admin\agentFarmerController;
 use App\Http\Controllers\admin\casesController;
 use App\Http\Controllers\admin\CropController;
-use App\Http\Controllers\admin\farmerController as AdminFarmerController;
 use App\Http\Controllers\admin\roleController;
 use App\Http\Controllers\analyst\analystController;
 use App\Http\Controllers\auth\forgetPassController;
@@ -14,7 +13,7 @@ use App\Http\Controllers\auth\loginController;
 use App\Http\Controllers\auth\registerController;
 use App\Http\Controllers\consultant\consultantController;
 use App\Http\Controllers\dashboardController;
-use App\Http\Controllers\farmer\farmerController;
+use App\Http\Controllers\admin\farmerController;
 use App\Http\Controllers\farmer\paymentController;
 use App\Http\Controllers\farmer\sampleController;
 use App\Http\Controllers\fieldAgent\fieldagentController;
@@ -95,12 +94,12 @@ Route::middleware('auth')->group(function () {
             Route::post('/crops/update/{id}', [CropController::class, 'updateCrops'])->name('crops.update');
             Route::get('/crops/destroy/{id}', [CropController::class, 'destroyCrops'])->name('crops.destroy');
 
-            Route::get('/farmer', [AdminFarmerController::class, 'farmerIndex'])->name('farmers');
-            Route::get('/farmer/create', [AdminFarmerController::class, 'farmerCreate'])->name('farmer.create');
-            Route::post('/farmer/store', [AdminFarmerController::class, 'farmerStore'])->name('farmer.store');
-            Route::get('/farmer/edit/{id}', [AdminFarmerController::class, 'farmerEdit'])->name('farmer.edit');
-            Route::post('/farmer/update/{id}', [AdminFarmerController::class, 'farmerUpdate'])->name('farmer.update');
-            Route::get('/farmer/destroy/{id}', [AdminFarmerController::class, 'farmerDestroy'])->name('farmer.destroy');
+            // Route::get('/farmer', [farmerController::class, 'farmerIndex'])->name('farmers');
+            // Route::get('/farmer/create', [farmerController::class, 'farmerCreate'])->name('farmer.create');
+            // Route::post('/farmer/store', [farmerController::class, 'farmerStore'])->name('farmer.store');
+            // Route::get('/farmer/edit/{id}', [farmerController::class, 'farmerEdit'])->name('farmer.edit');
+            // Route::post('/farmer/update/{id}', [farmerController::class, 'farmerUpdate'])->name('farmer.update');
+            // Route::get('/farmer/destroy/{id}', [farmerController::class, 'farmerDestroy'])->name('farmer.destroy');
 
             Route::get('/sampleType', [casesController::class, 'typeIndex'])->name('sampleType');
             Route::get('/sampleType/create', [casesController::class, 'typeCreate'])->name('sampleType.create');
@@ -149,6 +148,7 @@ Route::middleware('auth')->group(function () {
         });
     });
 
+
     Route::middleware(['auth', 'role:field_agent'])->prefix('agent')->name('agent.')->group(function () {
         // Dashboard
         Route::get('/dashboard', [fieldagentController::class, 'index'])->name('dashboard');
@@ -173,6 +173,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/reports/{id}/edit', [App\Http\Controllers\fieldAgent\farmerAgentController::class, 'editReport'])->name('reports.edit');
         Route::put('/reports/{id}', [App\Http\Controllers\fieldAgent\farmerAgentController::class, 'updateReport'])->name('reports.update');
         Route::delete('/reports/{report}/attachments/{index}', [App\Http\Controllers\fieldAgent\farmerAgentController::class, 'deleteAttachment'])->name('reports.delete-attachment');
+        // Sample collection
+        Route::get('/samples', [farmerAgentController::class, 'samplesShow'])->name('samples');
+        Route::post('/samples/collect/{id}', [farmerAgentController::class, 'collectSample'])->name('samples.collect');
+        Route::post('/accept-sample/{id}', [farmerAgentController::class, 'acceptSample'])->name('sample.accept');
     });
 
 

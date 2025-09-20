@@ -8,6 +8,8 @@ use App\Models\agentTask;
 use App\Models\FieldAgentAssignment;
 use App\Models\fieldModel;
 use App\Models\profileModel;
+use App\Models\sampleModel;
+use App\Models\sampleBufferModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -72,7 +74,6 @@ class farmerAgentController extends Controller
             }
 
             return view('agent.fields.index', compact('fields'));
-
         } catch (\Exception $e) {
             // Handle database errors gracefully
             $fields = collect();
@@ -274,5 +275,62 @@ class farmerAgentController extends Controller
         }
 
         return response()->json(['success' => false]);
+    }
+    public function samplesShow()
+    {
+        $samples = sampleModel::where('collection_method', 'field_agent')
+            // ->where('field_agent_id', auth()->id())
+            ->with('farmer', 'fieldAgent') // Eager load relationships
+            ->latest()
+            ->get();
+
+        return view('agent.samples.index', compact('samples'));
+    }
+    public function collectSample($sampleId)
+    {
+        $sample = sampleModel::where('collection_method', 'field_agent')
+            // ->where('field_agent_id', auth()->id())
+            ->where('id', $sampleId)
+            ->firstOrFail();
+
+        // Update status and record agent info
+        $sample->update([
+            'sample_status' => 'collected',
+            'collected_by_agent' => Auth::user()->name, // or use fieldAgent relationship
+            'collected_at' => now()->format('Y-m-d H:i:s'),
+        ]);
+
+        return redirect()->back()->with('success', "Sample #{$sample->sample_id} marked as collected.");
+    }
+
+    public function acceptSample($sampleId)
+    {
+        // Find sample
+        $sample = sampleModel::findOrFail($sampleId);
+
+        // Step 1: Check if sample is collected by agent
+        if ($sample->sample_status !== 'collected') {
+            return redirect()->back()->with('error', 'Sample must be marked as collected before acceptance.');
+        }
+
+        // Step 2: Check if sample is paid
+        $isPaid = $sample->payment && $sample->payment->status === 'paid';
+        if (!$isPaid) {
+            return redirect()->back()->with('error', 'This sample is not fully paid.');
+        }
+
+        // Step 3: Create buffer entry
+        sampleBufferModel::updateOrCreate(
+            ['sample_id' => $sample->id],
+            [
+                'sample_type' => $sample->sample_type,
+            ]
+        );
+
+        // Step 4: Update sample status
+        $sample->sample_status = 'accepted';
+        $sample->save();
+
+        return redirect()->back()->with('success', 'Sample accepted and added to buffer.');
     }
 }

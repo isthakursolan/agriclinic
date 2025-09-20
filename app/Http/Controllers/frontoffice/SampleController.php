@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\frontoffice;
 
 use App\Http\Controllers\Controller;
+use App\Models\batchModel;
 use App\Models\individualParameterModel;
+use App\Models\labRefModel;
 use App\Models\packagesModel;
 use App\Models\profileModel;
 use App\Models\sampleModel;
+use App\Models\sampleBufferModel;
 use App\Models\sampleMovementModel;
 use App\Models\sampleTypeModel;
 use App\Models\User;
@@ -110,7 +113,6 @@ class SampleController extends Controller
             $total += packagesModel::whereIn('id', $request->packages)->sum('amount');
         }
 
-
         return response()->json(['total' => $total]);
     }
 
@@ -147,5 +149,209 @@ class SampleController extends Controller
             'parameters' => $parameters,
             'packages' => $packages,
         ]);
+    }
+
+    public function acceptIndex()
+    {
+        // Fetch only collected samples that aren't yet accepted
+        // $samples = sampleBufferModel::with('sample')->get()->pluck('sample');
+        $samples = sampleModel::with(['farmer', 'fieldAgent', 'payment'])
+            ->where(function ($query) {
+                // Include samples collected via 'post' or 'self'
+                $query->whereIn('collection_method', ['post', 'self']);
+                // Include samples collected via 'field_agent' that are marked as 'collected'
+                $query->orWhere(function ($subquery) {
+                    $subquery->where('collection_method', 'field_agent')
+                        ->where('sample_status', 'collected');
+                });
+            })
+            ->where('sample_status', '!=', 'accepted')
+            ->get();
+        // echo $samples;
+        $agents = User::role('field_agent')->with('profile')->get();
+        return view('frontoffice.samples.accept', compact('samples', 'agents'));
+    }
+
+    public function acceptSample(Request $request)
+    {
+        $request->validate([
+            'sample_ids' => 'required|array',
+            'sample_ids.*' => 'exists:sample,id'
+        ]);
+
+        foreach ($request->input('sample_ids') as $sampleId) {
+            $sample = sampleModel::findOrFail($sampleId);
+
+            $hasValidPayment = $sample->payments()->where('status', 'paid')->exists();
+
+            // if (!$hasValidPayment) {
+            //     // No valid payment found for this sample
+            //     $sample->update([
+            //         'sample_status' => 'rejected',
+            //         'rejection_reason' => 'No payment received.',
+            //     ]);
+            //     continue;
+            // }
+
+            // Payment valid — accept sample
+            $sample->update([
+                'sample_status' => 'accepted',
+                'verify_payment' => 1, // ✅ Mark payment verified
+                'accepted_at' => now(),
+            ]);
+
+            // Accept the sample
+            sampleBufferModel::create([
+                'sample_id' => $sample->id,
+                'sample_type' => $sample->sample_type,
+                'accept_by' => Auth::id(),
+            ]);
+        }
+
+        return redirect()->route('frontoffice.samples.accept')
+            ->with('success', 'Samples processed successfully.');
+    }
+
+    public function rejectSample(Request $request, $sampleId)
+    {
+        $sample = sampleModel::findOrFail($sampleId);
+
+        $sample->update([
+            'sample_status' => 'rejected',
+            'rejection_reason' => $request->input('reason'),
+        ]);
+
+        return redirect()->back()->with('success', "Sample #{$sampleId} rejected.");
+    }
+
+    public function allBatch()
+    {
+        $batches = batchModel::with('sampleType')->orderBy('created_at', 'desc')->get();
+        return view('frontoffice.batches.index', compact('batches'));
+    }
+
+    public function batch()
+    {
+        // $samples = sampleModel::where('sample_status','accepted')->with('sampleType')->get();
+        // return view('frontoffice.batches.create', compact('samples'));
+        $samples = sampleModel::where('sample_status', 'accepted')
+            ->whereDoesntHave('buffer') // Only show samples not in any batch
+            ->with('sampleType') // Ensure relationship is loaded
+            ->get();
+        return view('frontoffice.batches.create', compact('samples'));
+    }
+
+    protected function processBatches()
+    {
+        $sampleTypeGroups = [];
+
+        // Get all accepted samples not in a batch
+        $samples = sampleModel::where('sample_status', 'accepted')
+            ->whereNull('batch_id')
+            ->with('sampleType')
+            ->get(); // Make sure you have a `sampleType` relationship
+
+        foreach ($samples as $sample) {
+            if ($sample->sampleType && $sample->sampleType->buffer_size > 0) {
+                $type = $sample->sampleType->id;
+                $sampleTypeGroups[$type][] = $sample;
+            }
+        }
+
+        foreach ($sampleTypeGroups as $typeId => $group) {
+            $sampleType = sampleTypeModel::find($typeId);
+            $bufferSize = $sampleType->buffer_size;
+
+            // Process in batches of buffer_size or less
+            $chunks = array_chunk($group, $bufferSize);
+
+            foreach ($chunks as $chunk) {
+                $this->createBatchFromSamples($chunk, $sampleType);
+            }
+        }
+    }
+    protected function createBatchFromSamples($chunk, $sampleType)
+    {
+        // Create batch and assign lab references
+        $batchNumber = $this->generateNextBatchNumber($sampleType);
+
+        $batch = batchModel::create([
+            'batch_no' => $batchNumber,
+            'sample_type' => $sampleType->id,
+            'date' => now(),
+            'sample_no' => count($chunk),
+            'batch_status' => 'created',
+        ]);
+
+        foreach ($chunk as $index => $sample) {
+            labRefModel::create([
+                'sample_id' => $sample->id,
+                'batch_no' => $batch->batch_no,
+                'lab_ref_no' => $index + 1,
+            ]);
+            $sample->update(['batch_id' => $batch->id]);
+            // 🚫 Remove from buffer
+            sampleBufferModel::where('sample_id', $sample->id)->delete();
+        }
+    }
+    protected function generateNextBatchNumber($sampleType)
+    {
+        $prefix = $sampleType->batch_prefix;
+
+        // Find last batch for the prefix and sample type
+        $lastBatch = batchModel::where('sample_type', $sampleType->id)
+            ->where('batch_no', 'like', $prefix . '%')
+            ->orderBy('batch_no', 'desc')
+            ->first();
+
+        $count = $lastBatch ? (int)substr($lastBatch->batch_no, -3) : 0;
+
+        $batchNo = $prefix . str_pad($count + 1, 3, '0', STR_PAD_LEFT);
+        return $batchNo;
+    }
+
+    public function createBatch(Request $request)
+    {
+        $request->validate([
+            'sample_ids' => 'required|array',
+            'sample_ids.*' => 'exists:sample,id',
+        ]);
+
+        // Fetch accepted samples and their buffers
+        $samples = sampleModel::with('sampleType')
+            ->with('buffer') // Ensure relationship exists
+            ->whereIn('id', $request->sample_ids)
+            ->where('sample_status', 'accepted')
+            ->get();
+        $sampleTypes = $samples->pluck('sampleType')->unique();
+        if ($sampleTypes->count() > 1) {
+            return back()->withErrors(['Samples must all be of the same type.']);
+        }
+
+        $sampleType = sampleTypeModel::findOrFail($sampleTypes->first()->id);
+        // Create batch
+        $batchNumber = $this->generateNextBatchNumber($sampleType);
+        $batch = batchModel::create([
+            'batch_no' => $batchNumber,
+            'sample_type' => $sampleType->id,
+            'date' => now(),
+            'sample_no' => $samples->count(),
+            'batch_status' => 'manual',
+        ]);
+
+        // Assign lab ref and clean up samples
+        foreach ($samples as $index => $sample) {
+            labRefModel::create([
+                'sample_id' => $sample->id,
+                'batch_no' => $batch->batch_no,
+                'lab_ref_no' => $index + 1,
+            ]);
+            $sample->update(['batch_id' => $batch->id]);
+
+            // 🚫 Remove sample from buffer
+            sampleBufferModel::where('sample_id', $sample->id)->delete();
+        }
+
+        return back()->with('success', 'Batch created manually.');
     }
 }

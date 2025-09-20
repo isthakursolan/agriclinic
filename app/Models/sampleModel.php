@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\farmer\paymentController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +26,8 @@ class sampleModel extends Model
         'amount',
         'sample_status',
         'verify_payment',
+        'collected_by_agent',
+        'collected_at',
     ];
     // Relations
     protected $casts = [
@@ -41,6 +44,10 @@ class sampleModel extends Model
 
             $sample->sample_id = $nextId;
         });
+    }
+    public function userAcceptingant()
+    {
+        return $this->belongsTo(User::class, 'accept_by');
     }
     public function sampleType()
     {
@@ -70,7 +77,14 @@ class sampleModel extends Model
     {
         return $this->belongsTo(fieldModel::class, 'field_id');
     }
-
+    public function fieldAgent()
+    {
+        return $this->belongsTo(User::class, 'field_agent_id');
+    }
+    public function payment()
+    {
+        return $this->hasOne(paymentsModel::class, 'sample_id');
+    }
     // public function sampleType()
     // {
     //     return $this->belongsTo(sampleTypeModel::class, 'sample_type_id');
@@ -83,5 +97,9 @@ class sampleModel extends Model
     public function movements()
     {
         return $this->hasMany(sampleMovementModel::class, 'sample_id');
+    }
+    public function buffer()
+    {
+        return $this->hasOne(sampleBufferModel::class, 'sample_id');
     }
 }

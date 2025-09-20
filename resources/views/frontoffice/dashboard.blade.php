@@ -85,6 +85,8 @@
                                                     <td>
                                                         @if($sample->sample_status == 'paid')
                                                             <span class="text-success">Paid</span>
+                                                        @elseif($sample->sample_status == 'collected')
+                                                            <span class="text-primary">Collected</span>
                                                         @else
                                                             <span class="text-warning">Pending Payment</span>
                                                         @endif
