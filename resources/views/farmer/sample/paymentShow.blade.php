@@ -9,6 +9,11 @@
                         <h3 class="card-title"><i class="fas fa-map-marked-alt"></i> Payment </h3>
                     </div>
                     <div class="card-body">
+                        @if ($isAlreadyPaid)
+                            <div class="alert alert-success">
+                                Payment has already been made for this sample.
+                            </div>
+                        @endif
 
                         <h3>Samples </h3>
                         <form action="{{ route('user.payments.confirm', $id) }}" method="POST" id="checkoutForm">
@@ -16,70 +21,78 @@
                             <table border="1" style="width:100%" class="datatable table table-striped table-bordered">
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th scope="col">Select</th>
+                                        @if (!$isAlreadyPaid)
+                                            <th scope="col">Select</th>
+                                        @endif
                                         <th scope="col">Sample ID</th>
                                         <th scope="col">Type</th>
+                                        <th scope="col">Package</th>
                                         <th scope="col">Parameters</th>
                                         <th scope="col">Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($sample as $s)
+                                    @foreach ($samples as $s)
                                         <tr>
-                                            <td>
-                                                <input type="checkbox" name="samples[]" value="{{ $s->id }}"
-                                                    class="sampleCheck" checked data-amount="{{ $s->amount }}">
-                                            </td>
-                                            <td>{{ $s->id }}</td>
+                                            @if (!$isAlreadyPaid)
+                                                <td>
+                                                    <input type="checkbox" name="samples[]" value="{{ $s->id }}"
+                                                        class="sampleCheck" checked data-amount="{{ $s->amount }}"
+                                                        @if ($s->sample_status !== 'pending' || \App\Models\paymentsModel::whereJsonContains('sample_id', $s->id)->exists()) disabled @endif>
+                                                </td>
+                                            @endif
+                                            <td>{{ $s->sample_id }}</td>
                                             <td>{{ $s->sample_type }}</td>
-                                            <td>{{ implode(', ', $s->parameters) }}</td>
+                                            <td>{{ $s->package_name ?? 'N/A' }}</td>
+                                            <td>{{ $s->parameter_names ?? 'N/A' }}</td>
                                             <td>{{ $s->amount }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
 
-                            <h4>Total: ₹<span id="totalAmount">{{ $totalAmount }}</span></h4>
-                            <input type="hidden" name="amount" id="amountInput" value="{{ $totalAmount }}">
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label> Payment Mode</label>
-                                        <select name="mode" id="mode" class="form-control" required>
-                                            <option value="">Select Mode</option>
-                                            <option value="cash">Cash</option>
-                                            <option value="online">Online</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div id="cash_fields" style="display: none;">
+                            @if (!$isAlreadyPaid)
+                                <h4>Total: ₹<span id="totalAmount">{{ $totalAmount }}</span></h4>
+                                <input type="hidden" name="amount" id="amountInput" value="{{ $totalAmount }}">
+                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="to">Cash Given To:</label>
-                                            <select id="to" name="to" class="form-control">
-                                                <option value="select" disabled selected>Select</option>
-                                                <option value="field_agent">Field Agent</option>
-                                                <option value="front_desk">Front Desk</option>
+                                            <label> Payment Mode</label>
+                                            <select name="mode" id="mode" class="form-control" required>
+                                                <option value="">Select Mode</option>
+                                                <option value="cash">Cash</option>
+                                                <option value="online">Online</option>
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                                <div id="online_fields" style="display: none;">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="transaction_id">Transaction ID:</label>
-                                            <input type="text" id="transaction_id" name="transaction_id"
-                                                class="form-control">
+                                    <div id="cash_fields" style="display: none;">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="to">Cash Given To:</label>
+                                                <select id="to" name="to" class="form-control">
+                                                    <option value="select" disabled selected>Select</option>
+                                                    <option value="field_agent">Field Agent</option>
+                                                    <option value="front_desk">Front Desk</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="online_fields" style="display: none;">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="transaction_id">Transaction ID:</label>
+                                                <input type="text" id="transaction_id" name="transaction_id"
+                                                    class="form-control">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                             <div class="card-footer text-right">
-                                <button id="confirmPayBtn" type="submit" class="btn btn-success">
-                                    <i class="fas fa-save"></i> Confirm Payment
-                                </button>
-                            </div>
+                                <div class="card-footer text-right">
+                                    <button id="confirmPayBtn" type="submit" class="btn btn-success">
+                                        <i class="fas fa-save"></i> Confirm Payment
+                                    </button>
+                                </div>
+                            @endif
                         </form>
 
                     </div>

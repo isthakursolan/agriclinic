@@ -6,6 +6,7 @@ use App\Http\Controllers\farmer\paymentController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 
 class sampleModel extends Model
 {
@@ -51,7 +52,7 @@ class sampleModel extends Model
     }
     public function sampleType()
     {
-        return $this->belongsTo(SampleTypeModel::class, 'sample_type');
+        return $this->belongsTo(sampleTypeModel::class, 'sample_type');
     }
 
     public function investigations()
@@ -90,10 +91,15 @@ class sampleModel extends Model
     //     return $this->belongsTo(sampleTypeModel::class, 'sample_type_id');
     // }
 
-    // public function package()
-    // {
-    //     return $this->belongsTo(Package::class, 'package_id');
-    // }
+    public function package()
+    {
+        return $this->belongsTo(packagesModel::class, 'package_id');
+    }
+    public function parameters()
+    {
+        return $this->belongsToMany(individualParameterModel::class, 'parameter_sample')->withTimestamps();
+    }
+
     public function movements()
     {
         return $this->hasMany(sampleMovementModel::class, 'sample_id');

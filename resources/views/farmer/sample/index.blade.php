@@ -33,7 +33,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($samples as $sample)
+                            @forelse ($samples as $sample)
                                 <tr>
                                     <td>{{ $sample->sample_id }}</td>
                                     <td>
@@ -58,16 +58,31 @@
                                         @endforeach
                                     </td>
                                     <td>{{ $sample->amount }}</td>
-                                    <td>{{ $sample->sample_status }}</td>
+                                    <td><span
+                                            class="badge
+                                            @if ($sample->sample_status == 'pending') text-warning
+                                            @elseif($sample->sample_status == 'accepted') text-success
+                                            @elseif($sample->sample_status == 'paid') text-success
+                                            @elseif($sample->sample_status == 'collected') text-info
+                                            @else badge-secondary @endif
+                                        ">{{ ucfirst($sample->sample_status) }}</span>
+                                    </td>
                                     <td>{{ $sample->concern }}</td>
-                                    <td>Button</td>
-                                    {{-- <td>
-                                        @foreach ($sample->investigations as $inv)
-                                            {{ $inv->parameter->parameter }}<br>
-                                        @endforeach
-                                    </td> --}}
+                                    <td class="text-center">
+                                        @if ($sample->sample_status == 'pending')
+                                            <a href="{{ route('user.payments.show', $sample->id) }}"
+                                                class="btn btn-success btn-sm"><i class="fas fa-credit-card"></i> Pay</a>
+                                            {{-- <a href="{{ route('user.samples.edit', $sample->id) }}"
+                                                class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a> --}}
+                                        @else
+                                            <a href="{{ route('user.samples.details', $sample->id) }}"
+                                                class="btn btn-info btn-sm"><i class="fas fa-eye"></i> View</a>
+                                        @endif
+                                    </td>
+                                @empty
+                                    <td colspan="8" class="text-center">No samples found.</td>
                                 </tr>
-                            @endforeach
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

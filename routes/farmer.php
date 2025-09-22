@@ -36,9 +36,13 @@ Route::middleware(['auth:farmer'])->prefix('/user')->name('user.')->group(functi
     Route::get('/sample', [sampleController::class, 'index'])->name('sample');
     Route::get('/sample/create', [sampleController::class, 'create'])->name('sample.create');
     Route::post('/sample/store', [sampleController::class, 'store'])->name('sample.store');
-    Route::get('/sample-type/{id}/data', [SampleController::class, 'getSampleTypeData']);
-    Route::get('/samples/{sample}/edit', [SampleController::class, 'edit']);
+    Route::get('/sample-type/{id}/data', [sampleController::class, 'getSampleTypeData']);
+    Route::get('/samples/{id}/edit', [sampleController::class, 'edit'])->name('samples.edit');
+    Route::get('/samples/{id}', [sampleController::class, 'update'])->name('samples.update');
+    Route::get('/api/samples/{id}', [sampleController::class, 'getSampleById']);
+    Route::get('/samples/details/{id}', [sampleController::class, 'details'])->name('samples.details');
 
-    Route::get('/payment', [paymentController::class, 'show'])->name('payments.show');
+
+    Route::get('/payment/{id?}', [paymentController::class, 'show'])->name('payments.show');
     Route::post('/payments/confirm/{sampleId}', [paymentController::class, 'confirm'])->name('payments.confirm');
 });

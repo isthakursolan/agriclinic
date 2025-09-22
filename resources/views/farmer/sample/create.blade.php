@@ -441,7 +441,7 @@
                 });
             }
 
-            window.location.href = "{{ route('user.payments.show', $profile->id) }}";
+            window.location.href = "{{ route('user.payments.show') }}";
         });
     </script>
 @endsection

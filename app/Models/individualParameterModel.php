@@ -30,6 +30,6 @@ class individualParameterModel extends Model
 
     public function investigations()
     {
-        return $this->hasMany(investigationsModel::class, 'parameter_id');
+        return $this->hasMany(investigationsModel::class, 'parameter');
     }
 }

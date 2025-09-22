@@ -13,6 +13,7 @@ use App\Models\paymentsModel;
 use App\Models\profileModel;
 use App\Models\sampleModel;
 use App\Models\sampleTypeModel;
+use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +21,7 @@ class sampleController extends Controller
 {
     public function index()
     {
-        $samples = SampleModel::where('farmer_id', session('id'))->get();
+        $samples = SampleModel::where('farmer_id', session('id'))->with('payments')->get();
         $field = fieldModel::get();
         $crop = activecropModel::get();
         $type = sampleTypeModel::get();
@@ -86,17 +87,92 @@ class sampleController extends Controller
             'sample_status' => 'pending',
         ]);
         return response()->json(['success' => true, 'sample' => $sample]);
-        // Step 4: Redirect **outside the transaction**
-        // return redirect()->route('user.payments.show')
-        //     ->with('success', 'Sample created successfully. Proceed to payment.');
-        // return redirect()->route('user.sample.create')
-        //     ->with('success', 'Sample created successfully. Proceed to payment.');
     }
-    public function edit(sampleModel $sample)
+    public function edit($id)
     {
-        return response()->json([
-            'success' => true,
-            'sample' => $sample
+        $sample = sampleModel::with(['sampleType', 'package'])->findOrFail($id);
+
+        // Get packages and parameters for the sample's type
+        $packages = packagesModel::with('parameters')
+            ->where('sample_type', $sample->sample_type)
+            ->get();
+        $parameters = individualParameterModel::where('sample_type', $sample->sample_type)->get();
+        $profile = profileModel::where('id', session('id'))->first();
+        $concerns = concernModel::get();
+        $field = fieldModel::where('farmer_id', session('id'))->get();
+        $crop = activecropModel::where('farmer_id', session('id'))->get();
+        return view('farmer.sample.edit', [
+            'sample' => $sample,
+            'sample_type' => sampleTypeModel::all(),
+            'packages' => $packages,
+            'parameter' => $parameters,
+            'profile' => $profile,
+            'concerns' => $concerns,
+            'field' => $field,
+            'crop' => $crop,
         ]);
     }
+
+    public function update(Request $request, $id)
+    {
+        $sample = sampleModel::findOrFail($id);
+        if ($sample->sample_status != 'pending' && $sample->sample_status != 'paid') {
+            return redirect()->route('user.sample')->with('error', 'This sample has been processed and cannot be edited.');
+        }
+
+        $validated = $request->validate([
+            'sample_type' => 'required|exists:sample_type,id',
+            'quantity' => 'required|string',
+            'package' => 'nullable|exists:packages,id',
+            'parameters' => 'nullable|array',
+            'parameters.*' => 'exists:individual_parameter,id',
+            'concern' => 'nullable|exists:concern,id',
+            'collection_method' => 'required|in:self,agent',
+            'amount' => 'required|numeric',
+        ]);
+
+        $all_parameter_ids = $validated['parameters'] ?? [];
+
+        if (!empty($validated['package'])) {
+            $package = \App\Models\packagesModel::find($validated['package']);
+            if ($package && $package->parameters) {
+                $package_params = json_decode($package->parameters, true);
+                if (is_array($package_params)) {
+                    $all_parameter_ids = array_merge($all_parameter_ids, $package_params);
+                }
+            }
+        }
+
+        $sample->update([
+            'sample_type' => $validated['sample_type'],
+            'quantity' => $validated['quantity'],
+            'package' => $validated['package'] ?? null,
+            'parameters' => array_unique($all_parameter_ids), // Merged and unique
+            'concern' => $validated['concern'],
+            'collection_method' => $validated['collection_method'],
+            'amount' => $validated['amount'],
+        ]);
+
+        return redirect()->route('user.sample.edit', $sample->id)->with('success', 'Sample updated successfully.');
+    }
+
+    public function details($id)
+    {
+        $sample = sampleModel::with(['farmer', 'crop', 'field','investigations.parameters'])
+            ->where('farmer_id', session('id'))
+            ->findOrFail($id);
+
+        $payment = \App\Models\paymentsModel::whereJsonContains('sample_id', $id)->first();
+
+        return view('farmer.sample.details', compact('sample', 'payment'));
+    }
+
+    // public function getSampleParameters($sampleId)
+    // {
+    //     $sample = sampleModel::with(['field', 'crop', 'package', 'sampleType', 'investigations', 'payments'])->where('id', $id)
+    //         ->where('farmer_id', session('id'))
+    //         ->firstOrFail();
+    //     // dd($sample);
+    //     return view('farmer.sample.details', compact('sample'));
+    // }
 }

@@ -10,8 +10,10 @@ use App\Models\cropcatModel;
 use App\Models\cropModel;
 use App\Models\croptypeModel;
 use App\Models\fieldModel;
+use App\Models\paymentsModel;
 use App\Models\profileModel;
 use App\Models\rootstockModel as ModelsRootstockModel;
+use App\Models\sampleModel;
 use App\Models\User;
 use App\Models\varietyModel;
 use App\Modes\rootstockModel;
@@ -22,7 +24,35 @@ class farmerController extends Controller
 {
     public function index()
     {
-        return view('farmer.dashboard');
+        $farmerId = Auth::id();
+
+        $crops_count = activecropModel::where('farmer_id', $farmerId)->count();
+        $fields_count = fieldModel::where('farmer_id', $farmerId)->count();
+        $samples_count = sampleModel::where('farmer_id', $farmerId)->count();
+        $pending_payments_count = paymentsModel::whereHas('sample', function ($query) use ($farmerId) {
+            $query->where('farmer_id', $farmerId);
+        })->where('status', 'pending')->count();
+
+        $recent_samples = sampleModel::where('farmer_id', $farmerId)
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+
+        $recent_payments = paymentsModel::whereHas('sample', function ($query) use ($farmerId) {
+            $query->where('farmer_id', $farmerId);
+        })
+            ->orderBy('date', 'desc')
+            ->take(5)
+            ->get();
+
+        return view('farmer.dashboard', [
+            'crops_count' => $crops_count,
+            'fields_count' => $fields_count,
+            'samples_count' => $samples_count,
+            'pending_payments' => $pending_payments_count,
+            'recent_samples' => $recent_samples,
+            'recent_payments' => $recent_payments,
+        ]);
     }
     public function logout(Request $request)
     {

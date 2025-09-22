@@ -280,6 +280,7 @@ class farmerAgentController extends Controller
     {
         $samples = sampleModel::where('collection_method', 'field_agent')
             // ->where('field_agent_id', auth()->id())
+            ->whereNotIn('sample_status', ['accepted', 'collected'])
             ->with('farmer', 'fieldAgent') // Eager load relationships
             ->latest()
             ->get();

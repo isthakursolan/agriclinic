@@ -12,16 +12,35 @@ use Illuminate\Support\Facades\DB;
 
 class paymentController extends Controller
 {
-    public function show()
+    public function show($sampleid = null)
     {
         $id = session('id');
-        $sample = sampleModel::where('farmer_id', $id)
-            ->where('sample_status', 'pending')
-            ->get();
+        $isAlreadyPaid = false;
 
-        $totalAmount = $sample->sum('amount');
+        if ($sampleid) {
+            $sample = sampleModel::with('payments')->where('farmer_id', $id)->findOrFail($sampleid);
+            $isAlreadyPaid = $sample->sample_status !== 'pending' ||
+                            ($sample->payments && $sample->payments->isNotEmpty());
+            $samples = collect([$sample]);
+            $totalAmount = $isAlreadyPaid ? 0 : $sample->amount;
+        } else {
+            $samples = sampleModel::where('farmer_id', $id)
+                ->where('sample_status', 'pending')
+                ->get();
+            $totalAmount = $samples->sum('amount');
+        }
 
-        return view('farmer.sample.paymentShow', compact('sample', 'totalAmount', 'id'));
+        foreach ($samples as $s) {
+            if (!empty($s->parameters)) {
+                $s->parameter_names = \App\Models\individualParameterModel::whereIn('id', $s->parameters)->pluck('parameter')->implode(', ');
+            }
+            if ($s->package) {
+                $package = \App\Models\packagesModel::find($s->package);
+                $s->package_name = $package->package_name ?? 'N/A';
+            }
+        }
+
+        return view('farmer.sample.paymentShow', compact('samples', 'totalAmount', 'id', 'isAlreadyPaid'));
     }
 
     public function confirm(Request $request, $sampleId)

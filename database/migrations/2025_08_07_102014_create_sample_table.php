@@ -13,7 +13,7 @@ return new class extends Migration
     {
 
         Schema::create('sample', function (Blueprint $table) {
-            $table->integer('id', true)->unique('id_unique');
+            $table->id(); // Simplified auto-increment ID
             $table->string('sample_id')->unique();
             $table->integer('farmer_id');
             $table->integer('field_id')->nullable();
@@ -24,18 +24,18 @@ return new class extends Migration
             $table->string('quantity', 45)->nullable();
             $table->json('package')->nullable();
             $table->json('parameters')->nullable();
-            $table->text('amount')->nullable();
+            $table->decimal('amount', 10, 2)->nullable();  // Changed to boolean
             $table->string('sample_status', 45)->default('pending');
-            $table->string('verify_payment', 45)->default('0');
+            $table->boolean('verify_payment')->default('0');
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
 
             $table->primary(['id']);
               // foreign keys
-            $table->foreign('farmer_id')->references('id')->on('profile')->onDelete('cascade');
-            $table->foreign('crop_id')->references('id')->on('crop')->onDelete('set null');
-            $table->foreign('field_id')->references('id')->on('field')->onDelete('set null');
-            $table->foreign('sample_type')->references('id')->on('sample_type')->onDelete('cascade');
+            // $table->foreign('farmer_id')->references('id')->on('profile')->onDelete('cascade');
+            // $table->foreign('crop_id')->references('id')->on('crop')->onDelete('set null');
+            // $table->foreign('field_id')->references('id')->on('field')->onDelete('set null');
+            // $table->foreign('sample_type')->references('id')->on('sample_type')->onDelete('cascade');
         });
     }
 

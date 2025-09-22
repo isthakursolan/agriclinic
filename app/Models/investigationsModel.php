@@ -25,8 +25,9 @@ class investigationsModel extends Model
         return $this->belongsTo(sampleModel::class, 'sample_id');
     }
 
-    public function parameter()
+    public function parameters()
     {
-        return $this->belongsTo(individualParameterModel::class, 'parameter_id');
+        return $this->belongsTo(individualParameterModel::class, 'parameter');
     }
+
 }

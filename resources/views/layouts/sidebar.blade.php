@@ -187,7 +187,7 @@
                             <p>Request Tests</p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon bi bi-file-earmark-text"></i>
                             <p>Reports</p>
@@ -198,7 +198,7 @@
                             <i class="nav-icon bi bi-credit-card"></i>
                             <p>Invoices / Payments</p>
                         </a>
-                    </li>
+                    </li> --}}
                 @endrole
 
                 @role('field_agent')
@@ -237,7 +237,7 @@
                     </li>
 
                     <!-- Fields -->
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="{{ route('agent.fields') }}"
                             class="nav-link {{ request()->routeIs('agent.fields') && !request()->is('*/show') ? 'active' : '' }}">
                             <i class="nav-icon bi bi-geo-alt"></i>
@@ -261,7 +261,7 @@
                             <i class="nav-icon bi bi-file-earmark-text"></i>
                             <p> My Reports </p>
                         </a>
-                    </li>
+                    </li> --}}
                 @endrole
 
                 @role('consultant')
@@ -448,7 +448,8 @@
             </ul>
         </nav>
     </div>
-</aside <script>
+</aside>
+ <script>
     document.addEventListener('DOMContentLoaded', function() {
         const sidebar = document.querySelector('.app-sidebar .sidebar-wrapper');
         const menuItems = document.querySelectorAll('.nav-item > .nav-link');
