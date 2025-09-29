@@ -221,21 +221,27 @@
                     </li>
                     <!-- Farmers -->
                     <li class="nav-item">
-                        <a href="{{ route('agent.samples') }}"
-                            class="nav-link {{ request()->routeIs('agent.samples') ? 'active' : '' }}">
-                            <i class="nav-icon bi bi-people"></i>
-                            <p>Collect Samples</p>
-                        </a>
-                    </li>
-                    <!-- Farmers -->
-                    <li class="nav-item">
                         <a href="{{ route('agent.farmers') }}"
                             class="nav-link {{ request()->routeIs('agent.farmers') ? 'active' : '' }}">
                             <i class="nav-icon bi bi-people"></i>
                             <p>Assigned Farmers</p>
                         </a>
                     </li>
-
+                    <li class="nav-item">
+                        <a href="{{ route('sample') }}"
+                            class="nav-link {{ request()->routeIs('sample') ? 'active' : '' }}">
+                            <i class="nav-icon bi bi-speedometer2"></i>
+                            <p>Create Samples</p>
+                        </a>
+                    </li>
+                     <!-- Farmers -->
+                    <li class="nav-item">
+                        <a href="{{ route('agent.samples') }}"
+                            class="nav-link {{ request()->routeIs('agent.samples') ? 'active' : '' }}">
+                            <i class="nav-icon bi bi-people"></i>
+                            <p>Collect Samples</p>
+                        </a>
+                    </li>
                     <!-- Fields -->
                     {{-- <li class="nav-item">
                         <a href="{{ route('agent.fields') }}"
@@ -398,7 +404,7 @@
                         <a href="{{ route('frontoffice.all-batches') }}"
                             class="nav-link {{ request()->routeIs('frontoffice.batches.create') ? 'active' : '' }}">
                             <i class="bi bi-speedometer nav-icon"></i>
-                           <p> Batches</p>
+                            <p> Batches</p>
                         </a>
                     </li>
 
@@ -449,7 +455,7 @@
         </nav>
     </div>
 </aside>
- <script>
+<script>
     document.addEventListener('DOMContentLoaded', function() {
         const sidebar = document.querySelector('.app-sidebar .sidebar-wrapper');
         const menuItems = document.querySelectorAll('.nav-item > .nav-link');

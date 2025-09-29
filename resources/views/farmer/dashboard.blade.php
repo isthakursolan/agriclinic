@@ -21,7 +21,19 @@
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
                     <h3>Welcome, {{ Auth::user()->name }} 👨‍🌾</h3>
-                    <p class="text-muted">Here’s an overview of your farming activities.</p>
+                    <p class="text-muted">Here's an overview of your farming activities.</p>
+
+                    <div class="quick-actions mt-3">
+                        <a href="{{ route('user.field') }}" class="btn btn-primary me-2">
+                            <i class="fas fa-plus"></i> Add Plot
+                        </a>
+                        <a href="{{ route('user.sample') }}" class="btn btn-success me-2">
+                            <i class="fas fa-flask"></i> Submit Sample
+                        </a>
+                        <a href="{{ route('user.payments.show') }}" class="btn btn-warning">
+                            <i class="fas fa-rupee-sign"></i> Make Payment
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -71,10 +83,22 @@
                                 @forelse ($recent_samples as $sample)
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <span>Sample ID: {{ $sample->sample_id }}</span>
-                                        <span class="badge bg-primary rounded-pill">{{ $sample->sample_status }}</span>
+                                        <span class="badge rounded-pill
+                                            @if($sample->sample_status === 'pending') bg-warning
+                                            @elseif($sample->sample_status === 'accepted') bg-success
+                                            @elseif($sample->sample_status === 'rejected') bg-danger
+                                            @else bg-secondary @endif">
+                                            {{ $sample->sample_status }}
+                                        </span>
                                     </li>
                                 @empty
-                                    <li class="list-group-item">No recent samples found.</li>
+                                    <div class="text-center py-4">
+                                        <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                                        <p class="text-muted">No recent samples found</p>
+                                        <a href="{{ route('farmer.samples.create') }}" class="btn btn-primary">
+                                            Submit Your First Sample
+                                        </a>
+                                    </div>
                                 @endforelse
                             </ul>
                         </div>
@@ -100,7 +124,45 @@
                     </div>
                 </div>
             </div>
-
+            {{-- <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5>Crop Health Status</h5>
+                            <div class="progress mb-3">
+                                <div class="progress-bar bg-success" style="width: 75%"></div>
+                            </div>
+                            <small class="text-muted">75% of your crops are healthy</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card shadow-sm mt-4">
+                        <div class="card-header">
+                            <h4 class="card-title">Need Help?</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h5><i class="fas fa-question-circle text-primary me-2"></i> FAQs</h5>
+                                    <p>Find answers to common questions</p>
+                                    <a href="#" class="btn btn-sm btn-outline-primary">View FAQs</a>
+                                </div>
+                                <div class="col-md-4">
+                                    <h5><i class="fas fa-phone-alt text-success me-2"></i> Support</h5>
+                                    <p>Contact our support team</p>
+                                    <a href="#" class="btn btn-sm btn-outline-success">Contact Us</a>
+                                </div>
+                                <div class="col-md-4">
+                                    <h5><i class="fas fa-book text-info me-2"></i> Guides</h5>
+                                    <p>Learn how to use the platform</p>
+                                    <a href="#" class="btn btn-sm btn-outline-info">View Guides</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
         </div>
     </div>
 @endsection

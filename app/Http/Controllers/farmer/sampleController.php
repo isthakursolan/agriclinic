@@ -21,7 +21,10 @@ class sampleController extends Controller
 {
     public function index()
     {
-        $samples = SampleModel::where('farmer_id', session('id'))->with('payments')->get();
+        $samples = SampleModel::where('farmer_id', session('id'))
+            ->with(['payments', 'sampleType', 'package'])
+            ->orderBy('created_at', 'desc')
+            ->get();
         $field = fieldModel::get();
         $crop = activecropModel::get();
         $type = sampleTypeModel::get();
@@ -91,7 +94,9 @@ class sampleController extends Controller
     public function edit($id)
     {
         $sample = sampleModel::with(['sampleType', 'package'])->findOrFail($id);
-
+        if ($sample->sample_status != 'pending' && $sample->sample_status != 'paid') {
+            return redirect()->back()->with('error', 'Cannot edit processed samples');
+        }
         // Get packages and parameters for the sample's type
         $packages = packagesModel::with('parameters')
             ->where('sample_type', $sample->sample_type)
@@ -115,6 +120,7 @@ class sampleController extends Controller
 
     public function update(Request $request, $id)
     {
+
         $sample = sampleModel::findOrFail($id);
         if ($sample->sample_status != 'pending' && $sample->sample_status != 'paid') {
             return redirect()->route('user.sample')->with('error', 'This sample has been processed and cannot be edited.');
@@ -158,7 +164,7 @@ class sampleController extends Controller
 
     public function details($id)
     {
-        $sample = sampleModel::with(['farmer', 'crop', 'field','investigations.parameters'])
+        $sample = sampleModel::with(['farmer', 'crop', 'field', 'investigations.parameters'])
             ->where('farmer_id', session('id'))
             ->findOrFail($id);
 
@@ -175,4 +181,45 @@ class sampleController extends Controller
     //     // dd($sample);
     //     return view('farmer.sample.details', compact('sample'));
     // }
+    public function getEstimatedTimeline($sampleId)
+    {
+        $sample = SampleModel::findOrFail($sampleId);
+
+        // Get base reporting time from package or sample type
+        $reportingDays = $sample->package ?
+            $sample->package->reporting_time :
+            $sample->sampleType->default_reporting_time;
+
+        // Calculate estimated completion date based on status
+        $estimatedDate = now();
+
+        switch($sample->sample_status) {
+            case 'pending':
+                $estimatedDate = now()->addDays($reportingDays + 2); // +2 for processing
+                break;
+            case 'accepted':
+                $estimatedDate = now()->addDays($reportingDays);
+                break;
+            case 'collected':
+                $estimatedDate = now()->addDays($reportingDays - 2);
+                break;
+        }
+
+        return response()->json(['estimated_date' => $estimatedDate->format('M d, Y')]);
+    }
+    public function getHistoricalSamples($sampleId)
+    {
+        $currentSample = SampleModel::findOrFail($sampleId);
+
+        $historicalSamples = SampleModel::where('farmer_id', session('id'))
+            ->where('sample_type', $currentSample->sample_type)
+            ->where('id', '!=', $sampleId)
+            ->whereNotNull('completed_at')
+            ->with(['investigations.results'])
+            ->orderBy('completed_at', 'desc')
+            ->limit(5)
+            ->get();
+
+        return response()->json(['samples' => $historicalSamples]);
+    }
 }

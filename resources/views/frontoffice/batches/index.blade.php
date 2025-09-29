@@ -32,7 +32,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($batches as $batch)
+                                @forelse ($batches as $batch)
                                     <tr>
                                         <td>{{ $batch->batch_no }}</td>
                                         <td>{{ $batch->sampleType->e_type ?? 'N/A' }}</td>
@@ -40,11 +40,27 @@
                                         <td>{{ $batch->date }}</td>
                                         <td>{{ ucfirst($batch->batch_status) }}</td>
                                         <td>
-                                            Action
-                                            {{--Add other actions like 'View Details' or 'Generate Invoice' later --}}
+                                            <a href="{{ route('frontoffice.batches.view', $batch->id) }}"
+                                                class="btn btn-sm btn-info" title="View">
+                                                <i class="fas fa-eye"></i>View
+                                            </a>
+                                            <a href="{{ route('frontoffice.batches.parameters', $batch->id) }}"
+                                                class="btn btn-sm btn-primary" title="Parameters">
+                                                <i class="fas fa-list"></i>Parameters
+                                            </a>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="6" class="text-center py-4">
+                                            <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                                            <h4 class="text-muted">No batches created yet</h4>
+                                            <a href="{{ route('frontoffice.batches') }}" class="btn btn-primary mt-2">
+                                                <i class="fas fa-plus"></i> Create First Batch
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -68,4 +84,3 @@
         });
     </script>
 @endpush
-

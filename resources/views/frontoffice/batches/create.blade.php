@@ -52,8 +52,10 @@
                                     </tbody>
                                 </table>
                             </div>
-                             @if ($samples->isnotEmpty())
-                            <button type="submit" class="btn btn-primary">Create Batch Manually</button>
+                            @if ($samples->isnotEmpty())
+                                <button type="submit" class="btn btn-primary">Create Batch Manually</button>
+                                <a href="{{ URL::previous() }}" class="btn btn-secondary"><i class="fas fa-times"></i>
+                                    Cancel</a>
                             @endif
                         </form>
                     </div>

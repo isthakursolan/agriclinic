@@ -193,9 +193,8 @@
 
                         </div>
                         <div class="card-footer text-right">
-                            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Create
-                                Farmer</button>
-                            <a href="{{ route('farmers') }}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Create Farmer</button>
+                            <a href="{{ route('farmers') }}" class="btn btn-secondary"><i class="fas fa-times"></i> Cancel</a>
                         </div>
                     </form>
                 </div>

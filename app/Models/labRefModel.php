@@ -15,4 +15,16 @@ class labRefModel extends Model
         'batch_no',
         'lab_ref_no',
     ];
+     public function sample()
+    {
+        return $this->hasOne(sampleModel::class, 'sample_id','sample_id');
+    }
+    public function batch()
+    {
+        return $this->belongsTo(batchModel::class, 'batch_no', 'batch_no');
+    }
+    public function investigations()
+    {
+        return $this->hasMany(investigationsModel::class, 'sample_id', 'sample_id');
+    }
 }

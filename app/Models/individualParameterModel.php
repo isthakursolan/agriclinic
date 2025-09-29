@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class individualParameterModel extends Model
 {
-     use HasFactory;
-     protected $table = 'individual_parameter';
+    use HasFactory;
+    protected $table = 'individual_parameter';
 
     protected $fillable = [
+        'id',
         'parameter',
         'symbol',
         'reporting_time',
@@ -18,7 +19,7 @@ class individualParameterModel extends Model
         'sample_type',
         'reading_type',
     ];
-     public function sampleType()
+    public function sampleType()
     {
         return $this->belongsTo(sampleTypeModel::class, 'sample_type');
     }
@@ -31,5 +32,9 @@ class individualParameterModel extends Model
     public function investigations()
     {
         return $this->hasMany(investigationsModel::class, 'parameter');
+    }
+    public function sample()
+    {
+        return $this->belongsTo(sampleModel::class,'id');
     }
 }

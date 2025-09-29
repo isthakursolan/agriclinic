@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\frontoffice\batchController;
 use App\Http\Controllers\frontoffice\frontofficeController;
 use App\Http\Controllers\frontoffice\FarmerController as FrontOfficeFarmerController;
 use App\Http\Controllers\frontoffice\SampleController as FrontOfficeSampleController;
@@ -30,7 +31,7 @@ Route::middleware(['auth', 'role:front_office'])->prefix('frontoffice')->name('f
 
     // Payment/Paid Samples
     // Note: You will need to create a 'PaymentController' inside the 'app/Http/Controllers/frontoffice' directory.
-    Route::get('/payments/paid', [FrontOfficePaymentController::class, 'paid'])->name('payments.paid');
+    // Route::get('/payments/paid', [FrontOfficePaymentController::class, 'paid'])->name('payments.paid');
 
     // Accept samples
     Route::get('/samples/accept', [FrontOfficeSampleController::class, 'acceptIndex'])->name('samples.accept');
@@ -43,6 +44,11 @@ Route::middleware(['auth', 'role:front_office'])->prefix('frontoffice')->name('f
     Route::get('/all-batches', [FrontOfficeSampleController::class, 'allBatch'])->name('all-batches');
     Route::get('/batches', [FrontOfficeSampleController::class, 'batch'])->name('batches');
     Route::post('/batches/create', [FrontOfficeSampleController::class, 'createBatch'])->name('batches.create');
+
+    Route::get('/batches/{batch}/view', [BatchController::class, 'batchView'])->name('batches.view');
+    Route::get('/batches/{batch}/parameters', [BatchController::class, 'batchParameters'])->name('batches.parameters');
+    Route::get('/batches/{param}/parameters-view/{batch}', [BatchController::class, 'paramView'])->name('batches.parameters-view');
+    Route::get('/batches/{param}/print', [BatchController::class, 'paramPrint'])->name('batches.print');
 
 
 });

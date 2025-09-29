@@ -62,8 +62,10 @@
                                             <span class="badge bg-danger text-white">
                                                 Rejected: {{ $sample->rejection_reason ?? 'No reason provided' }}
                                             </span>
+                                        @elseif ($sample->sample_status === 'accepted' || ($sample->payment && $sample->payment->status === 'paid'))
+                                            <span class="badge bg-success">Collected</span>
                                         @else
-                                            <span class="badge bg-warning">Collected</span>
+                                            <span class="badge bg-warning">Pending Collection</span>
                                         @endif
                                     </td>
                                 </tr>

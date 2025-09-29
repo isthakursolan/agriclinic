@@ -97,7 +97,7 @@ class sampleModel extends Model
     }
     public function parameters()
     {
-        return $this->belongsToMany(individualParameterModel::class, 'parameter_sample')->withTimestamps();
+        return $this->belongsToMany(individualParameterModel::class, 'parameters', 'sample_id', 'parameters')->withTimestamps();
     }
 
     public function movements()
@@ -108,4 +108,14 @@ class sampleModel extends Model
     {
         return $this->hasOne(sampleBufferModel::class, 'sample_id');
     }
+    public function labRef()
+    {
+        return $this->belongsTo(labRefModel::class, 'sample_id', 'sample_id');
+    }
+    public function individualParameters()
+    {
+        $ids = $this->parameters ?? []; // already cast to array
+        return individualParameterModel::whereIn('id', $ids)->get();
+    }
+
 }

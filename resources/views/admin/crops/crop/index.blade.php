@@ -54,7 +54,7 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('admin.crop.', $crop->id) }}"
+                                                    <a href="{{ route('admin.crop.edit', $crop->id) }}"
                                                         class="btn btn-sm btn-warning">Update</a>
                                                     {{-- <form action="{{ route('admin.crop.destroy', $crop->id) }}"
                                                         method="get" class="d-inline"

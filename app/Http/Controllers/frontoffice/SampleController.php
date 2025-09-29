@@ -235,7 +235,7 @@ class SampleController extends Controller
         // $samples = sampleModel::where('sample_status','accepted')->with('sampleType')->get();
         // return view('frontoffice.batches.create', compact('samples'));
         $samples = sampleModel::where('sample_status', 'accepted')
-            ->whereDoesntHave('buffer') // Only show samples not in any batch
+            ->whereHas('buffer') // Only show samples that are not in the buffer
             ->with('sampleType') // Ensure relationship is loaded
             ->get();
         return view('frontoffice.batches.create', compact('samples'));

@@ -11,7 +11,7 @@
                     <div class="card-body">
 
                         <h3>Samples </h3>
-                        <form action="{{ route('payments.confirm', $id) }}" method="POST" id="checkoutForm">
+                        <form action="#" method="POST" id="checkoutForm">
                             @csrf
                             <table border="1" style="width:100%" class="datatable table table-striped table-bordered">
                                 <thead class="thead-dark">

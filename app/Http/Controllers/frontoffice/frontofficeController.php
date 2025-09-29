@@ -5,6 +5,7 @@ namespace App\Http\Controllers\frontoffice;
 use App\Http\Controllers\Controller;
 use App\Models\profileModel;
 use App\Models\sampleModel;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -33,14 +34,15 @@ class frontofficeController extends Controller
         $farmersWithPendingActions = profileModel::whereHas('user', function ($query) {
             $query->role('farmer');
         })
-        ->whereHas('samples', function ($query) {
-            $query->where(function ($q) {
-                $q->where('sample_status', 'pending')->orWhereNull('sample_status');
-            });
-        })
-        ->limit(10)
-        ->get();
-
+            ->whereHas('samples', function ($query) {
+                $query->where(function ($q) {
+                    $q->where('sample_status', 'pending')->orWhereNull('sample_status');
+                });
+            })
+            ->limit(10)
+            ->get();
+        $samplesThisWeek = sampleModel::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count();
+        // $totalFarmers = User::where('role','farmer')->count();
         return view('frontoffice.dashboard', compact(
             'newFarmersToday',
             'samplesReceivedToday',
