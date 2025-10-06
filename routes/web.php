@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\labscientist\batchController;
 use App\Http\Controllers\modules\sampleController;
 use App\Http\Controllers\modules\farmerController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,8 @@ Route::get('/', function () {
 require __DIR__ . '/auth.php';
 require __DIR__ . '/frontOffice.php';
 require __DIR__ . '/farmer.php';
+require __DIR__ . '/labScientist.php';
+require __DIR__ . '/analyst.php';
 
 Route::group(['middleware' => ['role:admin|field_agent|front_office|consultant']], function () {
     Route::get('/farmer', [farmerController::class, 'farmerIndex'])->name('farmers');
@@ -32,4 +35,15 @@ Route::group(['middleware' => ['role:admin|field_agent|front_office|consultant']
     Route::put('/samples/{id}', [SampleController::class, 'sampleUpdate']) ->name('sample.update');
     Route::get('/payment', [sampleController::class, 'show'])->name('payments.show');
     Route::post('/payments/confirm/{sampleId}', [sampleController::class, 'confirm'])->name('payments.confirm');
+});
+Route::group(['middleware' => ['role:lab_scientist|analyst']], function () {
+     Route::get('/batches', [batchController::class, 'index'])->name('lab.batches.index');
+    Route::get('/batches/{id}', [batchController::class, 'show'])->name('lab.batches.show');
+    Route::get('/batches/{id}/parameters', [batchController::class, 'parameters'])->name('lab.batches.parameters');
+    Route::get('/batches/{param}/parameters-view/{batch}', [batchController::class, 'paramView'])->name('lab.batches.parameter');
+    Route::get('/batches/{param}/result-edit/{sample}', [batchController::class, 'paramEdit'])->name('lab.batches.parameter-edit');
+    Route::post('/batches/result-update/{id}', [batchController::class, 'paramUpdate'])->name('lab.parameters.update');
+    Route::get('/batches/{param}/result-show/{sample}', [batchController::class, 'resultView'])->name('lab.batches.result-view');
+
+    Route::get('/investigations', [batchController::class, 'investigations'])->name('investigations.index');
 });

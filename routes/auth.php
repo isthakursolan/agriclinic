@@ -184,14 +184,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [accountantController::class, 'index'])->name('dashboard');
     });
 
-    Route::middleware(['auth', 'role:lab_scientist'])->prefix('lab')->name('lab.')->group(function () {
-        Route::get('/dashboard', [scientictController::class, 'index'])->name('dashboard');
-    });
-
-    Route::middleware(['auth', 'role:analyst'])->prefix('analyst')->name('analyst.')->group(function () {
-        Route::get('/dashboard', [analystController::class, 'index'])->name('dashboard');
-    });
-
     Route::middleware(['auth', 'role:consultant'])->prefix('con')->name('con.')->group(function () {
         Route::get('/dashboard', [consultantController::class, 'index'])->name('dashboard');
     });

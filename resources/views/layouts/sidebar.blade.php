@@ -19,7 +19,6 @@
                     </a>
                 </li>
 
-
                 @role('admin')
                     <!-- User Management -->
                     <li class="nav-item">
@@ -307,16 +306,19 @@
                 @endrole
 
                 @role('lab_scientist')
+                 <!-- Farmers -->
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-clipboard-pulse"></i>
-                            <p>Assigned Tests</p>
+                        <a href="{{ route('lab.batches.index') }}"
+                            class="nav-link {{ request()->routeIs('lab.batches.index') ? 'active' : '' }}">
+                            <i class="nav-icon bi bi-people"></i>
+                            <p> Batch</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-upload"></i>
-                            <p>Upload Results</p>
+                        <a href="{{ route('lab.investigations.index') }}"
+                            class="nav-link {{ request()->routeIs('lab.investigations.index') ? 'active' : '' }}" class="nav-link">
+                            <i class="nav-icon bi bi-clipboard-pulse"></i>
+                            <p>Investigations</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -327,6 +329,29 @@
                     </li>
                 @endrole
 
+                @role('analyst')
+                    <li class="nav-item">
+                        <a href="{{ route('lab.batches.index') }}"
+                            class="nav-link {{ request()->routeIs('lab.batches.index') ? 'active' : '' }}">
+                            <i class="nav-icon bi bi-clipboard-pulse"></i>
+                            <p>Result Management</p>
+                            {{-- All the data shown under this menu is from lab scientist module --}}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('analyst.verification.index') }}"
+                            class="nav-link {{ request()->routeIs('analyst.investigations.index') ? 'active' : '' }}">
+                            <i class="nav-icon bi bi-clipboard-pulse"></i>
+                            <p>Result Verification</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon bi bi-bar-chart"></i>
+                            <p>Reports</p>
+                        </a>
+                    </li>
+                @endrole
                 @role('accountant')
                     <li class="nav-item">
                         <a href="#" class="nav-link">

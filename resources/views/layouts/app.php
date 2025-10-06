@@ -1,7 +1,5 @@
-Parameter Report for {{ $parameter->parameter }} in Batch
-                            {{ $batch->batch_no }} with Sample Type {{ $batch->sampleType->e_type }} <!doctype html>
+<!doctype html>
 <html lang="en">
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>AGRI CLINIC</title>
@@ -25,7 +23,6 @@ Parameter Report for {{ $parameter->parameter }} in Batch
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
         crossorigin="anonymous" />
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.css') }}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"
         integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
@@ -40,7 +37,6 @@ Parameter Report for {{ $parameter->parameter }} in Batch
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css">
-    {{-- // In head section --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
 
@@ -168,92 +164,10 @@ Parameter Report for {{ $parameter->parameter }} in Batch
     <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"
         integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY=" crossorigin="anonymous"></script>
     <script>
-        new jsVectorMap({
-            selector: '#world-map',
-            map: 'world',
-        });
-
-        const option_sparkline1 = {
-            series: [{
-                data: [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021],
-            }, ],
-            chart: {
-                type: 'area',
-                height: 50,
-                sparkline: {
-                    enabled: true,
-                },
-            },
-            stroke: {
-                curve: 'straight',
-            },
-            fill: {
-                opacity: 0.3,
-            },
-            yaxis: {
-                min: 0,
-            },
-            colors: ['#DCE6EC'],
-        };
-
-        const sparkline1 = new ApexCharts(document.querySelector('#sparkline-1'), option_sparkline1);
-        sparkline1.render();
-
-        const option_sparkline2 = {
-            series: [{
-                data: [515, 519, 520, 522, 652, 810, 370, 627, 319, 630, 921],
-            }, ],
-            chart: {
-                type: 'area',
-                height: 50,
-                sparkline: {
-                    enabled: true,
-                },
-            },
-            stroke: {
-                curve: 'straight',
-            },
-            fill: {
-                opacity: 0.3,
-            },
-            yaxis: {
-                min: 0,
-            },
-            colors: ['#DCE6EC'],
-        };
-        const sparkline2 = new ApexCharts(document.querySelector('#sparkline-2'), option_sparkline2);
-        sparkline2.render();
-        const option_sparkline3 = {
-            series: [{
-                data: [15, 19, 20, 22, 33, 27, 31, 27, 19, 30, 21],
-            }, ],
-            chart: {
-                type: 'area',
-                height: 50,
-                sparkline: {
-                    enabled: true,
-                },
-            },
-            stroke: {
-                curve: 'straight',
-            },
-            fill: {
-                opacity: 0.3,
-            },
-            yaxis: {
-                min: 0,
-            },
-            colors: ['#DCE6EC'],
-        };
-        const sparkline3 = new ApexCharts(document.querySelector('#sparkline-3'), option_sparkline3);
-        sparkline3.render();
-    </script>
-    <script>
         document.addEventListener("DOMContentLoaded", function() {
             $('.datatable').DataTable();
         });
     </script>
-
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
