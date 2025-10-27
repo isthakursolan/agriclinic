@@ -28,7 +28,7 @@
                                     <p><strong>Payment Mode:</strong> {{ $payment->mode }}</p>
                                     <p><strong>Transaction ID:</strong> {{ $payment->transaction_id ?? 'N/A' }}</p>
                                 @else
-                                    <p><strong>Payment Status:</strong> {{$sample->sample_status}}</p>
+                                    <p><strong>Payment Status:</strong> {{ $sample->sample_status}}</p>
                                 @endif
                             </div>
                         </div>
@@ -40,12 +40,12 @@
                             <div class="col-md-6">
                                 @if ($sample->package)
                                     <p><strong>Package:</strong>
-                                        {{ \App\Models\packagesModel::find($sample->package)->package_name ?? 'N/A' }}
+                                        {{ App\Models\packagesModel::find($sample->package)->package_name ?? 'N/A' }}
                                     </p>
                                 @endif
                                 @if (!empty($sample->parameters))
                                     <p><strong>Parameters:</strong>
-                                        {{ \App\Models\individualParameterModel::whereIn('id', $sample->parameters)->pluck('parameter')->implode(', ') }}
+                                        {{ App\Models\individualParameterModel::whereIn('id', $sample->parameters)->pluck('parameter')->implode(', ') }}
                                     </p>
                                 @endif
                             </div>
@@ -78,8 +78,8 @@
                         @endif
                     </div>
                     <div class="card-footer text-right">
-                        <a href="{{ route('user.sample') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>
-                            Back</a>
+                        {{-- <a href="{{ route('admin.samples') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>
+                            Back</a> --}}
                     </div>
                 </div>
             </div>

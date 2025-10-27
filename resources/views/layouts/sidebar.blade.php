@@ -36,8 +36,6 @@
                             <p>Farmers</p>
                         </a>
                     </li>
-
-
                     <!-- Crops Menu -->
                     <li
                         class="nav-item {{ request()->is('admin/crop*') || request()->routeIs('admin.crop*') || request()->routeIs('admin.variety*') || request()->routeIs('admin.rootstock*') || request()->routeIs('admin.crops*') ? 'menu-open' : '' }}">
@@ -81,44 +79,6 @@
                             </li>
                         </ul>
                     </li>
-
-
-                    <!-- Field Agent Management -->
-                    <li class="nav-item {{ request()->is('admin/field-agents*') ? 'menu-open' : '' }}">
-                        <a href="#" class="nav-link {{ request()->is('admin/field-agents*') ? 'active' : '' }}">
-                            <i class="nav-icon bi bi-person-badge"></i>
-                            <p>
-                                Field Agents
-                                <i class="right bi bi-chevron-down"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview"
-                            style="{{ request()->is('admin/field-agents*') ? 'display:block;' : 'display:none;' }}">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.field-agents') }}"
-                                    class="nav-link {{ request()->routeIs('admin.field-agents') && !request()->is('*/assigned-farmers') && !request()->is('*/reports*') ? 'active' : '' }}">
-                                    <i class="bi bi-dot nav-icon"></i>
-                                    <p>Manage Agents</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.field-agents.assigned-farmers') }}"
-                                    class="nav-link {{ request()->routeIs('admin.field-agents.assigned-farmers') ? 'active' : '' }}">
-                                    <i class="bi bi-dot nav-icon"></i>
-                                    <p>View Assignments</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.field-agents.reports') }}"
-                                    class="nav-link {{ request()->routeIs('admin.field-agents.reports*') ? 'active' : '' }}">
-                                    <i class="bi bi-dot nav-icon"></i>
-                                    <p>Agent Reports</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-
                     <!-- Cases Menu -->
                     <li
                         class="nav-item {{ request()->is('admin/sampleType*') || request()->is('admin/singlePara*') || request()->is('admin/packages*') ? 'menu-open' : '' }}">
@@ -151,6 +111,47 @@
                                     class="nav-link {{ request()->routeIs('admin.packages*') ? 'active' : '' }}">
                                     <i class="bi bi-dot nav-icon"></i>
                                     <p>Packages</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                     <li class="nav-item">
+                        <a href="{{ route('admin.samples') }}"
+                            class="nav-link {{ request()->routeIs('admin.samples*') ? 'active' : '' }}">
+                            <i class="nav-icon bi bi-person-check"></i>
+                            <p>Samples</p>
+                        </a>
+                    </li>
+                    <!-- Field Agent Management -->
+                    <li class="nav-item {{ request()->is('admin/field-agents*') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ request()->is('admin/field-agents*') ? 'active' : '' }}">
+                            <i class="nav-icon bi bi-person-badge"></i>
+                            <p>
+                                Field Agents
+                                <i class="right bi bi-chevron-down"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview"
+                            style="{{ request()->is('admin/field-agents*') ? 'display:block;' : 'display:none;' }}">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.field-agents') }}"
+                                    class="nav-link {{ request()->routeIs('admin.field-agents') && !request()->is('*/assigned-farmers') && !request()->is('*/reports*') ? 'active' : '' }}">
+                                    <i class="bi bi-dot nav-icon"></i>
+                                    <p>Manage Agents</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.field-agents.assigned-farmers') }}"
+                                    class="nav-link {{ request()->routeIs('admin.field-agents.assigned-farmers') ? 'active' : '' }}">
+                                    <i class="bi bi-dot nav-icon"></i>
+                                    <p>View Assignments</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.field-agents.reports') }}"
+                                    class="nav-link {{ request()->routeIs('admin.field-agents.reports*') ? 'active' : '' }}">
+                                    <i class="bi bi-dot nav-icon"></i>
+                                    <p>Agent Reports</p>
                                 </a>
                             </li>
                         </ul>
@@ -233,7 +234,7 @@
                             <p>Create Samples</p>
                         </a>
                     </li>
-                     <!-- Farmers -->
+                    <!-- Farmers -->
                     <li class="nav-item">
                         <a href="{{ route('agent.samples') }}"
                             class="nav-link {{ request()->routeIs('agent.samples') ? 'active' : '' }}">
@@ -306,7 +307,7 @@
                 @endrole
 
                 @role('lab_scientist')
-                 <!-- Farmers -->
+                    <!-- Farmers -->
                     <li class="nav-item">
                         <a href="{{ route('lab.batches.index') }}"
                             class="nav-link {{ request()->routeIs('lab.batches.index') ? 'active' : '' }}">
@@ -316,7 +317,8 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('lab.investigations.index') }}"
-                            class="nav-link {{ request()->routeIs('lab.investigations.index') ? 'active' : '' }}" class="nav-link">
+                            class="nav-link {{ request()->routeIs('lab.investigations.index') ? 'active' : '' }}"
+                            class="nav-link">
                             <i class="nav-icon bi bi-clipboard-pulse"></i>
                             <p>Investigations</p>
                         </a>
@@ -346,7 +348,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('analyst.report.index') }}"
+                            class="nav-link ({{ request()->routeIs('analyst.report.index') ? 'active' : '' }})">
                             <i class="nav-icon bi bi-bar-chart"></i>
                             <p>Reports</p>
                         </a>

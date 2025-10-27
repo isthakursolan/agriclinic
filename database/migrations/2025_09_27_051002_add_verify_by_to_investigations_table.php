@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('investigations', function (Blueprint $table) {
-            $table->string('verify_by')->nullable(true)->after('verify_entry');
+            $table->integer('verify_by')->nullable(true)->after('verify_entry');
         });
     }
 

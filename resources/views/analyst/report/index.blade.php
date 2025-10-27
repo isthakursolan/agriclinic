@@ -41,27 +41,11 @@
 
                                                 <td>{{ $investigation->parameters->parameter }}</td>
                                                 <td>{{ $investigation->result ?? 'N/A' }}</td>
-
                                                 <td>
-                                                    {{-- Update Result --}}
-                                                    <a href="{{ route('lab.batches.parameter-edit', ['param' => $investigation->parameter, 'sample' => $investigation->sample_id]) }}"
-                                                        class="btn btn-sm btn-primary">
-                                                        <i class="fas fa-edit"></i> Update Result
+                                                    <a href="{{ route('analyst.report.create', $sample->id) }}"
+                                                        class="btn btn-success btn-sm">
+                                                        show Report
                                                     </a>
-
-                                                    {{-- Verify Result --}}
-                                                    <a href="{{ route('analyst.verify', ['id' => $investigation->id]) }}"
-                                                        class="btn btn-sm btn-info">
-                                                        <i class="fas fa-check"></i> Verify Result
-                                                    </a>
-
-                                                    {{-- ✅ Show Generate Report only if all verified --}}
-                                                    @if ($sample->all_verified)
-                                                        <a href="{{ route('analyst.report.create', $sample->id) }}"
-                                                            class="btn btn-success btn-sm">
-                                                            <i class="fas fa-file-alt"></i> Generate Report
-                                                        </a>
-                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach

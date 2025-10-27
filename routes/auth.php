@@ -14,6 +14,7 @@ use App\Http\Controllers\auth\registerController;
 use App\Http\Controllers\consultant\consultantController;
 use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\admin\farmerController;
+use App\Http\Controllers\admin\sampleController as AdminSampleController;
 use App\Http\Controllers\farmer\paymentController;
 use App\Http\Controllers\farmer\sampleController;
 use App\Http\Controllers\fieldAgent\fieldagentController;
@@ -145,6 +146,12 @@ Route::middleware('auth')->group(function () {
             Route::post('field-agents/reports/{report}/approve', [agentFarmerController::class, 'approveReport'])->name('field-agents.reports.approve');
             Route::post('field-agents/reports/{report}/reject', [agentFarmerController::class, 'rejectReport'])->name('field-agents.reports.reject');
             Route::get('field-agents/reports/by-agent/{agent}', [agentFarmerController::class, 'reportsByAgent'])->name('field-agents.reports.by-agent');
+
+            Route::get('/samples', [AdminSampleController::class, 'index'])->name('samples');
+            Route::get('/samples/details/{id}', [AdminSampleController::class, 'details'])->name('samples.details');
+
+
+
         });
     });
 
@@ -154,25 +161,25 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [fieldagentController::class, 'index'])->name('dashboard');
 
         // Farmers management
-        Route::get('/farmers', [App\Http\Controllers\fieldAgent\farmerAgentController::class, 'farmers'])->name('farmers');
-        Route::get('/farmers/{id}', [App\Http\Controllers\fieldAgent\farmerAgentController::class, 'showFarmer'])->name('farmers.show');
+        Route::get('/farmers', [farmerAgentController::class, 'farmers'])->name('farmers');
+        Route::get('/farmers/{id}', [farmerAgentController::class, 'showFarmer'])->name('farmers.show');
 
         // Fields management
-        Route::get('/fields', [App\Http\Controllers\fieldAgent\farmerAgentController::class, 'fields'])->name('fields');
-        Route::get('/fields/{id}', [App\Http\Controllers\fieldAgent\farmerAgentController::class, 'showField'])->name('fields.show');
+        Route::get('/fields', [farmerAgentController::class, 'fields'])->name('fields');
+        Route::get('/fields/{id}', [farmerAgentController::class, 'showField'])->name('fields.show');
 
         // Tasks management
-        Route::get('/tasks', [App\Http\Controllers\fieldAgent\farmerAgentController::class, 'tasks'])->name('tasks');
-        Route::post('/tasks/{id}/start', [App\Http\Controllers\fieldAgent\farmerAgentController::class, 'startTask'])->name('tasks.start');
+        Route::get('/tasks', [farmerAgentController::class, 'tasks'])->name('tasks');
+        Route::post('/tasks/{id}/start', [farmerAgentController::class, 'startTask'])->name('tasks.start');
 
         // Reports management
-        Route::get('/reports', [App\Http\Controllers\fieldAgent\farmerAgentController::class, 'reports'])->name('reports');
-        Route::get('/reports/create/{task}', [App\Http\Controllers\fieldAgent\farmerAgentController::class, 'createReport'])->name('reports.create');
-        Route::post('/reports/{task}', [App\Http\Controllers\fieldAgent\farmerAgentController::class, 'storeReport'])->name('reports.store');
-        Route::get('/reports/{id}', [App\Http\Controllers\fieldAgent\farmerAgentController::class, 'showReport'])->name('reports.show');
-        Route::get('/reports/{id}/edit', [App\Http\Controllers\fieldAgent\farmerAgentController::class, 'editReport'])->name('reports.edit');
-        Route::put('/reports/{id}', [App\Http\Controllers\fieldAgent\farmerAgentController::class, 'updateReport'])->name('reports.update');
-        Route::delete('/reports/{report}/attachments/{index}', [App\Http\Controllers\fieldAgent\farmerAgentController::class, 'deleteAttachment'])->name('reports.delete-attachment');
+        Route::get('/reports', [farmerAgentController::class, 'reports'])->name('reports');
+        Route::get('/reports/create/{task}', [farmerAgentController::class, 'createReport'])->name('reports.create');
+        Route::post('/reports/{task}', [farmerAgentController::class, 'storeReport'])->name('reports.store');
+        Route::get('/reports/{id}', [farmerAgentController::class, 'showReport'])->name('reports.show');
+        Route::get('/reports/{id}/edit', [farmerAgentController::class, 'editReport'])->name('reports.edit');
+        Route::put('/reports/{id}', [farmerAgentController::class, 'updateReport'])->name('reports.update');
+        Route::delete('/reports/{report}/attachments/{index}', [farmerAgentController::class, 'deleteAttachment'])->name('reports.delete-attachment');
         // Sample collection
         Route::get('/samples', [farmerAgentController::class, 'samplesShow'])->name('samples');
         Route::post('/samples/collect/{id}', [farmerAgentController::class, 'collectSample'])->name('samples.collect');

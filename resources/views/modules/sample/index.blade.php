@@ -71,7 +71,8 @@
                                     {{-- <td>{{ $sample->sample_status }}</td> --}}
                                     <td>{{ $sample->concern }}</td>
                                     <td>
-                                        Button
+                                        <a href="{{ route('sample.details', $sample->id) }}"
+                                            class="btn btn-info btn-sm"><i class="fas fa-eye"></i> View</a>
                                         {{-- <a href="{{ route('sample.edit', $sample->sample_id) }}"
                                             class="btn btn-sm btn-info"><i class="fas fa-edit"></i> Edit</a> --}}
                                     </td>

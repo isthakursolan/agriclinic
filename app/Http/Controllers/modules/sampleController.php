@@ -36,6 +36,19 @@ class sampleController extends Controller
         return view('modules.sample.create', compact('profile', 'sample_type'));
     }
 
+        public function details($id)
+    {
+        // echo "Details coming soon for sample id: " . $id;
+        $farmer_id =sampleModel::where('id', $id)->value('farmer_id');
+        $sample = sampleModel::with(['farmer', 'crop', 'field', 'investigations.parameters'])
+            ->where('farmer_id', $farmer_id)
+            ->findOrFail($id);
+
+        $payment = paymentsModel::whereJsonContains('sample_id', $id)->first();
+
+        return view('admin.samples.details', compact('sample', 'payment'));
+    }
+
     public function getSampleTypeData($id)
     {
         $concerns = concernModel::where('sample_type', $id)->get();

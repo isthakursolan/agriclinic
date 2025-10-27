@@ -17,6 +17,7 @@ class investigationsModel extends Model
         'reading2',
         'dilusion',
         'verify_entry',
+        'verify_by',
         'result',
         'interpretation',
     ];

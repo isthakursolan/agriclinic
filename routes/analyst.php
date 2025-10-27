@@ -15,5 +15,6 @@ Route::middleware(['auth', 'role:analyst'])->prefix('analyst')->name('analyst.')
     Route::get('/verification/{id}', [analystResultController::class, 'verify'])->name('verify');
 
     // Reports
-    // Route::resource('/reports', AnalystReportController::class);
+    Route::get('/reports', [analystResultController::class, 'reports'])->name('report.index');
+    Route::get('/report/{sample_id}', [analystResultController::class, 'showReport'])->name('report.create');
 });

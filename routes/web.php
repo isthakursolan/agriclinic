@@ -29,6 +29,7 @@ Route::group(['middleware' => ['role:admin|field_agent|front_office|consultant']
 
     Route::get('/sample', [sampleController::class, 'index'])->name('sample');
     Route::get('/sample/create', [sampleController::class, 'create'])->name('sample.create');
+    Route::get('/sample/details/{id}', [sampleController::class, 'details'])->name('sample.details');
     Route::post('/sample/store', [sampleController::class, 'store'])->name('sample.store');
     Route::get('/sample-type/{id}/data', [SampleController::class, 'getSampleTypeData']);
     Route::get('/samples/{sample}/edit', [SampleController::class, 'sampleEdit'])->name('sample.edit');
