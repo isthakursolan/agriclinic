@@ -30,8 +30,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
         integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous" />
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css" /> --}}
-    <!-- Bootstrap JS Bundle (includes Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <!-- Bootstrap CSS CDN -->
@@ -62,9 +60,8 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS Bundle (includes Popper) - Load after jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     {{-- <script src="./js/adminlte.js"></script> --}}
     <script>
         const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
@@ -88,15 +85,18 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js" crossorigin="anonymous"></script>
     <script>
-        new Sortable(document.querySelector('.connectedSortable'), {
-            group: 'shared',
-            handle: '.card-header',
-        });
+        const connectedSortableEl = document.querySelector('.connectedSortable');
+        if (connectedSortableEl) {
+            new Sortable(connectedSortableEl, {
+                group: 'shared',
+                handle: '.card-header',
+            });
 
-        const cardHeaders = document.querySelectorAll('.connectedSortable .card-header');
-        cardHeaders.forEach((cardHeader) => {
-            cardHeader.style.cursor = 'move';
-        });
+            const cardHeaders = document.querySelectorAll('.connectedSortable .card-header');
+            cardHeaders.forEach((cardHeader) => {
+                cardHeader.style.cursor = 'move';
+            });
+        }
     </script>
 
     {{-- <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script> --}}
@@ -149,21 +149,24 @@
             },
         };
 
-        const sales_chart = new ApexCharts(
-            document.querySelector('#revenue-chart'),
-            sales_chart_options,
-        );
-        sales_chart.render();
+        const revenueChartEl = document.querySelector('#revenue-chart');
+        if (revenueChartEl) {
+            const sales_chart = new ApexCharts(revenueChartEl, sales_chart_options);
+            sales_chart.render();
+        }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"
         integrity="sha256-/t1nN2956BT869E6H4V1dnt0X5pAQHPytli+1nTZm2Y=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"
         integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY=" crossorigin="anonymous"></script>
     <script>
-        new jsVectorMap({
-            selector: '#world-map',
-            map: 'world',
-        });
+        const worldMapEl = document.querySelector('#world-map');
+        if (worldMapEl) {
+            new jsVectorMap({
+                selector: '#world-map',
+                map: 'world',
+            });
+        }
 
         const option_sparkline1 = {
             series: [{
@@ -188,8 +191,11 @@
             colors: ['#DCE6EC'],
         };
 
-        const sparkline1 = new ApexCharts(document.querySelector('#sparkline-1'), option_sparkline1);
-        sparkline1.render();
+        const sparkline1El = document.querySelector('#sparkline-1');
+        if (sparkline1El) {
+            const sparkline1 = new ApexCharts(sparkline1El, option_sparkline1);
+            sparkline1.render();
+        }
 
         const option_sparkline2 = {
             series: [{
@@ -213,8 +219,12 @@
             },
             colors: ['#DCE6EC'],
         };
-        const sparkline2 = new ApexCharts(document.querySelector('#sparkline-2'), option_sparkline2);
-        sparkline2.render();
+        const sparkline2El = document.querySelector('#sparkline-2');
+        if (sparkline2El) {
+            const sparkline2 = new ApexCharts(sparkline2El, option_sparkline2);
+            sparkline2.render();
+        }
+        
         const option_sparkline3 = {
             series: [{
                 data: [15, 19, 20, 22, 33, 27, 31, 27, 19, 30, 21],
@@ -237,12 +247,123 @@
             },
             colors: ['#DCE6EC'],
         };
-        const sparkline3 = new ApexCharts(document.querySelector('#sparkline-3'), option_sparkline3);
-        sparkline3.render();
+        const sparkline3El = document.querySelector('#sparkline-3');
+        if (sparkline3El) {
+            const sparkline3 = new ApexCharts(sparkline3El, option_sparkline3);
+            sparkline3.render();
+        }
     </script>
+    <style>
+        /* Modern card hover effects */
+        .card[style*="linear-gradient"]:hover {
+            transform: translateY(-5px) !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+        }
+        .info-box[style*="linear-gradient"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+        }
+        
+        /* DataTables Info and Length Selector Styling */
+        .dataTables_info {
+            font-size: 0.875rem;
+            padding: 0.75rem 0;
+            color: #6c757d;
+        }
+        
+        .dataTables_length {
+            padding: 0.75rem 0;
+        }
+        
+        .dataTables_length label {
+            font-size: 0.875rem;
+            margin-bottom: 0;
+            padding-right: 0.5rem;
+            color: #6c757d;
+        }
+        
+        .dataTables_length select {
+            font-size: 0.875rem;
+            padding: 0.375rem 1.75rem 0.375rem 0.5rem;
+            margin: 0 0.5rem;
+        }
+        
+        /* Padding for all DataTables - minimum 15px on all edges */
+        .dataTables_wrapper {
+            padding: 15px !important;
+        }
+        
+        .dataTables_wrapper thead th {
+            padding: 15px !important;
+        }
+        
+        .dataTables_wrapper tbody td {
+            padding: 15px !important;
+        }
+        
+        /* Fix button row alignment after card-header */
+        .card-header.text-white + .row {
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 1rem;
+            margin-bottom: 0;
+        }
+        
+        .card-header.text-white + .row .col.text-end.m-1 {
+            margin: 0 !important;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        .card-header.text-white + .row .col.text-end.m-1 .btn {
+            margin: 0;
+        }
+    </style>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             $('.datatable').DataTable();
+            
+            // Ensure Bootstrap dropdowns are properly initialized
+            var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+            var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+                return new bootstrap.Dropdown(dropdownToggleEl);
+            });
+            
+            // Extract page title from content area and move to navbar
+            const contentHeader = document.querySelector('.app-content-header h2, .content-header h1, .app-content-header h3');
+            const pageTitleEl = document.getElementById('page-title');
+            
+            if (contentHeader && pageTitleEl) {
+                // Get the title text and clean it up
+                let titleText = contentHeader.textContent.trim();
+                // Remove extra spaces and clean up
+                titleText = titleText.replace(/\s+/g, ' ');
+                pageTitleEl.textContent = titleText;
+                
+                // Hide only the title, keep breadcrumbs visible and make them full width
+                const titleRow = contentHeader.closest('.row');
+                if (titleRow) {
+                    const titleCol = contentHeader.closest('.col-sm-6');
+                    if (titleCol) {
+                        titleCol.style.display = 'none';
+                    }
+                    // Find breadcrumb column and make it full width
+                    const breadcrumbCol = titleRow.querySelector('.col-sm-6:last-child, .col-sm-6:has(.breadcrumb)');
+                    if (breadcrumbCol) {
+                        breadcrumbCol.classList.remove('col-sm-6');
+                        breadcrumbCol.classList.add('col-12');
+                        // Update breadcrumb alignment for full width
+                        const breadcrumb = breadcrumbCol.querySelector('.breadcrumb');
+                        if (breadcrumb) {
+                            breadcrumb.classList.remove('float-sm-end', 'float-sm-right');
+                            breadcrumb.classList.add('mb-0');
+                        }
+                    }
+                } else {
+                    // Fallback: just hide the title element
+                    contentHeader.style.display = 'none';
+                }
+            }
         });
     </script>
 

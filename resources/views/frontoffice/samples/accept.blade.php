@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header">
+        <div class="card-header text-white" style="background-color: #777777;">
             <h4>Accept Collected Samples</h4>
         </div>
         <div class="card-body">
@@ -47,9 +47,9 @@
                                     {{-- <td>{{ $sample->collection_method }}</td> --}}
                                     {{-- <td>
                                         @if ($sample->payment && $sample->payment->status === 'paid')
-                                            <span class="text-success">Paid ✅</span>
+                                            <span style="color: #777777;">Paid ✅</span>
                                         @else
-                                            <span class="text-danger">Unpaid ❌</span>
+                                            <span style="color: #777777;">Unpaid ❌</span>
                                         @endif
                                     </td> --}}
                                     {{-- <td>

@@ -89,6 +89,160 @@ body {
     overflow-y: auto;
 }
 
+/* Admin and Superadmin - Dark gray with white text */
+.app-sidebar.sidebar-admin,
+.app-sidebar.sidebar-superadmin {
+    background-color: #2d2d2d !important;
+    color: #ffffff !important;
+}
+
+.app-sidebar.sidebar-admin .nav-link,
+.app-sidebar.sidebar-admin .brand-text,
+.app-sidebar.sidebar-admin .brand-link,
+.app-sidebar.sidebar-superadmin .nav-link,
+.app-sidebar.sidebar-superadmin .brand-text,
+.app-sidebar.sidebar-superadmin .brand-link {
+    color: #ffffff !important;
+}
+
+.app-sidebar.sidebar-admin .nav-link:hover,
+.app-sidebar.sidebar-superadmin .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+
+/* Farmer - Dark blue-gray */
+.app-sidebar.sidebar-farmer {
+    background-color: #1a3a52 !important;
+    color: #e8f4f8 !important;
+}
+
+.app-sidebar.sidebar-farmer .nav-link,
+.app-sidebar.sidebar-farmer .brand-text,
+.app-sidebar.sidebar-farmer .brand-link {
+    color: #e8f4f8 !important;
+}
+
+.app-sidebar.sidebar-farmer .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+
+/* Field Agent - Dark green */
+.app-sidebar.sidebar-field_agent {
+    background-color: #1e4d3a !important;
+    color: #e8f5e9 !important;
+}
+
+.app-sidebar.sidebar-field_agent .nav-link,
+.app-sidebar.sidebar-field_agent .brand-text,
+.app-sidebar.sidebar-field_agent .brand-link {
+    color: #e8f5e9 !important;
+}
+
+.app-sidebar.sidebar-field_agent .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+
+/* Consultant - Dark purple */
+.app-sidebar.sidebar-consultant {
+    background-color: #3d2d4f !important;
+    color: #f0e6f5 !important;
+}
+
+.app-sidebar.sidebar-consultant .nav-link,
+.app-sidebar.sidebar-consultant .brand-text,
+.app-sidebar.sidebar-consultant .brand-link {
+    color: #f0e6f5 !important;
+}
+
+.app-sidebar.sidebar-consultant .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+
+/* Lab Scientist - Dark teal */
+.app-sidebar.sidebar-lab_scientist {
+    background-color: #2d4a4a !important;
+    color: #e0f2f1 !important;
+}
+
+.app-sidebar.sidebar-lab_scientist .nav-link,
+.app-sidebar.sidebar-lab_scientist .brand-text,
+.app-sidebar.sidebar-lab_scientist .brand-link {
+    color: #e0f2f1 !important;
+}
+
+.app-sidebar.sidebar-lab_scientist .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+
+/* Accountant - Dark brown */
+.app-sidebar.sidebar-accountant {
+    background-color: #4a3d2d !important;
+    color: #f5f0e8 !important;
+}
+
+.app-sidebar.sidebar-accountant .nav-link,
+.app-sidebar.sidebar-accountant .brand-text,
+.app-sidebar.sidebar-accountant .brand-link {
+    color: #f5f0e8 !important;
+}
+
+.app-sidebar.sidebar-accountant .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+
+/* Front Office - Dark orange-brown */
+.app-sidebar.sidebar-front_office {
+    background-color: #4a3a2d !important;
+    color: #fff5e8 !important;
+}
+
+.app-sidebar.sidebar-front_office .nav-link,
+.app-sidebar.sidebar-front_office .brand-text,
+.app-sidebar.sidebar-front_office .brand-link {
+    color: #fff5e8 !important;
+}
+
+.app-sidebar.sidebar-front_office .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+
+/* Analyst - Dark indigo */
+.app-sidebar.sidebar-analyst {
+    background-color: #2d2d4a !important;
+    color: #e8e8f5 !important;
+}
+
+.app-sidebar.sidebar-analyst .nav-link,
+.app-sidebar.sidebar-analyst .brand-text,
+.app-sidebar.sidebar-analyst .brand-link {
+    color: #e8e8f5 !important;
+}
+
+.app-sidebar.sidebar-analyst .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+
+/* Card footer inside forms - remove horizontal padding, transparent background, add top margin */
+form .card-footer.text-right {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 15px !important;
+    background-color: transparent !important;
+}
+
+.content-wrapper.pt-4.col-md-6.mx-auto form .card-footer.text-right,
+.app-content .row.justify-content-center .col-md-6 form .card-footer.text-right {
+    padding:0 !important;
+}
+
 /* smooth submenu animation */
 .nav-treeview {
     overflow: hidden;
@@ -99,4 +253,51 @@ body {
 .nav-link.active {
     background: rgba(255, 255, 255, 0.08);
     border-left: 3px solid #0d6efd;
+}
+
+/* Remove border from card-body */
+main.app-main .content .card .card-body,
+main.app-main .app-content .card .card-body {
+    padding: 0;
+}
+
+table.dataTable.no-footer {
+	border: 1px solid rgba(0, 0, 0, .1) !important;
+    margin-bottom: 15px !important;
+}
+
+/* Add margin to alerts inside card-body */
+.card .alert {
+    margin: 15px;
+}
+.card .alert ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Add margin-top to help text links below select dropdowns */
+.form-text.text-muted a {
+    margin-top: 7.5px;
+    display: inline-block;
+}
+
+table.dataTable {
+    font-size: 14px !important;
+}
+
+/* Limit Action columns in DataTables to max 300px width */
+table.dataTable th:first-child,
+table.dataTable td:first-child{
+    width: 25px;
+}
+table.dataTable th:nth-child(2),
+table.dataTable td:nth-child(2){
+    width: auto !important;
+}
+table.dataTable th:last-child,
+table.dataTable td:last-child {
+    max-width: 200px;
+    min-width: 120px;
+    width:fit-content;
 }

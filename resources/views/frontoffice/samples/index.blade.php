@@ -5,11 +5,11 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">All Samples</h3>
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-list-ul me-2"></i>All Samples</h3>
                         <div class="card-tools">
-                            <a href="{{ route('frontoffice.samples.create') }}" class="btn btn-primary">
-                                <i class="fas fa-plus"></i> Register New Sample
+                            <a href="{{ route('frontoffice.samples.create') }}" class="btn btn-dark">
+                                <i class="bi bi-plus-circle me-2"></i> Register New Sample
                             </a>
                         </div>
                     </div>
@@ -42,9 +42,9 @@
                                         <td>{{ number_format($sample->amount, 2) }}</td>
                                          <td>
                                             @if($sample->sample_status == 'paid')
-                                                <span class="text-success font-weight-bold">Paid</span>
+                                                <span style="color: #777777;">Paid</span>
                                             @elseif($sample->sample_status == 'pending')
-                                                <span class="text-warning font-weight-bold">Pending Payment</span>
+                                                <span style="color: #777777;">Pending Payment</span>
                                             @else
                                                 <span class="text-info font-weight-bold">{{ ucfirst($sample->sample_status) }}</span>
                                             @endif

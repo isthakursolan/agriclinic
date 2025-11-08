@@ -27,34 +27,34 @@
                     <!-- Statistics Cards -->
                     <div class="row">
                         <div class="col-md-3">
-                            <div class="card text-white bg-primary mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Assigned Farmers</h5>
-                                    <p class="card-text display-4">{{ $assignedFarmersCount }}</p>
+                            <div class="card text-white mb-3 border-0 shadow-lg" style="background: linear-gradient(135deg, #15803d 0%, #0f5d2a 100%); transition: transform 0.3s ease;">
+                                <div class="card-body px-4 py-4">
+                                    <h5 class="card-title mb-4 fw-semibold text-start" style="font-size: 0.95rem; opacity: 0.95; letter-spacing: 0.5px;">Assigned Farmers</h5>
+                                    <p class="card-text fw-bold mb-0 text-end" style="font-size: 3rem; line-height: 1.2;">{{ $assignedFarmersCount }}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="card text-white bg-info mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Active Fields</h5>
-                                    <p class="card-text display-4">{{ $fieldsCount }}</p>
+                            <div class="card text-white mb-3 border-0 shadow-lg" style="background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); transition: transform 0.3s ease;">
+                                <div class="card-body px-4 py-4">
+                                    <h5 class="card-title mb-4 fw-semibold text-start" style="font-size: 0.95rem; opacity: 0.95; letter-spacing: 0.5px;">Active Fields</h5>
+                                    <p class="card-text fw-bold mb-0 text-end" style="font-size: 3rem; line-height: 1.2;">{{ $fieldsCount }}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="card text-white bg-warning mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Pending Tasks</h5>
-                                    <p class="card-text display-4">{{ $pendingTasks }}</p>
+                            <div class="card text-white mb-3 border-0 shadow-lg" style="background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); transition: transform 0.3s ease;">
+                                <div class="card-body px-4 py-4">
+                                    <h5 class="card-title mb-4 fw-semibold text-start" style="font-size: 0.95rem; opacity: 0.95; letter-spacing: 0.5px;">Pending Tasks</h5>
+                                    <p class="card-text fw-bold mb-0 text-end" style="font-size: 3rem; line-height: 1.2;">{{ $pendingTasks }}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="card text-white bg-success mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Completed Tasks</h5>
-                                    <p class="card-text display-4">{{ $completedTasks }}</p>
+                            <div class="card text-white mb-3 border-0 shadow-lg" style="background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); transition: transform 0.3s ease;">
+                                <div class="card-body px-4 py-4">
+                                    <h5 class="card-title mb-4 fw-semibold text-start" style="font-size: 0.95rem; opacity: 0.95; letter-spacing: 0.5px;">Completed Tasks</h5>
+                                    <p class="card-text fw-bold mb-0 text-end" style="font-size: 3rem; line-height: 1.2;">{{ $completedTasks }}</p>
                                 </div>
                             </div>
                         </div>
@@ -73,8 +73,8 @@
                     <div class="row mt-4">
                         <div class="col-md-6">
                             <div class="card">
-                                <div class="card-header">
-                                    <h5><i class="fas fa-tasks"></i> Upcoming Tasks</h5>
+                                <div class="card-header text-white" style="background-color: #777777;">
+                                    <h5><i class="bi bi-list-task me-2"></i> Upcoming Tasks</h5>
                                 </div>
                                 <div class="card-body">
                                     @if($recentTasks->count() > 0)
@@ -117,8 +117,8 @@
                         <!-- Recent Reports -->
                         <div class="col-md-6">
                             <div class="card">
-                                <div class="card-header">
-                                    <h5><i class="fas fa-file-alt"></i> Recent Reports</h5>
+                                <div class="card-header text-white" style="background-color: #777777;">
+                                    <h5><i class="bi bi-file-text me-2"></i> Recent Reports</h5>
                                 </div>
                                 <div class="card-body">
                                     @if($recentReports->count() > 0)
@@ -127,7 +127,7 @@
                                                 <div class="list-group-item">
                                                     <div class="d-flex w-100 justify-content-between">
                                                         <h6 class="mb-1">{{ $report->task->title }}</h6>
-                                                        <small class="text-success">{{ $report->submitted_at->diffForHumans() }}</small>
+                                                        <small style="color: #777777;">{{ $report->submitted_at->diffForHumans() }}</small>
                                                     </div>
                                                     <p class="mb-1">{{ Str::limit($report->notes, 50) }}</p>
                                                     <small>
@@ -153,21 +153,21 @@
                     <div class="row mt-4">
                         <div class="col-md-12">
                             <div class="card">
-                                <div class="card-header">
+                                <div class="card-header text-white" style="background-color: #777777;">
                                     <h5><i class="fas fa-bolt"></i> Quick Actions</h5>
                                 </div>
                                 <div class="card-body text-center">
                                     <a href="{{ route('agent.farmers') }}" class="btn btn-primary btn-lg m-2">
-                                        <i class="fas fa-users"></i><br>My Farmers
+                                        <i class="bi bi-people me-2"></i><br>My Farmers
                                     </a>
                                     <a href="{{ route('agent.fields') }}" class="btn btn-info btn-lg m-2">
-                                        <i class="fas fa-seedling"></i><br>Fields
+                                        <i class="bi bi-flower1 me-2"></i><br>Fields
                                     </a>
                                     <a href="{{ route('agent.tasks') }}" class="btn btn-warning btn-lg m-2">
-                                        <i class="fas fa-tasks"></i><br>Tasks
+                                        <i class="bi bi-list-task me-2"></i><br>Tasks
                                     </a>
                                     <a href="{{ route('agent.reports') }}" class="btn btn-success btn-lg m-2">
-                                        <i class="fas fa-file-alt"></i><br>Reports
+                                        <i class="bi bi-file-text me-2"></i><br>Reports
                                     </a>
                                 </div>
                             </div>

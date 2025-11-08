@@ -4,9 +4,9 @@
     <div class="content-wrapper pt-4">
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-users"></i> Assigned Farmers</h3>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-people me-2"></i> Assigned Farmers</h3>
                     </div>
                     <div class="row">
                         <div class="col text-end m-1">
@@ -39,9 +39,9 @@
                                             {{-- <td>{{ $sample->fieldAgent->name }}</td> --}}
                                             <td>
                                                 @if ($sample->sample_status == 'collected')
-                                                    <span class=" text-success">Collected</span>
+                                                    <span style="color: #777777;">Collected</span>
                                                 @else
-                                                    <span class=" text-warning">Pending Collection</span>
+                                                    <span style="color: #777777;">Pending Collection</span>
                                                 @endif
                                             </td>
                                             <td>
@@ -63,7 +63,7 @@
                             </table>
                         @else
                             <div class="alert alert-info">
-                                <i class="fas fa-info-circle"></i> You don't have any Samples to Collect yet.
+                                <i class="bi bi-info-circle me-2"></i> You don't have any Samples to Collect yet.
                             </div>
                         @endif
                     </div>

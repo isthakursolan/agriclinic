@@ -4,9 +4,9 @@
     <div class="content-wrapper pt-4">
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-tasks"></i> My Tasks</h3>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-list-task me-2"></i> My Tasks</h3>
                     </div>
                     <div class="row">
                         <div class="col text-end m-1">
@@ -107,7 +107,7 @@
                                                         @if($task->reports && $task->reports->count() > 0)
                                                             <a href="{{ route('agent.reports.show', $task->reports->first()->id) }}"
                                                                class="btn btn-sm btn-primary" title="View Report">
-                                                                <i class="fas fa-file-alt"></i> View Report
+                                                                <i class="bi bi-file-text me-2"></i> View Report
                                                             </a>
                                                         @else
                                                             <span class="badge badge-success">Completed</span>
@@ -121,7 +121,7 @@
                             </table>
                         @else
                             <div class="alert alert-info">
-                                <i class="fas fa-info-circle"></i> You don't have any tasks assigned to you yet.
+                                <i class="bi bi-info-circle me-2"></i> You don't have any tasks assigned to you yet.
                             </div>
                         @endif
                     </div>

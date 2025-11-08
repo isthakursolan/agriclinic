@@ -4,14 +4,14 @@
     <div class="content-wrapper pt-4">
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-map-marked-alt"></i> Samples</h3>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-geo-alt me-2"></i> Samples</h3>
                     </div>
                     <div class="row">
                         <div class="col text-end m-1">
-                            <a href="{{ route('sample.create') }}" class="btn btn-primary">
-                                Book Test
+                            <a href="{{ route('sample.create') }}" class="btn btn-dark mb-3">
+                                <i class="bi bi-plus-circle me-2"></i>Book Test
                             </a>
                         </div>
                     </div>
@@ -60,9 +60,9 @@
                                     <td>{{ $sample->amount }}</td>
                                     <td>
                                         @if ($sample->sample_status == 'paid')
-                                            <span class="text-success font-weight-bold">Paid</span>
+                                            <span style="color: #777777;">Paid</span>
                                         @elseif($sample->sample_status == 'pending')
-                                            <span class="text-warning font-weight-bold">Pending Payment</span>
+                                            <span style="color: #777777;">Pending Payment</span>
                                         @else
                                             <span
                                                 class="text-info font-weight-bold">{{ ucfirst($sample->sample_status) }}</span>
@@ -73,7 +73,7 @@
                                     <td>
                                         Button
                                         {{-- <a href="{{ route('sample.edit', $sample->sample_id) }}"
-                                            class="btn btn-sm btn-info"><i class="fas fa-edit"></i> Edit</a> --}}
+                                            class="btn btn-sm btn-info"><i class="bi bi-pencil-square me-2"></i> Edit</a> --}}
                                     </td>
                                 </tr>
                             @endforeach

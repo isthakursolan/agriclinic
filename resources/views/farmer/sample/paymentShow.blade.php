@@ -4,9 +4,9 @@
     <div class="content-wrapper pt-4">
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-map-marked-alt"></i> Payment </h3>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-geo-alt me-2"></i> Payment </h3>
                     </div>
                     <div class="card-body">
                         @if ($isAlreadyPaid)
@@ -88,9 +88,11 @@
                                     </div>
                                 </div>
                                 <div class="card-footer text-right">
-                                    <button id="confirmPayBtn" type="submit" class="btn btn-success">
-                                        <i class="fas fa-save"></i> Confirm Payment
-                                    </button>
+                                    <div style="padding: 15px;">
+                                        <button id="confirmPayBtn" type="submit" class="btn btn-dark">
+                                            <i class="fas fa-save"></i> Confirm Payment
+                                        </button>
+                                    </div>
                                 </div>
                             @endif
                         </form>

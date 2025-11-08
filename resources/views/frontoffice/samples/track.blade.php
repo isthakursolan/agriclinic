@@ -6,8 +6,8 @@
             <div class="container-fluid">
                 <!-- Search Form -->
                 <div class="card card-info">
-                    <div class="card-header">
-                        <h3 class="card-title">Track Sample</h3>
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-search me-2"></i>Track Sample</h3>
                     </div>
                     <form action="{{ route('frontoffice.samples.track') }}" method="GET">
                         <div class="card-body">
@@ -29,8 +29,8 @@
                 @if ($sample)
                 <!-- Tracking Results -->
                 <div class="card mt-4">
-                    <div class="card-header">
-                        <h3 class="card-title">Tracking History for Sample #{{ $sample->sample_id }}</h3>
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-clock-history me-2"></i>Tracking History for Sample #{{ $sample->sample_id }}</h3>
                     </div>
                     <div class="card-body">
                         <div class="row">

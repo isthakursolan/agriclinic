@@ -18,29 +18,42 @@
     <div class="app-content">
         <div class="container-fluid">
             <h1>Hello {{ auth()->user()->name }}</h1>
-            <div class="grid grid-cols-4 gap-4">
-                <div class="bg-white shadow rounded p-4">
-                    <h2 class="text-lg font-semibold">Total Users</h2>
-                    <p>10</p>
-                    {{-- <p>{{ $usersCount }}</p> --}}
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card text-white mb-3 border-0 shadow-lg" style="background: linear-gradient(135deg, #15803d 0%, #0f5d2a 100%); transition: transform 0.3s ease;">
+                        <div class="card-body px-4 py-4">
+                            <h5 class="card-title mb-4 fw-semibold text-start" style="font-size: 0.95rem; opacity: 0.95; letter-spacing: 0.5px;">Total Users</h5>
+                            <p class="card-text fw-bold mb-0 text-end" style="font-size: 3rem; line-height: 1.2;">10</p>
+                            {{-- <p class="card-text fw-bold mb-0 text-end" style="font-size: 3rem; line-height: 1.2;">{{ $usersCount }}</p> --}}
+                        </div>
+                    </div>
                 </div>
-
-                <div class="bg-white shadow rounded p-4">
-                    <h2 class="text-lg font-semibold">Total Cases</h2>
-                    <p>10</p>
-                    {{-- <p>{{ $casesCount }}</p> --}}
+                <div class="col-md-3">
+                    <div class="card text-white mb-3 border-0 shadow-lg" style="background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); transition: transform 0.3s ease;">
+                        <div class="card-body px-4 py-4">
+                            <h5 class="card-title mb-4 fw-semibold text-start" style="font-size: 0.95rem; opacity: 0.95; letter-spacing: 0.5px;">Total Cases</h5>
+                            <p class="card-text fw-bold mb-0 text-end" style="font-size: 3rem; line-height: 1.2;">10</p>
+                            {{-- <p class="card-text fw-bold mb-0 text-end" style="font-size: 3rem; line-height: 1.2;">{{ $casesCount }}</p> --}}
+                        </div>
+                    </div>
                 </div>
-
-                <div class="bg-white shadow rounded p-4">
-                    <h2 class="text-lg font-semibold">Total Payments</h2>
-                    <p>10</p>
-                    {{-- <p>₹{{ $totalPayments }}</p> --}}
+                <div class="col-md-3">
+                    <div class="card text-white mb-3 border-0 shadow-lg" style="background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); transition: transform 0.3s ease;">
+                        <div class="card-body px-4 py-4">
+                            <h5 class="card-title mb-4 fw-semibold text-start" style="font-size: 0.95rem; opacity: 0.95; letter-spacing: 0.5px;">Total Payments</h5>
+                            <p class="card-text fw-bold mb-0 text-end" style="font-size: 3rem; line-height: 1.2;">10</p>
+                            {{-- <p class="card-text fw-bold mb-0 text-end" style="font-size: 3rem; line-height: 1.2;">₹{{ $totalPayments }}</p> --}}
+                        </div>
+                    </div>
                 </div>
-
-                <div class="bg-white shadow rounded p-4">
-                    <h2 class="text-lg font-semibold">Pending Reports</h2>
-                    <p>10</p>
-                    {{-- <p>{{ $pendingReports }}</p> --}}
+                <div class="col-md-3">
+                    <div class="card text-white mb-3 border-0 shadow-lg" style="background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); transition: transform 0.3s ease;">
+                        <div class="card-body px-4 py-4">
+                            <h5 class="card-title mb-4 fw-semibold text-start" style="font-size: 0.95rem; opacity: 0.95; letter-spacing: 0.5px;">Pending Reports</h5>
+                            <p class="card-text fw-bold mb-0 text-end" style="font-size: 3rem; line-height: 1.2;">10</p>
+                            {{-- <p class="card-text fw-bold mb-0 text-end" style="font-size: 3rem; line-height: 1.2;">{{ $pendingReports }}</p> --}}
+                        </div>
+                    </div>
                 </div>
             </div>
 

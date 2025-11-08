@@ -4,18 +4,18 @@
     <div class="content-wrapper pt-4">
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-file-alt"></i> Report Details</h3>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-file-text me-2"></i> Report Details</h3>
                     </div>
                     <div class="row">
                         <div class="col text-end m-1">
                             @if($report->task->status != 'completed')
-                                <a href="{{ route('agent.reports.edit', $report->id) }}" class="btn btn-warning">
-                                    <i class="fas fa-edit"></i> Edit Report
+                                <a href="{{ route('agent.reports.edit', $report->id) }}" class="btn btn-warning mb-3">
+                                    <i class="bi bi-pencil-square me-2"></i> Edit Report
                                 </a>
                             @endif
-                            <a href="{{ route('agent.reports') }}" class="btn btn-secondary">
+                            <a href="{{ route('agent.reports') }}" class="btn btn-secondary mb-3">
                                 <i class="fas fa-arrow-left"></i> Back to Reports
                             </a>
                         </div>
@@ -30,7 +30,7 @@
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-header bg-primary text-white">
-                                        <h5 class="card-title mb-0"><i class="fas fa-tasks"></i> Task Information</h5>
+                                        <h5 class="card-title mb-0"><i class="bi bi-list-task me-2"></i> Task Information</h5>
                                     </div>
                                     <div class="card-body">
                                         <table class="table table-bordered">
@@ -65,7 +65,7 @@
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-header bg-success text-white">
-                                        <h5 class="card-title mb-0"><i class="fas fa-info-circle"></i> Report Information</h5>
+                                        <h5 class="card-title mb-0"><i class="bi bi-info-circle me-2"></i> Report Information</h5>
                                     </div>
                                     <div class="card-body">
                                         <table class="table table-bordered">
@@ -108,7 +108,7 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header bg-info text-white">
-                                        <h5 class="card-title mb-0"><i class="fas fa-sticky-note"></i> Report Notes</h5>
+                                        <h5 class="card-title mb-0"><i class="bi bi-sticky me-2"></i> Report Notes</h5>
                                     </div>
                                     <div class="card-body">
                                         <p>{{ $report->notes }}</p>
@@ -123,7 +123,7 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header bg-warning text-white">
-                                        <h5 class="card-title mb-0"><i class="fas fa-paperclip"></i> Attachments</h5>
+                                        <h5 class="card-title mb-0"><i class="bi bi-paperclip me-2"></i> Attachments</h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">

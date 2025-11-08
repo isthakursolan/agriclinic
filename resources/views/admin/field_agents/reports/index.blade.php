@@ -1,16 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="app-content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3 class="mb-0">Field Agent Reports</h3>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-end">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Field Agent Reports</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="content-wrapper pt-4">
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-file-alt"></i> Field Agent Reports</h3>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-file-text me-2"></i> Field Agent Reports</h3>
                     </div>
                     <div class="row">
                         <div class="col text-end m-1">
-                            <a href="{{ route('admin.field-agents') }}" class="btn btn-secondary">
+                            <a href="{{ route('admin.field-agents') }}" class="btn btn-secondary mb-3">
                                 <i class="fas fa-arrow-left"></i> Back to Agents
                             </a>
                         </div>
@@ -21,7 +36,7 @@
                     <table id="reportsTable" class="datatable display table table-bordered table-striped">
                         <thead>
                             <tr class="bg-info">
-                                <th>Report ID</th>
+                                <th>#</th>
                                 <th>Field Agent</th>
                                 <th>Task</th>
                                 <th>Farmer</th>
@@ -48,7 +63,7 @@
                                     <td>
                                         @if($report->task->farmer)
                                             {{ $report->task->farmer->fullname }}
-                                            <br><small class="text-success">{{ $report->task->farmer->contact }}</small>
+                                            <br><small style="color: #777777;">{{ $report->task->farmer->contact }}</small>
                                         @else
                                             <span class="text-muted">No farmer assigned</span>
                                         @endif

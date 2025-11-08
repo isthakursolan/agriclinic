@@ -4,10 +4,10 @@
     <div class="content-wrapper pt-4">
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            <i class="fas fa-tasks"></i> Tasks for {{ $agent->name }}
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white">
+                            <i class="bi bi-list-task me-2"></i>Tasks for {{ $agent->name }}
                             @if($agent->profile)
                                 ({{ $agent->profile->fullname }})
                             @endif
@@ -15,10 +15,10 @@
                     </div>
                     <div class="row">
                         <div class="col text-end m-1">
-                            <a href="{{ route('admin.field-agents.create-task') }}?agent={{ $agent->id }}" class="btn btn-primary">
-                                <i class="fas fa-plus"></i> Create New Task
+                            <a href="{{ route('admin.field-agents.create-task') }}?agent={{ $agent->id }}" class="btn btn-dark mb-3">
+                                <i class="bi bi-plus-circle me-2"></i> Create New Task
                             </a>
-                            <a href="{{ route('admin.field-agents') }}" class="btn btn-secondary">
+                            <a href="{{ route('admin.field-agents') }}" class="btn btn-secondary mb-3">
                                 <i class="fas fa-arrow-left"></i> Back to Agents
                             </a>
                         </div>
@@ -30,6 +30,7 @@
                     <table id="tasksTable" class="datatable display table table-bordered table-striped">
                         <thead>
                             <tr class="bg-info">
+                                <th>#</th>
                                 <th>Task Title</th>
                                 <th>Farmer</th>
                                 <th>Field</th>
@@ -37,12 +38,13 @@
                                 <th>Due Date</th>
                                 <th>Status</th>
                                 <th>Created</th>
-                                <th>Action</th>
+                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($tasks as $task)
                                 <tr>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $task->title }}</td>
                                     <td>
                                         @if($task->farmer)
@@ -77,23 +79,21 @@
                                         @endif
                                     </td>
                                     <td>{{ $task->created_at->format('M d, Y') }}</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="{{ route('admin.field-agents.edit-task', $task->id) }}"
-                                               class="btn btn-sm btn-warning">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <form method="POST"
-                                                  action="{{ route('admin.field-agents.destroy-task', $task->id) }}"
-                                                  class="d-inline"
-                                                  onsubmit="return confirm('Are you sure you want to delete this task?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        </div>
+                                    <td class="text-center">
+                                        <a href="{{ route('admin.field-agents.edit-task', $task->id) }}"
+                                           class="btn btn-sm btn-dark">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <form method="POST"
+                                              action="{{ route('admin.field-agents.destroy-task', $task->id) }}"
+                                              class="d-inline"
+                                              onsubmit="return confirm('Are you sure you want to delete this task?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -106,7 +106,7 @@
     <script>
         $(document).ready(function() {
             $('#tasksTable').DataTable({
-                "order": [[ 4, "asc" ]] // Sort by due date by default
+                "order": [[ 5, "asc" ]] // Sort by due date by default
             });
         });
     </script>

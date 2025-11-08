@@ -1,4 +1,4 @@
-<aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+<aside class="app-sidebar bg-body-secondary shadow sidebar-{{ Auth::user()->roles->first()->name ?? 'default' }}" data-bs-theme="dark">
     <div class="sidebar-brand">
         <a href="/login" class="brand-link">
             <img src="{{ asset('adminlte/dist/assets/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
@@ -11,24 +11,7 @@
         <nav class="mt-2">
             <ul class="nav sidebar-menu flex-column" data-accordion="false" id="navigation">
 
-                <!-- Notifications -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link {{ request()->is('notifications*') ? 'active' : '' }}">
-                        <i class="nav-icon bi bi-bell"></i>
-                        <p>Notifications</p>
-                    </a>
-                </li>
-
-
-                @role('admin')
-                    <!-- User Management -->
-                    <li class="nav-item">
-                        <a href="{{ route('admin.roles') }}"
-                            class="nav-link {{ request()->routeIs('admin.roles*') ? 'active' : '' }}">
-                            <i class="nav-icon bi bi-people"></i>
-                            <p>Role Management</p>
-                        </a>
-                    </li>
+                @role('admin|superadmin')
                     <!-- Farmers -->
                     <li class="nav-item">
                         <a href="{{ route('farmers') }}"
@@ -41,9 +24,9 @@
 
                     <!-- Crops Menu -->
                     <li
-                        class="nav-item {{ request()->is('admin/crop*') || request()->routeIs('admin.crop*') || request()->routeIs('admin.variety*') || request()->routeIs('admin.rootstock*') || request()->routeIs('admin.crops*') ? 'menu-open' : '' }}">
+                        class="nav-item {{ request()->is('admin/crop*') || request()->routeIs('admin.crop*') || request()->routeIs('admin.variety*') || request()->routeIs('admin.rootstock*') || request()->routeIs('admin.crop-varieties*') ? 'menu-open' : '' }}">
                         <a href="#"
-                            class="nav-link {{ request()->is('admin/crop*') || request()->routeIs('admin.crop*') || request()->routeIs('admin.variety*') || request()->routeIs('admin.rootstock*') || request()->routeIs('admin.crops*') ? 'active' : '' }}">
+                            class="nav-link {{ request()->is('admin/crop*') || request()->routeIs('admin.crop*') || request()->routeIs('admin.variety*') || request()->routeIs('admin.rootstock*') || request()->routeIs('admin.crop-varieties*') ? 'active' : '' }}">
                             <i class="nav-icon bi bi-flower1"></i>
                             <p>
                                 Crops
@@ -51,33 +34,33 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview"
-                            style="{{ request()->is('admin/crop*') || request()->routeIs('admin.crop*') || request()->routeIs('admin.variety*') || request()->routeIs('admin.rootstock*') || request()->routeIs('admin.crops*') ? 'display:block;' : 'display:none;' }}">
+                            style="{{ request()->is('admin/crop*') || request()->routeIs('admin.crop*') || request()->routeIs('admin.variety*') || request()->routeIs('admin.rootstock*') || request()->routeIs('admin.crop-varieties*') ? 'display:block;' : 'display:none;' }}">
                             <li class="nav-item">
-                                <a href="{{ route('admin.crop.cat') }}"
-                                    class="nav-link {{ request()->routeIs('admin.crop.cat*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.crops') }}"
+                                    class="nav-link {{ request()->routeIs('admin.crops') || request()->routeIs('admin.crops.*') ? 'active' : '' }}">
+                                    <i class="bi bi-dot nav-icon"></i>
+                                    <p>Crops List</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.crop.categories') }}"
+                                    class="nav-link {{ request()->routeIs('admin.crop.categories*') ? 'active' : '' }}">
                                     <i class="bi bi-dot nav-icon"></i>
                                     <p>Crop Categories</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('admin.crop.type') }}"
-                                    class="nav-link {{ request()->routeIs('admin.crop.type*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.crop.types') }}"
+                                    class="nav-link {{ request()->routeIs('admin.crop.types*') ? 'active' : '' }}">
                                     <i class="bi bi-dot nav-icon"></i>
                                     <p>Crop Types</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('admin.crop') }}"
-                                    class="nav-link {{ request()->routeIs('admin.crop') ? 'active' : '' }}">
+                                <a href="{{ route('admin.crop-varieties') }}"
+                                    class="nav-link {{ request()->routeIs('admin.crop-varieties*') ? 'active' : '' }}">
                                     <i class="bi bi-dot nav-icon"></i>
-                                    <p>Crops</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.crops') }}"
-                                    class="nav-link {{ request()->routeIs('admin.crops*') ? 'active' : '' }}">
-                                    <i class="bi bi-dot nav-icon"></i>
-                                    <p>Variety and Rootstock</p>
+                                    <p>Varieties & Rootstocks</p>
                                 </a>
                             </li>
                         </ul>
@@ -106,52 +89,52 @@
                                 <a href="{{ route('admin.field-agents.assigned-farmers') }}"
                                     class="nav-link {{ request()->routeIs('admin.field-agents.assigned-farmers') ? 'active' : '' }}">
                                     <i class="bi bi-dot nav-icon"></i>
-                                    <p>View Assignments</p>
+                                    <p>Farmer Assignments</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.field-agents.reports') }}"
                                     class="nav-link {{ request()->routeIs('admin.field-agents.reports*') ? 'active' : '' }}">
                                     <i class="bi bi-dot nav-icon"></i>
-                                    <p>Agent Reports</p>
+                                    <p>Field Agent Reports</p>
                                 </a>
                             </li>
                         </ul>
                     </li>
 
 
-                    <!-- Cases Menu -->
+                    <!-- Test Configuration Menu -->
                     <li
-                        class="nav-item {{ request()->is('admin/sampleType*') || request()->is('admin/singlePara*') || request()->is('admin/packages*') ? 'menu-open' : '' }}">
+                        class="nav-item {{ request()->is('admin/sample-types*') || request()->is('admin/test-parameters*') || request()->is('admin/test-packages*') ? 'menu-open' : '' }}">
                         <a href="#"
-                            class="nav-link {{ request()->is('admin/sampleType*') || request()->is('admin/singlePara*') || request()->is('admin/packages*') ? 'active' : '' }}">
+                            class="nav-link {{ request()->is('admin/sample-types*') || request()->is('admin/test-parameters*') || request()->is('admin/test-packages*') ? 'active' : '' }}">
                             <i class="nav-icon bi bi-clipboard-data"></i>
                             <p>
-                                Cases
+                                Test Configurations
                                 <i class="right bi bi-chevron-down"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview"
-                            style="{{ request()->is('admin/sampleType*') || request()->is('admin/singlePara*') || request()->is('admin/packages*') ? 'display:block;' : 'display:none;' }}">
+                            style="{{ request()->is('admin/sample-types*') || request()->is('admin/test-parameters*') || request()->is('admin/test-packages*') ? 'display:block;' : 'display:none;' }}">
                             <li class="nav-item">
-                                <a href="{{ route('admin.sampleType') }}"
-                                    class="nav-link {{ request()->routeIs('admin.sampleType*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.sample-types') }}"
+                                    class="nav-link {{ request()->routeIs('admin.sample-types*') ? 'active' : '' }}">
                                     <i class="bi bi-dot nav-icon"></i>
                                     <p>Sample Types</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('admin.singlePara') }}"
-                                    class="nav-link {{ request()->routeIs('admin.singlePara*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.test-parameters') }}"
+                                    class="nav-link {{ request()->routeIs('admin.test-parameters*') ? 'active' : '' }}">
                                     <i class="bi bi-dot nav-icon"></i>
-                                    <p>Individual Parameters</p>
+                                    <p>Test Parameters</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('admin.packages') }}"
-                                    class="nav-link {{ request()->routeIs('admin.packages*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.test-packages') }}"
+                                    class="nav-link {{ request()->routeIs('admin.test-packages*') ? 'active' : '' }}">
                                     <i class="bi bi-dot nav-icon"></i>
-                                    <p>Packages</p>
+                                    <p>Test Packages</p>
                                 </a>
                             </li>
                         </ul>
@@ -211,28 +194,28 @@
                         </a>
                     </li> --}}
 
-                    <!-- Farmers -->
+                    <!-- Register Farmers -->
                     <li class="nav-item">
                         <a href="{{ route('farmers') }}"
                             class="nav-link {{ request()->routeIs('farmers') ? 'active' : '' }}">
-                            <i class="nav-icon bi bi-people"></i>
-                            <p>Add Farmers</p>
+                            <i class="nav-icon bi bi-person-plus"></i>
+                            <p>Register Farmers</p>
                         </a>
                     </li>
-                    <!-- Farmers -->
+                    <!-- Sample Collection -->
                     <li class="nav-item">
                         <a href="{{ route('agent.samples') }}"
                             class="nav-link {{ request()->routeIs('agent.samples') ? 'active' : '' }}">
-                            <i class="nav-icon bi bi-people"></i>
-                            <p>Collect Samples</p>
+                            <i class="nav-icon bi bi-box-seam"></i>
+                            <p>Sample Collection</p>
                         </a>
                     </li>
-                    <!-- Farmers -->
+                    <!-- Assigned Farmers -->
                     <li class="nav-item">
                         <a href="{{ route('agent.farmers') }}"
                             class="nav-link {{ request()->routeIs('agent.farmers') ? 'active' : '' }}">
                             <i class="nav-icon bi bi-people"></i>
-                            <p>Assigned Farmers</p>
+                            <p>My Assigned Farmers</p>
                         </a>
                     </li>
 
@@ -277,19 +260,13 @@
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon bi bi-briefcase"></i>
-                            <p>Assigned Cases</p>
+                            <p>My Test Requests</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon bi bi-lightbulb"></i>
                             <p>Recommendations</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-people"></i>
-                            <p>Farmers</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -304,19 +281,19 @@
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon bi bi-clipboard-pulse"></i>
-                            <p>Assigned Tests</p>
+                            <p>My Assigned Tests</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon bi bi-upload"></i>
-                            <p>Upload Results</p>
+                            <p>Upload Test Results</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon bi bi-bar-chart"></i>
-                            <p>Reports</p>
+                            <p>Test Reports</p>
                         </a>
                     </li>
                 @endrole
@@ -364,14 +341,14 @@
                             style="{{ request()->is('farmers*') ? 'display:block;' : 'display:none;' }}">
                             <li class="nav-item">
                                 <a href="{{ route('farmer.create') }}"
-                                    class="nav-link {{ request()->routeIs('farmers.create') ? 'active' : '' }}">
+                                    class="nav-link {{ request()->routeIs('farmer.create') ? 'active' : '' }}">
                                     <i class="bi bi-dot nav-icon"></i>
                                     <p>Add New Farmer</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('farmers') }}"
-                                    class="nav-link {{ request()->routeIs('farmers.index') ? 'active' : '' }}">
+                                    class="nav-link {{ request()->routeIs('farmers') || request()->routeIs('farmer.*') ? 'active' : '' }}">
                                     <i class="bi bi-dot nav-icon"></i>
                                     <p>Manage Farmers</p>
                                 </a>
@@ -382,23 +359,23 @@
                     <li class="nav-item">
                         <a href="{{ route('sample') }}"
                             class="nav-link {{ request()->routeIs('sample') ? 'active' : '' }}">
-                            <i class="nav-icon bi bi-speedometer2"></i>
-                            <p>Create Samples</p>
+                            <i class="nav-icon bi bi-file-earmark-plus"></i>
+                            <p>Create Test Request</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('frontoffice.samples.accept') }}"
                             class="nav-link {{ request()->routeIs('frontoffice.samples.accept') ? 'active' : '' }}">
-                            <i class="bi bi-speedometer nav-icon"></i>
-                            <p>Accept Samples</p>
+                            <i class="bi bi-check-circle nav-icon"></i>
+                            <p>Sample Intake</p>
                         </a>
                     </li>
                     {{-- In Blade sidebar --}}
                     <li class="nav-item">
                         <a href="{{ route('frontoffice.all-batches') }}"
                             class="nav-link {{ request()->routeIs('frontoffice.batches.create') ? 'active' : '' }}">
-                            <i class="bi bi-speedometer nav-icon"></i>
-                           <p> Batches</p>
+                            <i class="bi bi-boxes nav-icon"></i>
+                           <p>Sample Batches</p>
                         </a>
                     </li>
 
@@ -449,7 +426,14 @@
         </nav>
     </div>
 </aside>
- <script>
+<style>
+    .app-sidebar .nav-link p .right,
+    .app-sidebar .nav-link .right {
+        transition: transform 0.3s ease;
+        display: inline-block;
+    }
+</style>
+<script>
     document.addEventListener('DOMContentLoaded', function() {
         const sidebar = document.querySelector('.app-sidebar .sidebar-wrapper');
         const menuItems = document.querySelectorAll('.nav-item > .nav-link');
@@ -477,18 +461,30 @@
                             if (openSubmenu) {
                                 openSubmenu.style.display = 'none'; // Hide submenu
                             }
-                            const openLink = openItem.querySelector('> .nav-link');
+                            const openLink = openItem.querySelector('.nav-link');
                             if (openLink) {
                                 openLink.classList.remove('active');
+                                // Rotate chevron icon back
+                                const pTag = openLink.querySelector('p');
+                                const chevron = pTag ? pTag.querySelector('.right') : null;
+                                if (chevron) {
+                                    chevron.style.transform = 'rotate(0deg)';
+                                }
                             }
                         }
                     });
 
                     // Toggle current menu
+                    const pTag = this.querySelector('p');
+                    const chevron = pTag ? pTag.querySelector('.right') : null;
                     if (!isOpen) {
                         parent.classList.add('menu-open');
                         submenu.style.display = 'block';
                         this.classList.add('active');
+                        // Rotate chevron icon down (180 degrees)
+                        if (chevron) {
+                            chevron.style.transform = 'rotate(180deg)';
+                        }
                     } else {
                         parent.classList.remove('menu-open');
                         submenu.style.display = 'none'; // Hide submenu
@@ -496,9 +492,25 @@
                                 '.nav-treeview .nav-link.active')) {
                             this.classList.remove('active');
                         }
+                        // Rotate chevron icon back (0 degrees)
+                        if (chevron) {
+                            chevron.style.transform = 'rotate(0deg)';
+                        }
                     }
                 }
             });
+        });
+
+        // Initialize chevron rotation for already open menus
+        document.querySelectorAll('.nav-item.menu-open').forEach(function(openItem) {
+            const openLink = openItem.querySelector('.nav-link');
+            if (openLink) {
+                const pTag = openLink.querySelector('p');
+                const chevron = pTag ? pTag.querySelector('.right') : null;
+                if (chevron) {
+                    chevron.style.transform = 'rotate(180deg)';
+                }
+            }
         });
 
         // Auto-scroll to active link

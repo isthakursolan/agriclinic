@@ -4,9 +4,9 @@
     <div class="content-wrapper pt-4">
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-map-marker-alt"></i> Field Details: {{ $field->field_name }}</h3>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-geo-alt me-2"></i> Field Details: {{ $field->field_name }}</h3>
                     </div>
                     <div class="row">
                         <div class="col text-end m-1">
@@ -25,7 +25,7 @@
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-header bg-primary text-white">
-                                        <h5 class="card-title mb-0"><i class="fas fa-info-circle"></i> Field Information</h5>
+                                        <h5 class="card-title mb-0"><i class="bi bi-info-circle me-2"></i> Field Information</h5>
                                     </div>
                                     <div class="card-body">
                                         <table class="table table-bordered">
@@ -62,7 +62,7 @@
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-header bg-success text-white">
-                                        <h5 class="card-title mb-0"><i class="fas fa-tint"></i> Irrigation & Location</h5>
+                                        <h5 class="card-title mb-0"><i class="bi bi-droplet me-2"></i> Irrigation & Location</h5>
                                     </div>
                                     <div class="card-body">
                                         <table class="table table-bordered">
@@ -88,7 +88,7 @@
                                                 <td>
                                                     <a href="https://maps.google.com/?q={{ $field->field_latitude }},{{ $field->field_longitude }}"
                                                        target="_blank" class="btn btn-sm btn-primary">
-                                                        <i class="fas fa-map-marker-alt"></i> View on Map
+                                                        <i class="bi bi-geo-alt me-2"></i> View on Map
                                                     </a>
                                                 </td>
                                             </tr>
@@ -104,7 +104,7 @@
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-header bg-warning text-white">
-                                        <h5 class="card-title mb-0"><i class="fas fa-user"></i> Farmer Information</h5>
+                                        <h5 class="card-title mb-0"><i class="bi bi-person me-2"></i> Farmer Information</h5>
                                     </div>
                                     <div class="card-body">
                                         <table class="table table-bordered">
@@ -143,7 +143,7 @@
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-header bg-info text-white">
-                                        <h5 class="card-title mb-0"><i class="fas fa-file-alt"></i> Description & Map</h5>
+                                        <h5 class="card-title mb-0"><i class="bi bi-file-text me-2"></i> Description & Map</h5>
                                     </div>
                                     <div class="card-body">
                                         @if($field->description)
@@ -177,7 +177,7 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header bg-danger text-white">
-                                        <h5 class="card-title mb-0"><i class="fas fa-tasks"></i> Tasks for this Field</h5>
+                                        <h5 class="card-title mb-0"><i class="bi bi-list-task me-2"></i> Tasks for this Field</h5>
                                     </div>
                                     <div class="card-body">
                                         @if($tasks && $tasks->count() > 0)
@@ -236,7 +236,7 @@
                                                                         @if($task->reports && $task->reports->count() > 0)
                                                                             <a href="{{ route('agent.reports.show', $task->reports->first()->id) }}"
                                                                                class="btn btn-sm btn-primary">
-                                                                                <i class="fas fa-file-alt"></i> View Report
+                                                                                <i class="bi bi-file-text me-2"></i> View Report
                                                                             </a>
                                                                         @else
                                                                             <span class="badge badge-success">Completed</span>
@@ -275,10 +275,10 @@
                     </div>
                     <div class="modal-body">
                         <div class="alert alert-info">
-                            <i class="fas fa-info-circle"></i> Please provide detailed notes about the work completed and any observations made.
+                            <i class="bi bi-info-circle me-2"></i> Please provide detailed notes about the work completed and any observations made.
                         </div>
                         <div class="form-group">
-                            <label for="notes">Task Completion Notes <span class="text-danger">*</span></label>
+                            <label for="notes">Task Completion Notes <span style="color: #777777;">*</span></label>
                             <textarea name="notes" id="notes" class="form-control" rows="6"
                                       placeholder="Describe what was done, observations made, any issues encountered, recommendations for future..." required></textarea>
                             <small class="form-text text-muted">Minimum 10 characters required.</small>

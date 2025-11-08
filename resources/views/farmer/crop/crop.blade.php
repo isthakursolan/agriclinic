@@ -4,14 +4,14 @@
     <div class="content-wrapper pt-4">
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-map-marked-alt"></i> Crops</h3>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-flower1 me-2"></i> Crops</h3>
                     </div>
                     <div class="row">
                         <div class="col text-end m-1">
-                            <a href="{{ route('user.add.crop') }}" class="btn btn-primary">
-                                Add Crop
+                            <a href="{{ route('user.add.crop') }}" class="btn btn-dark mb-3">
+                                <i class="bi bi-plus-circle me-2"></i>Add Crop
                             </a>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                                     <td>{{ $crop->expected_harvest_date }}</td>
                                     <td>
                                         <a href="{{ route('user.edit.crop', $crop->id) }}" class="btn btn-sm btn-primary">
-                                            <i class="fas fa-edit"></i>Update
+                                            <i class="bi bi-pencil-square me-2"></i>Update
                                         </a>
                                         {{-- <form action="{{ route('user.crop.destroy', $crop->id) }}" method="get" style="display:inline-block;">
                                         @csrf

@@ -4,10 +4,10 @@
     <div class="content-wrapper pt-4">
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            <i class="fas fa-map-marked-alt"></i>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white">
+                            <i class="bi bi-pencil-square me-2"></i>
                             {{ $sample ? 'Edit Sample for Sample Id : ' . $sample->id : 'Book Tests' }}
                         </h3>
                     </div>
@@ -302,11 +302,13 @@
                         </div>
 
                         <div class="card-footer text-right">
-                            <button type="submit" class="btn btn-success">
-                                <i class="fas fa-save"></i>
-                                {{ $sample ? 'Update Sample' : 'Submit' }}
-                            </button>
-                            <a href="{{ route('user.sample') }}" class="btn btn-secondary">Cancel</a>
+                            <div style="padding: 15px;">
+                                <button type="submit" class="btn btn-dark">
+                                    <i class="fas fa-save"></i>
+                                    {{ $sample ? 'Update Sample' : 'Submit' }}
+                                </button>
+                                <a href="{{ route('user.sample') }}" class="btn btn-secondary">Cancel</a>
+                            </div>
                         </div>
                 </div>
                 </form>

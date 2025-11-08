@@ -1,26 +1,42 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="content-wrapper pt-4">
-        <section class="content">
-            <div class="container-fluid">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-map-marked-alt"></i> Packages</h3>
-                    </div>
+    <div class="app-content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2 class="text-2xl font-bold mb-0">Test Packages</h2>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-end mb-0">
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Test Configuration</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Test Packages</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="app-content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header text-white" style="background-color: #777777;">
+                    <h3 class="card-title mb-0 text-white"><i class="bi bi-box-seam me-2"></i> Packages</h3>
+                </div>
                     <div class="row">
                         <div class="col text-end m-1">
-                            <a href="{{ route('admin.packages.create') }}" class="btn btn-primary">
-                                Add Packages
+                            <a href="{{ route('admin.test-packages.create') }}" class="btn btn-dark mb-3">
+                                <i class="bi bi-plus-circle me-2"></i>Add Packages
                             </a>
                         </div>
                     </div>
 
-                    @if (session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
-                    @endif
+                    <div class="card-body">
+                        @if (session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
 
-                    <table class="datatable table table-bordered table-striped">
+                        <table class="datatable table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -29,7 +45,7 @@
                                 <th>Price</th>
                                 <th>Reporting Time</th>
                                 <th>Parameters</th>
-                                <th>Actions</th>
+                                <th class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -51,10 +67,12 @@
                                             @endforeach
                                         @endif
                                     </td>
-                                    <td>
-                                        <a href="{{ route('admin.packages.edit', $package->id) }}"
-                                            class="btn btn-primary btn-sm">Update</a>
-                                        {{-- <form action="{{ route('admin.packages.destroy', $package->id) }}" method="get"
+                                    <td class="text-center">
+                                        <a href="{{ route('admin.test-packages.edit', $package->id) }}"
+                                            class="btn btn-dark btn-sm" title="Update Package">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        {{-- <form action="{{ route('admin.test-packages.destroy', $package->id) }}" method="get"
                                             class="d-inline" onsubmit="return confirm('Delete this package?')">
                                             @csrf
                                             @method('DELETE')
@@ -64,8 +82,10 @@
                                 </tr>
                             @endforeach
                         </tbody>
-                    </table>
+                        </table>
+                    </div>
                 </div>
-        </section>
+            </div>
+        </div>
     </div>
 @endsection

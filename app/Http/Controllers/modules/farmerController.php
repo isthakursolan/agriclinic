@@ -70,7 +70,7 @@ class farmerController extends Controller
             // ... add other fields here
         ]);
 
-        return redirect()->route('modules.farmers')->with('success', 'Farmer created successfully');
+        return redirect()->route('farmers')->with('success', 'Farmer created successfully');
     }
 
     public function farmerEdit($id)
@@ -128,7 +128,7 @@ class farmerController extends Controller
 
         $profile->save();
 
-        return redirect()->route('modules.farmers')
+        return redirect()->route('farmers')
             ->with('success', 'Farmer updated successfully.');
     }
 
@@ -140,6 +140,6 @@ class farmerController extends Controller
         }
         $user->delete();
 
-        return redirect()->route('modules.farmers')->with('success', 'Farmer deleted successfully!');
+        return redirect()->route('farmers')->with('success', 'Farmer deleted successfully!');
     }
 }

@@ -6,10 +6,10 @@
             <div class="container-fluid">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h2 class="mb-0 text-dark fw-bold">
-                        <i class="fas fa-user text-success"></i> Farmer Profile
+                        <i style="color: #777777;"></i> Farmer Profile
                     </h2>
                     <a href="{{ route('user.profile.edit', $profile->id) }}" class="btn btn-success shadow-sm">
-                        <i class="fas fa-edit"></i> Update Profile
+                        <i class="bi bi-pencil-square me-2"></i> Update Profile
                     </a>
                 </div>
                 @if (session('success'))
@@ -21,7 +21,7 @@
                     <div class="col-md-6">
                         <div class="card shadow-sm border-0 mb-4">
                             <div class="card-header bg-success text-white d-flex align-items-center">
-                                <span class="badge bg-white text-success me-2 p-2 rounded-circle">
+                                <span style="color: #777777;">
                                     <i class="fas fa-user-circle"></i>
                                 </span>
                                 <h5 class="mb-0 fw-bold">Personal Information</h5>
@@ -42,8 +42,8 @@
                     <div class="col-md-6">
                         <div class="card shadow-sm border-0 mb-4">
                             <div class="card-header bg-primary text-white d-flex align-items-center">
-                                <span class="badge bg-white text-primary me-2 p-2 rounded-circle">
-                                    <i class="fas fa-map-marker-alt"></i>
+                                <span style="color: #777777;">
+                                    <i class="bi bi-geo-alt me-2"></i>
                                 </span>
                                 <h5 class="mb-0 fw-bold">Address</h5>
                             </div>
@@ -63,7 +63,7 @@
                     <div class="col-md-6">
                         <div class="card shadow-sm border-0 mb-4">
                             <div class="card-header bg-warning text-dark d-flex align-items-center">
-                                <span class="badge bg-dark text-warning me-2 p-2 rounded-circle">
+                                <span style="color: #777777;">
                                     <i class="fas fa-tractor"></i>
                                 </span>
                                 <h5 class="mb-0 fw-bold">Land & Farming</h5>
@@ -82,7 +82,7 @@
                         <div class="card shadow-sm border-0 mb-4">
                             <div class="card-header bg-info text-white d-flex align-items-center">
                                 <span class="badge bg-white text-info me-2 p-2 rounded-circle">
-                                    <i class="fas fa-seedling"></i>
+                                    <i class="bi bi-flower1 me-2"></i>
                                 </span>
                                 <h5 class="mb-0 fw-bold">Crop Details</h5>
                             </div>

@@ -4,19 +4,20 @@
     <div class="content-wrapper pt-4">
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-tasks"></i> Create Task for Field Agent</h3>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-list-task me-2"></i> Create Task for Field Agent</h3>
                     </div>
                     <form action="{{ route('admin.field-agents.store-task') }}" method="POST">
                         @csrf
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="field_agent_id">Select Field Agent <span
-                                                class="text-danger">*</span></label>
-                                        <select name="field_agent_id" id="field_agent_id" class="form-control" required>
+                            <div style="padding: 15px;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="field_agent_id" class="form-label fw-semibold">Select Field Agent <span
+                                                    style="color: #777777;">*</span></label>
+                                            <select name="field_agent_id" id="field_agent_id" class="form-select" required>
                                             <option value="">Choose Field Agent</option>
                                             @foreach ($agents as $agent)
                                                 <option value="{{ $agent->id }}"
@@ -29,14 +30,14 @@
                                             @endforeach
                                         </select>
                                         @error('field_agent_id')
-                                            <span class="text-danger">{{ $message }}</span>
+                                            <span style="color: #777777;">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="farmer_id">Select Farmer (Optional)</label>
-                                        <select name="farmer_id" id="farmer_id" class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="farmer_id" class="form-label fw-semibold">Select Farmer (Optional)</label>
+                                            <select name="farmer_id" id="farmer_id" class="form-select">
                                             <option value="">Choose Farmer</option>
                                             @foreach ($farmers as $farmer)
                                                 <option value="{{ $farmer->id }}">
@@ -45,67 +46,72 @@
                                             @endforeach
                                         </select>
                                         @error('farmer_id')
-                                            <span class="text-danger">{{ $message }}</span>
+                                            <span style="color: #777777;">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="field_id">Select Field (Optional)</label>
-                                        <select name="field_id" id="field_id" class="form-control" disabled>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="field_id" class="form-label fw-semibold">Select Field (Optional)</label>
+                                            <select name="field_id" id="field_id" class="form-select" disabled>
                                             <option value="">First select a farmer</option>
                                         </select>
                                         <small class="text-muted">Fields will appear after selecting a farmer</small>
                                         @error('field_id')
-                                            <span class="text-danger">{{ $message }}</span>
+                                            <span style="color: #777777;">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="due_date">Due Date <span class="text-danger">*</span></label>
-                                        <input type="date" name="due_date" id="due_date" class="form-control"
-                                            min="{{ date('Y-m-d', strtotime('+1 day')) }}" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="due_date" class="form-label fw-semibold">Due Date <span style="color: #777777;">*</span></label>
+                                            <input type="date" name="due_date" id="due_date" class="form-control"
+                                                min="{{ date('Y-m-d', strtotime('+1 day')) }}" required>
                                         @error('due_date')
-                                            <span class="text-danger">{{ $message }}</span>
+                                            <span style="color: #777777;">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="title">Task Title <span class="text-danger">*</span></label>
-                                        <input type="text" name="title" id="title" class="form-control"
-                                            placeholder="Enter task title" required>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <label for="title" class="form-label fw-semibold">Task Title <span style="color: #777777;">*</span></label>
+                                            <input type="text" name="title" id="title" class="form-control"
+                                                placeholder="Enter task title" required>
                                         @error('title')
-                                            <span class="text-danger">{{ $message }}</span>
+                                            <span style="color: #777777;">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="description">Task Description <span class="text-danger">*</span></label>
-                                        <textarea name="description" id="description" class="form-control" rows="4"
-                                            placeholder="Enter detailed task description" required></textarea>
-                                        @error('description')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <label for="description" class="form-label fw-semibold">Task Description <span style="color: #777777;">*</span></label>
+                                            <textarea name="description" id="description" class="form-control" rows="4"
+                                                placeholder="Enter detailed task description" required></textarea>
+                                            @error('description')
+                                                <span style="color: #777777;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-success">
-                                <i class="fas fa-save"></i> Create Task
-                            </button>
-                            <a href="{{ route('admin.field-agents') }}" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left"></i> Back
-                            </a>
+                        <div class="card-footer text-right">
+                            <div style="padding: 15px;">
+                                <div class="d-flex justify-content-start gap-2">
+                                    <button type="submit" class="btn btn-dark">
+                                        <i class="bi bi-save me-1"></i> Create Task
+                                    </button>
+                                    <a href="{{ route('admin.field-agents') }}" class="btn btn-secondary">
+                                        <i class="bi bi-x-circle me-1"></i> Cancel
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>

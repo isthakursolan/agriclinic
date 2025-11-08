@@ -4,9 +4,9 @@
     <div class="content-wrapper pt-4">
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-user"></i> Farmer Details: {{ $farmer->fullname }}</h3>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-person me-2"></i> Farmer Details: {{ $farmer->fullname }}</h3>
                     </div>
                     <div class="row">
                         <div class="col text-end m-1">
@@ -25,7 +25,7 @@
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-header bg-primary text-white">
-                                        <h5 class="card-title mb-0"><i class="fas fa-info-circle"></i> Farmer Information</h5>
+                                        <h5 class="card-title mb-0"><i class="bi bi-info-circle me-2"></i> Farmer Information</h5>
                                     </div>
                                     <div class="card-body">
                                         <table class="table table-bordered">
@@ -46,7 +46,7 @@
                                                 <td>
                                                     {{ $farmer->contact }}
                                                     @if($farmer->whatsapp)
-                                                        <br><small class="text-success">WhatsApp: {{ $farmer->whatsapp }}</small>
+                                                        <br><small style="color: #777777;">WhatsApp: {{ $farmer->whatsapp }}</small>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -82,7 +82,7 @@
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-header bg-success text-white">
-                                        <h5 class="card-title mb-0"><i class="fas fa-seedling"></i> Farming Information</h5>
+                                        <h5 class="card-title mb-0"><i class="bi bi-flower1 me-2"></i> Farming Information</h5>
                                     </div>
                                     <div class="card-body">
                                         <table class="table table-bordered">
@@ -121,7 +121,7 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header bg-info text-white">
-                                        <h5 class="card-title mb-0"><i class="fas fa-map-marker-alt"></i> Fields</h5>
+                                        <h5 class="card-title mb-0"><i class="bi bi-geo-alt me-2"></i> Fields</h5>
                                     </div>
                                     <div class="card-body">
                                         @if($farmer->fields && $farmer->fields->count() > 0)
@@ -177,7 +177,7 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header bg-warning text-white">
-                                        <h5 class="card-title mb-0"><i class="fas fa-tasks"></i> Tasks</h5>
+                                        <h5 class="card-title mb-0"><i class="bi bi-list-task me-2"></i> Tasks</h5>
                                     </div>
                                     <div class="card-body">
                                         @if($tasks && $tasks->count() > 0)
@@ -235,7 +235,7 @@
                                                                         @if($task->reports && $task->reports->count() > 0)
                                                                             <a href="{{ route('agent.reports.show', $task->reports->first()->id) }}"
                                                                             class="btn btn-sm btn-primary">
-                                                                                <i class="fas fa-file-alt"></i> View Report
+                                                                                <i class="bi bi-file-text me-2"></i> View Report
                                                                             </a>
                                                                         @else
                                                                             <span class="badge badge-success">Completed</span>
@@ -274,7 +274,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="notes">Notes <span class="text-danger">*</span></label>
+                            <label for="notes">Notes <span style="color: #777777;">*</span></label>
                             <textarea name="notes" id="notes" class="form-control" rows="5"
                                       placeholder="Enter detailed notes about the task completion" required></textarea>
                         </div>

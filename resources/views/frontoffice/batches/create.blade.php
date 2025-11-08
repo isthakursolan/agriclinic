@@ -5,11 +5,11 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title"> Create Batch</h3>
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-plus-circle me-2"></i>Create Batch</h3>
                         {{-- <div class="card-tools">
                             <a href="{{ route('frontoffice.samples.create') }}" class="btn btn-primary">
-                                <i class="fas fa-plus"></i> Register New Sample
+                                <i class="bi bi-plus-circle me-2"></i> Register New Sample
                             </a>
                         </div> --}}
                     </div>
@@ -53,7 +53,7 @@
                                 </table>
                             </div>
                              @if ($samples->isnotEmpty())
-                            <button type="submit" class="btn btn-primary">Create Batch Manually</button>
+                            <button type="submit" class="btn btn-dark"><i class="bi bi-plus-circle me-2"></i>Create Batch Manually</button>
                             @endif
                         </form>
                     </div>

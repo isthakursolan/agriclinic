@@ -33,7 +33,7 @@ class casesController extends Controller
         ]);
 
         SampleTypeModel::create($request->all());
-        return redirect()->route('admin.sampleType')->with('success', 'Sample Type created.');
+        return redirect()->route('admin.sample-types')->with('success', 'Sample Type created.');
     }
 
     public function typeEdit($id)
@@ -54,14 +54,14 @@ class casesController extends Controller
         ]);
 
         $sample_type->update($request->all());
-        return redirect()->route('admin.sampleType')->with('success', 'Sample Type updated.');
+        return redirect()->route('admin.sample-types')->with('success', 'Sample Type updated.');
     }
 
     public function typeDestroy($id)
     {
         $sample_type = sampleTypeModel::findOrFail($id);
         $sample_type->delete();
-        return redirect()->route('admin.sampleType')->with('success', 'Sample Type deleted.');
+        return redirect()->route('admin.sample-types')->with('success', 'Sample Type deleted.');
     }
 
 
@@ -93,7 +93,7 @@ class casesController extends Controller
 
         individualParameterModel::create($request->all());
 
-        return redirect()->route('admin.singlePara')->with('success', 'Parameter created successfully.');
+        return redirect()->route('admin.test-parameters')->with('success', 'Parameter created successfully.');
     }
 
     public function individualEdit($id)
@@ -118,7 +118,7 @@ class casesController extends Controller
 
         $parameter->update($request->all());
 
-        return redirect()->route('admin.singlePara')->with('success', 'Parameter updated successfully.');
+        return redirect()->route('admin.test-parameters')->with('success', 'Parameter updated successfully.');
     }
 
     public function individualDestroy($id)
@@ -126,7 +126,7 @@ class casesController extends Controller
         $parameter = individualParameterModel::findOrFail($id);
         $parameter->delete();
 
-        return redirect()->route('admin.singlePara')->with('success', 'Parameter deleted successfully.');
+        return redirect()->route('admin.test-parameters')->with('success', 'Parameter deleted successfully.');
     }
 
 
@@ -165,7 +165,7 @@ class casesController extends Controller
             'parameters' => $request->parameters, // JSON string of selected parameter IDs
         ]);
 
-        return redirect()->route('admin.packages')->with('success', 'Package created successfully.');
+        return redirect()->route('admin.test-packages')->with('success', 'Package created successfully.');
     }
 
     public function packagesEdit($id)
@@ -198,7 +198,7 @@ class casesController extends Controller
             'parameters' => $request->parameters, // JSON string of selected parameter IDs
         ]);
 
-        return redirect()->route('admin.packages')->with('success', 'Package updated successfully.');
+        return redirect()->route('admin.test-packages')->with('success', 'Package updated successfully.');
     }
 
     public function packagesDestroy($id)
@@ -206,6 +206,6 @@ class casesController extends Controller
         $package = packagesModel::findOrFail($id);
         $package->delete();
 
-        return redirect()->route('admin.packages')->with('success', 'Package deleted successfully.');
+        return redirect()->route('admin.test-packages')->with('success', 'Package deleted successfully.');
     }
 }

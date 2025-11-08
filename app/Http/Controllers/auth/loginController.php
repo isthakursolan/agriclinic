@@ -67,18 +67,20 @@ class loginController extends Controller
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
-        $loginInput = $request->login;
-        $password = $request->password;
+        
         // Find the user by email, username, or contact
+        $loginInput = $request->email;
         $user = User::where('email', $loginInput)
             ->orWhere('username', $loginInput)
             ->orWhere('contact', $loginInput)
             ->first();
-        if (Auth::attempt($request->only('email', 'password'))) {
-            // if ($user && Auth::attempt(['id' => $user->id, 'password' => $password])) {
+        
+        if ($user && Auth::attempt(['email' => $user->email, 'password' => $request->password])) {
             $user = Auth::user();
             $profile = profileModel::where('user_id', $user->id)->first();
-            $request->session()->put(['id' => $profile->id]);
+            if ($profile) {
+                $request->session()->put(['id' => $profile->id]);
+            }
             // Route to role-specific views or reuse one view with conditional widgets
             if ($user->hasRole(['admin', 'superadmin'])) {
                 return redirect()->route('admin.dashboard');
