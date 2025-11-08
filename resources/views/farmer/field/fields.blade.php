@@ -50,7 +50,11 @@
                                         </form> --}}
                                     </td>
                                 </tr>
-                            @endforeach
+                                @empty
+                                <tr>
+                                    <td colspan="8" class="text-center">No field found.</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

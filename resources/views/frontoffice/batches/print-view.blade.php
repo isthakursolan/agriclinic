@@ -4,7 +4,7 @@
 <div class="print-container">
     @if($printMode)
         <h2 class="text-center">Batch Parameters Report</h2>
-        <table class="table table-bordered">
+        <table class="table table-bordered ">
             <thead>
                 <tr>
                     <th>Parameter Name</th>

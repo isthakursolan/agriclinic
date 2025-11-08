@@ -119,10 +119,10 @@
                             </div>
                             <div class="card-footer text-right">
                                 {{-- <button type="submit" class="btn btn-success"><i class="fas fa-save"></i>
-                                    Submit</button>
-                                <a href="{{ route('user.sample') }}" class="btn btn-secondary">Cancel</a> --}}
+                                    Submit</button>--}}
                                 <button type="button" id="addSampleBtn" class="btn btn-primary">Add Sample</button>
                                 <button type="button" id="paymentBtn" class="btn btn-success">Proceed to Payment</button>
+                                <a href="{{ route('user.sample') }}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </div>
                     </form>

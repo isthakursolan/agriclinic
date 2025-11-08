@@ -111,6 +111,7 @@
 
                     <div class="card-footer text-right">
                         <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Update Crop</button>
+                        <a href="{{ route('user.crop') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>

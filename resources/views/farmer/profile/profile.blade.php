@@ -230,7 +230,7 @@
                         </div>
                         <div class="card-footer text-right">
                             <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Submit</button>
-                            {{-- <a href="{{ route('profile') }}" class="btn btn-secondary">Cancel</a> --}}
+                            <a href="{{ route('user.profile') }}" class="btn btn-secondary">Cancel</a>
                         </div>
                     </form>
                 </div>

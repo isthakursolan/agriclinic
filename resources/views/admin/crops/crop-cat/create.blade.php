@@ -29,7 +29,7 @@
                         <div class="card-footer text-right">
                             <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save
                                 Category</button>
-                            <a href="{{ route('admin.crop.cat') }}" class="btn btn-secondary">Back</a>
+                            <a href="{{ route('admin.crop.cat') }}" class="btn btn-secondary">Cancel</a>
                         </div>
                     </form>
                 </div>

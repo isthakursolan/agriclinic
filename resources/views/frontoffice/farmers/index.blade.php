@@ -20,7 +20,7 @@
                             </div>
                         @endif
 
-                        <table id="farmersTable" class="table table-bordered table-striped">
+                        <table id="farmersTable" class="datatable table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>ID</th>

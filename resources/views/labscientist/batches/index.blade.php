@@ -15,7 +15,7 @@
                             </div>
                         @endif
 
-                        <table id="samplesTable" class="table table-bordered table-striped">
+                        <table id="samplesTable" class="table table-bordered table-striped datatable">
                             <thead>
                                 <tr>
                                     <th>Batch No</th>

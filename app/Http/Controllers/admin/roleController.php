@@ -30,7 +30,7 @@ class roleController extends Controller
             return redirect()->back()->with('error', 'You cannot change role of admin or superadmin');
         }
 
-        $roles = Role::all();
+        $roles = Role::where('name', '!=', 'admin')->where('name', '!=', 'superadmin')->get();
         return view('admin.roles.edit', compact('user', 'roles'));
     }
 
@@ -39,11 +39,6 @@ class roleController extends Controller
         if ($user->hasRole(['admin', 'superadmin'])) {
             return redirect()->back()->with('error', 'You cannot change role of admin or superadmin');
         }
-
-        // $request->validate([
-        //     'role' => 'required|exists:roles,name',
-        // ]);
-
          $request->validate([
             'role'   => 'required|array|min:1',
             'role.*' => 'exists:roles,name',

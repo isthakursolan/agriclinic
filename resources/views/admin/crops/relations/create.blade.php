@@ -39,7 +39,7 @@
                     </div>
                     <div class="card-footer text-right">
                         <button type="submit" class="btn btn-success">Save</button>
-                        <a href="{{ route('admin.crops') }}" class="btn btn-secondary">Back</a>
+                        <a href="{{ route('admin.crops') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>

@@ -24,7 +24,7 @@
                             <!-- Report Information -->
                             <div class="col-md-6">
                                 <h5><i class="fas fa-info-circle"></i> Report Information</h5>
-                                <table class="table table-bordered">
+                                <table class="datatable table table-bordered">
                                     <tr>
                                         <td><strong>Report ID:</strong></td>
                                         <td>#{{ $report->id }}</td>
@@ -51,7 +51,7 @@
                             <!-- Field Agent Information -->
                             <div class="col-md-6">
                                 <h5><i class="fas fa-user"></i> Field Agent Information</h5>
-                                <table class="table table-bordered">
+                                <table class="datatable table table-bordered">
                                     <tr>
                                         <td><strong>Agent Name:</strong></td>
                                         <td>{{ $report->fieldAgent->name }}</td>
@@ -78,7 +78,7 @@
                             <!-- Task Information -->
                             <div class="col-md-6">
                                 <h5><i class="fas fa-tasks"></i> Task Information</h5>
-                                <table class="table table-bordered">
+                                <table class="datatable table table-bordered">
                                     <tr>
                                         <td><strong>Task Title:</strong></td>
                                         <td>{{ $report->task->title }}</td>
@@ -102,7 +102,7 @@
                             <!-- Farmer & Field Information -->
                             <div class="col-md-6">
                                 <h5><i class="fas fa-seedling"></i> Farmer & Field Information</h5>
-                                <table class="table table-bordered">
+                                <table class="datatable table table-bordered">
                                     <tr>
                                         <td><strong>Farmer:</strong></td>
                                         <td>

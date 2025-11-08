@@ -55,7 +55,7 @@
 
                         <h4>Investigation Results</h4>
                         @if ($sample->investigations->count() > 0)
-                            <table class="table table-bordered">
+                            <table class="datatable table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>Parameter</th>

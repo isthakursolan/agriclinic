@@ -21,6 +21,7 @@
 
                 @role('admin')
                     <!-- User Management -->
+                    <span class=" text-white font-medium">Admin Menu</span>
                     <li class="nav-item">
                         <a href="{{ route('admin.roles') }}"
                             class="nav-link {{ request()->routeIs('admin.roles*') ? 'active' : '' }}">
@@ -159,6 +160,7 @@
                 @endrole
 
                 @role('farmer')
+                <span class=" text-white font-medium">Farmer Menu</span>
                     <li class="nav-item">
                         <a href="{{ route('user.profile') }}"
                             class="nav-link {{ request()->routeIs('user.profile*') ? 'active' : '' }}">
@@ -202,6 +204,7 @@
                 @endrole
 
                 @role('field_agent')
+                <span class=" text-white font-medium">Field Agent Menu</span>
                     <!-- Dashboard -->
                     {{-- <li class="nav-item">
                         <a href="{{ route('agent.dashboard') }}"
@@ -270,7 +273,8 @@
                     </li> --}}
                 @endrole
 
-                @role('consultant')
+                {{-- @role('consultant')
+                <span class=" text-white font-medium">Consultant Menu</span>
                     <!-- Farmers -->
                     <li class="nav-item">
                         <a href="{{ route('farmers') }}"
@@ -304,9 +308,10 @@
                             <p>Reports</p>
                         </a>
                     </li>
-                @endrole
+                @endrole --}}
 
-                @role('lab_scientist')
+                {{-- @role('lab_scientist')
+                <span class=" text-white font-medium">Lab Scientist Menu</span>
                     <!-- Farmers -->
                     <li class="nav-item">
                         <a href="{{ route('lab.batches.index') }}"
@@ -329,9 +334,10 @@
                             <p>Reports</p>
                         </a>
                     </li>
-                @endrole
+                @endrole --}}
 
                 @role('analyst')
+                <span class=" text-white font-medium">Analyst Menu</span>
                     <li class="nav-item">
                         <a href="{{ route('lab.batches.index') }}"
                             class="nav-link {{ request()->routeIs('lab.batches.index') ? 'active' : '' }}">
@@ -355,7 +361,9 @@
                         </a>
                     </li>
                 @endrole
-                @role('accountant')
+
+                {{-- @role('accountant')
+                <span class=" text-white font-medium">Accountant Menu</span>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon bi bi-receipt"></i>
@@ -374,9 +382,10 @@
                             <p>Reports</p>
                         </a>
                     </li>
-                @endrole
+                @endrole --}}
 
                 @role('front_office')
+                <span class=" text-white font-medium">Front Office Menu</span>
                     {{-- <li class="nav-item">
                         <a href="{{ route('frontoffice.dashboard') }}"
                             class="nav-link {{ request()->routeIs('frontoffice.dashboard') ? 'active' : '' }}">

@@ -28,7 +28,7 @@
                                         <h5 class="card-title mb-0"><i class="fas fa-info-circle"></i> Farmer Information</h5>
                                     </div>
                                     <div class="card-body">
-                                        <table class="table table-bordered">
+                                        <table class="table datatable table-bordered">
                                             <tr>
                                                 <th style="width: 140px;">Full Name</th>
                                                 <td>{{ $farmer->fullname }}</td>
@@ -85,7 +85,7 @@
                                         <h5 class="card-title mb-0"><i class="fas fa-seedling"></i> Farming Information</h5>
                                     </div>
                                     <div class="card-body">
-                                        <table class="table table-bordered">
+                                        <table class="table datatable table-bordered">
                                             <tr>
                                                 <th style="width: 180px;">Crops Grown</th>
                                                 <td>{{ $farmer->crop_grown ?? 'Not specified' }}</td>
@@ -126,7 +126,7 @@
                                     <div class="card-body">
                                         @if($farmer->fields && $farmer->fields->count() > 0)
                                             <div class="table-responsive">
-                                                <table class="table table-bordered table-striped">
+                                                <table class=" datatable table table-bordered table-striped">
                                                     <thead>
                                                         <tr>
                                                             <th>Field Name</th>
@@ -182,7 +182,7 @@
                                     <div class="card-body">
                                         @if($tasks && $tasks->count() > 0)
                                             <div class="table-responsive">
-                                                <table class="table table-bordered table-striped">
+                                                <table class="datatable table table-bordered table-striped">
                                                     <thead>
                                                         <tr>
                                                             <th>Title</th>

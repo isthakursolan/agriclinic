@@ -83,7 +83,7 @@ class batchController extends Controller
                 $query->where('parameter', $paramId);
             })
             ->get();
-            // echo $samples;
+        // echo $samples;
         return view('labscientist.parameters.view', compact('parameter', 'batch', 'samples'));
     }
 
@@ -141,8 +141,35 @@ class batchController extends Controller
     }
     public function investigations()
     {
-        $investigations = investigationsModel::with('sample', 'sample.sampleType','parameters')->get();
+        $investigations = investigationsModel::with('sample', 'sample.sampleType', 'parameters')->get();
         // echo $investigations;
         return view('labscientist.investigations.index', compact('investigations'));
+    }
+    public function bulkUpdate(Request $request)
+    {
+        $data = $request->input('data', []);
+        if (empty($data)) {
+            return response()->json(['success' => false, 'message' => 'No data received.']);
+        }
+
+        $allowedFields = ['reading1', 'reading2', 'dilusion', 'result', 'interpretation'];
+        $updatedCount = 0;
+
+        foreach ($data as $item) {
+            if (!isset($item['id'], $item['field'], $item['value'])) continue;
+            if (!in_array($item['field'], $allowedFields)) continue;
+
+            $inv = \App\Models\investigationsModel::find($item['id']);
+            if ($inv) {
+                $inv->{$item['field']} = $item['value'];
+                $inv->save();
+                $updatedCount++;
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => "$updatedCount record(s) updated successfully."
+        ]);
     }
 }

@@ -91,6 +91,7 @@
                                     <button id="confirmPayBtn" type="submit" class="btn btn-success">
                                         <i class="fas fa-save"></i> Confirm Payment
                                     </button>
+                                    <a href="{{ route('user.sample') }}" class="btn btn-secondary">Cancel</a>
                                 </div>
                             @endif
                         </form>

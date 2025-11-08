@@ -65,7 +65,7 @@
                             </div>
                             <div class="card-body">
                                 @if($recentSamples->count() > 0)
-                                    <table class="table table-striped">
+                                    <table class="table table-striped datatable table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>Sample ID</th>

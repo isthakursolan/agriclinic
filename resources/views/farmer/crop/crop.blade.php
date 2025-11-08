@@ -32,7 +32,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($crops as $crop)
+                            @forelse ($crops as $crop)
                                 <tr>
                                     <td>
                                         @foreach ($plots as $plot)
@@ -61,7 +61,11 @@
                                     </form> --}}
                                     </td>
                                 </tr>
-                            @endforeach
+                                @empty
+                                <tr>
+                                    <td colspan="8" class="text-center">No Crops found.</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

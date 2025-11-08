@@ -21,7 +21,7 @@
 
                     <div class="card-body">
                         @if ($samples->count() > 0)
-                            <table class="table table-bordered">
+                            <table class="table datatable table-bordered">
                                 <thead>
                                     <tr>
                                         <th>Sample ID</th>

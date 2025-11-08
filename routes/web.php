@@ -45,6 +45,8 @@ Route::group(['middleware' => ['role:lab_scientist|analyst']], function () {
     Route::get('/batches/{param}/result-edit/{sample}', [batchController::class, 'paramEdit'])->name('lab.batches.parameter-edit');
     Route::post('/batches/result-update/{id}', [batchController::class, 'paramUpdate'])->name('lab.parameters.update');
     Route::get('/batches/{param}/result-show/{sample}', [batchController::class, 'resultView'])->name('lab.batches.result-view');
+    Route::post('/parameters/bulk-update', [batchController::class, 'bulkUpdate'])->name('parameters.bulkUpdate');
+
 
     Route::get('/investigations', [batchController::class, 'investigations'])->name('investigations.index');
 });

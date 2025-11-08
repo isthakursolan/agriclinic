@@ -66,7 +66,7 @@
                             <!-- Age of Crop -->
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="aging" class="form-label">Age of Crop <span class="text-danger">*</span></label>
+                                    <label for="aging" class="form-label">Aging Cycle (Day/Month/Year)<span class="text-danger">*</span></label>
                                     <input type="text" name="aging" id="aging" class="form-control" value="{{ $crop->aging }}" required>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                     <!-- Form Footer -->
                     <div class="card-footer text-right">
                         <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Update Crop</button>
-                        <a href="{{ route('admin.crop') }}" class="btn btn-secondary">Back</a>
+                        <a href="{{ route('admin.crop') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
 

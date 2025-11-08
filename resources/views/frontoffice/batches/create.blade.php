@@ -23,7 +23,7 @@
                         <form action="{{ route('frontoffice.batches.create') }}" method="POST">
                             @csrf
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table datatable table-bordered" id="samplesTable">
                                     <thead>
                                         <tr>
                                             <th>Select</th>
