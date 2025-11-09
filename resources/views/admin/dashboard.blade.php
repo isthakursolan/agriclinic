@@ -19,9 +19,10 @@
         <div class="container-fluid">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h3>Welcome, {{ Auth::user()->name }} 👨‍🌾</h3>
-                    <p class="text-muted">Here's an overview of  activities.</p>
-                    <div class="row">
+                    <div style="padding: 15px;">
+                        <h3>Welcome, {{ Auth::user()->name }} 👨‍🌾</h3>
+                        <p class="text-muted">Here's an overview of  activities.</p>
+                        <div class="row">
                         <div class="col-md-3">
                             <div class="card text-white mb-3 border-0 shadow-lg" style="background: linear-gradient(135deg, #15803d 0%, #0f5d2a 100%); transition: transform 0.3s ease;">
                                 <div class="card-body px-4 py-4">
@@ -57,6 +58,7 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
