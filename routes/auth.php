@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\agentFarmerController;
 use App\Http\Controllers\admin\casesController;
 use App\Http\Controllers\admin\CropController;
 use App\Http\Controllers\admin\roleController;
+use App\Http\Controllers\admin\ImpersonationController;
 use App\Http\Controllers\analyst\analystController;
 use App\Http\Controllers\auth\forgetPassController;
 use Illuminate\Support\Facades\Route;
@@ -44,16 +45,27 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/reset-password', [forgetPassController::class, 'reset'])->name('password.update');
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/logout', [loginController::class, 'logout'])->name('logout');
-    
-    // Universal Profile Routes (for all authenticated users)
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    // Admin Field Agent Management Routes
-    Route::middleware(['auth', 'role:admin|superadmin'])->group(function () {
-        Route::prefix('admin')->name('admin.')->group(function () {
-            Route::get('/dashboard', [adminController::class, 'index'])->name('dashboard');
+    Route::middleware('auth')->group(function () {
+        Route::get('/logout', [loginController::class, 'logout'])->name('logout');
+        
+        // Universal Profile Routes (for all authenticated users)
+        Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+        
+        // Stop impersonation route - accessible even when impersonating (no role check, but must be authenticated)
+        Route::match(['get', 'post'], '/admin/impersonate/stop', [ImpersonationController::class, 'stop'])->name('admin.impersonate.stop');
+        
+        // Admin Field Agent Management Routes
+        Route::middleware(['auth', 'role:admin|superadmin'])->group(function () {
+            Route::prefix('admin')->name('admin.')->group(function () {
+                Route::get('/dashboard', [adminController::class, 'index'])->name('dashboard');
+
+                // Impersonation Routes (Superadmin Only)
+                Route::middleware(['role:superadmin'])->group(function () {
+                    Route::get('/users', [ImpersonationController::class, 'index'])->name('users.index');
+                    Route::get('/users/{user}', [ImpersonationController::class, 'show'])->name('users.show');
+                    Route::post('/impersonate/{user}', [ImpersonationController::class, 'impersonate'])->name('impersonate.start');
+                });
 
             Route::get('/crop-categories', [CropController::class, 'indexCategory'])->name('crop.categories');
             Route::get('/crop-categories/create', [CropController::class, 'createCategory'])->name('crop.categories.create');

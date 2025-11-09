@@ -301,3 +301,103 @@ table.dataTable td:last-child {
     min-width: 120px;
     width:fit-content;
 }
+
+/* Impersonation Widget - Bottom Floating Bar */
+.impersonation-widget {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 9999;
+    background: linear-gradient(135deg, #dc3546 0%, #b91c1c 100%);
+    border-top: 3px solid #991b1b;
+    padding: 12px 20px;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+    display: block !important;
+    visibility: visible !important;
+}
+
+.impersonation-widget .impersonation-icon {
+    font-size: 1.5rem;
+    color: #fff;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.impersonation-widget .impersonation-info {
+    color: #fff;
+}
+
+.impersonation-widget .impersonation-info strong {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.impersonation-widget .impersonation-info small {
+    font-size: 0.75rem;
+}
+
+.impersonation-widget .btn-light {
+    background: #fff;
+    border: none;
+    color: #dc3546;
+    font-weight: 600;
+    padding: 6px 16px;
+    transition: all 0.3s ease;
+}
+
+.impersonation-widget .btn-light:hover {
+    background: #f8f9fa;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.impersonation-widget .vr {
+    opacity: 0.3;
+}
+
+/* Adjust main content padding to prevent overlap */
+body {
+    padding-bottom: 0;
+}
+
+.app-main {
+    padding-bottom: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .impersonation-widget {
+        padding: 10px 15px;
+    }
+    
+    .impersonation-widget .impersonation-icon {
+        font-size: 1.25rem;
+    }
+    
+    .impersonation-widget .impersonation-info strong {
+        font-size: 0.85rem;
+    }
+    
+    .impersonation-widget .impersonation-info small {
+        font-size: 0.7rem;
+    }
+    
+    .impersonation-widget .btn-light {
+        padding: 5px 12px;
+        font-size: 0.875rem;
+    }
+    
+    .impersonation-widget .vr {
+        display: none;
+    }
+}

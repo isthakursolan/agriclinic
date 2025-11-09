@@ -107,7 +107,16 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                     <div class="user-header text-bg-primary p-3">
-                        <p class="mb-0">{{ Auth::user()->email ?? 'User' }} <small class="d-block">{{ Auth::user()->name ?? '' }}</small> </p>
+                        <p class="mb-0">{{ Auth::user()->email ?? 'User' }} 
+                            <small class="d-block">
+                                Role: 
+                                @if(Auth::user()->roles->count() > 0)
+                                    {{ Auth::user()->roles->pluck('name')->map(fn($role) => ucfirst($role))->join(', ') }}
+                                @else
+                                    No role
+                                @endif
+                            </small>
+                        </p>
                     </div>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="bi bi-person me-2"></i> Edit Profile</a>

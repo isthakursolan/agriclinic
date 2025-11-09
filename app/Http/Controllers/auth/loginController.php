@@ -122,6 +122,29 @@ class loginController extends Controller
 
     public function logout(Request $request)
     {
+        // Check if user is impersonating
+        if ($request->session()->has('impersonation.original_user_id')) {
+            // Restore original user
+            $originalUserId = $request->session()->get('impersonation.original_user_id');
+            Auth::loginUsingId($originalUserId);
+            
+            // Update profile session if exists
+            $originalUser = \App\Models\User::find($originalUserId);
+            if ($originalUser) {
+                $profile = \App\Models\profileModel::where('user_id', $originalUser->id)->first();
+                if ($profile) {
+                    $request->session()->put('id', $profile->id);
+                }
+            }
+            
+            // Clear impersonation session
+            $request->session()->forget('impersonation');
+            
+            return redirect()->route('admin.dashboard')
+                ->with('success', 'Impersonation stopped. Returned to your account.');
+        }
+        
+        // Normal logout
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
