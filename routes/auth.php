@@ -57,7 +57,7 @@ Route::middleware(['guest'])->group(function () {
         Route::match(['get', 'post'], '/admin/impersonate/stop', [ImpersonationController::class, 'stop'])->name('admin.impersonate.stop');
         
         // Impersonation Routes (Superadmin Only)
-        Route::middleware(['auth', 'role:superadmin'])->group(function () {
+        Route::middleware(['auth', 'load.roles', 'role:superadmin'])->group(function () {
             Route::prefix('admin')->name('admin.')->group(function () {
                 Route::get('/users', [ImpersonationController::class, 'index'])->name('users.index');
                 Route::get('/users/{user}', [ImpersonationController::class, 'show'])->name('users.show');

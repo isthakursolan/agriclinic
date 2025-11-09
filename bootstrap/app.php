@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\authMiddleware;
 use App\Http\Middleware\guestMiddleware;
+use App\Http\Middleware\LoadUserRoles;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 use Illuminate\Foundation\Application;
@@ -18,6 +19,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Apply LoadUserRoles middleware globally to all web routes
+        $middleware->web(append: [
+            \App\Http\Middleware\LoadUserRoles::class,
+        ]);
+        
         $middleware->alias([
 
             // Laravel defaults
@@ -32,6 +38,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class,
+            
+            // Custom middlewares
+            'load.roles' => LoadUserRoles::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

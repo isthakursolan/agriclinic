@@ -129,10 +129,20 @@ class loginController extends Controller
         if ($request->session()->has('impersonation.original_user_id')) {
             // Restore original user
             $originalUserId = $request->session()->get('impersonation.original_user_id');
-            Auth::loginUsingId($originalUserId);
+            Auth::loginUsingId($originalUserId, true);
+            
+            // Get fresh user instance with roles loaded from database
+            $originalUser = \App\Models\User::with('roles')->find($originalUserId);
+            
+            // Ensure the authenticated user has roles loaded
+            if (Auth::user()) {
+                Auth::user()->load('roles');
+            }
+            
+            // Save session to ensure it's persisted
+            $request->session()->save();
             
             // Update profile session if exists
-            $originalUser = \App\Models\User::find($originalUserId);
             if ($originalUser) {
                 $profile = \App\Models\profileModel::where('user_id', $originalUser->id)->first();
                 if ($profile) {

@@ -16,9 +16,16 @@ class ImpersonationController extends Controller
      */
     public function index()
     {
-        // Ensure only superadmin can access
-        if (!Auth::user()->hasRole('superadmin')) {
+        $currentUser = Auth::user();
+        
+        // Ensure only superadmin can access - load roles first
+        if (!$currentUser) {
             abort(403, 'Unauthorized access.');
+        }
+        
+        $currentUser->load('roles');
+        if (!$currentUser->hasRole('superadmin')) {
+            abort(403, 'Unauthorized access. Only superadmin can view all users.');
         }
 
         $users = User::with('roles', 'profile')
@@ -34,9 +41,16 @@ class ImpersonationController extends Controller
      */
     public function show(User $user)
     {
-        // Ensure only superadmin can access
-        if (!Auth::user()->hasRole('superadmin')) {
+        $currentUser = Auth::user();
+        
+        // Ensure only superadmin can access - load roles first
+        if (!$currentUser) {
             abort(403, 'Unauthorized access.');
+        }
+        
+        $currentUser->load('roles');
+        if (!$currentUser->hasRole('superadmin')) {
+            abort(403, 'Unauthorized access. Only superadmin can view user profiles.');
         }
 
         // Load user relationships
@@ -53,11 +67,19 @@ class ImpersonationController extends Controller
     {
         $currentUser = Auth::user();
 
-        // Ensure only superadmin can impersonate
+        // Ensure only superadmin can impersonate - load roles first
+        if (!$currentUser) {
+            return redirect()->back()->with('error', 'You must be logged in to impersonate users.');
+        }
+        
+        $currentUser->load('roles');
         if (!$currentUser->hasRole('superadmin')) {
             return redirect()->back()->with('error', 'Only superadmin can impersonate users.');
         }
 
+        // Load user roles to check if they're a superadmin
+        $user->load('roles');
+        
         // Prevent impersonating another superadmin
         if ($user->hasRole('superadmin')) {
             return redirect()->back()->with('error', 'Cannot impersonate another superadmin.');
@@ -68,62 +90,71 @@ class ImpersonationController extends Controller
             return redirect()->back()->with('error', 'Cannot impersonate yourself.');
         }
 
-        // Store original user ID in session BEFORE login (to preserve it)
-        $request->session()->put('impersonation.original_user_id', $currentUser->id);
-        $request->session()->put('impersonation.impersonated_user_id', $user->id);
-        $request->session()->put('impersonation.started_at', now());
+        // Get fresh user instance with roles loaded
+        $impersonatedUser = User::with('roles')->find($user->id);
+        
+        if (!$impersonatedUser) {
+            return redirect()->back()->with('error', 'User not found.');
+        }
 
-        // Log in as the impersonated user (this may regenerate session, so we'll restore data after)
-        Auth::loginUsingId($user->id, true); // true = remember the user
+        // Store original user ID in session BEFORE login (to preserve it)
+        $originalUserId = $currentUser->id;
+        
+        // Log in as the impersonated user using the user model directly
+        // This ensures the user instance with roles is properly set
+        Auth::login($impersonatedUser, true); // true = remember the user
         
         // Re-store impersonation data after login (session might have been regenerated)
-        $request->session()->put('impersonation.original_user_id', $currentUser->id);
-        $request->session()->put('impersonation.impersonated_user_id', $user->id);
+        $request->session()->put('impersonation.original_user_id', $originalUserId);
+        $request->session()->put('impersonation.impersonated_user_id', $impersonatedUser->id);
         $request->session()->put('impersonation.started_at', now());
 
         // Update profile session if exists
-        $profile = profileModel::where('user_id', $user->id)->first();
+        $profile = profileModel::where('user_id', $impersonatedUser->id)->first();
         if ($profile) {
             $request->session()->put('id', $profile->id);
         }
 
+        // Save session to ensure it's persisted
+        $request->session()->save();
+
         // Redirect to appropriate dashboard based on user's role
-        if ($user->hasRole(['admin', 'superadmin'])) {
+        if ($impersonatedUser->hasRole('admin')) {
             return redirect()->route('admin.dashboard')
-                ->with('success', "Now impersonating as {$user->name}");
+                ->with('success', "Now impersonating as {$impersonatedUser->name}");
         }
-        if ($user->hasRole('consultant')) {
+        if ($impersonatedUser->hasRole('consultant')) {
             return redirect()->route('con.dashboard')
-                ->with('success', "Now impersonating as {$user->name}");
+                ->with('success', "Now impersonating as {$impersonatedUser->name}");
         }
-        if ($user->hasRole('lab_scientist')) {
+        if ($impersonatedUser->hasRole('lab_scientist')) {
             return redirect()->route('lab.dashboard')
-                ->with('success', "Now impersonating as {$user->name}");
+                ->with('success', "Now impersonating as {$impersonatedUser->name}");
         }
-        if ($user->hasRole('analyst')) {
+        if ($impersonatedUser->hasRole('analyst')) {
             return redirect()->route('analyst.dashboard')
-                ->with('success', "Now impersonating as {$user->name}");
+                ->with('success', "Now impersonating as {$impersonatedUser->name}");
         }
-        if ($user->hasRole('accountant')) {
+        if ($impersonatedUser->hasRole('accountant')) {
             return redirect()->route('acc.dashboard')
-                ->with('success', "Now impersonating as {$user->name}");
+                ->with('success', "Now impersonating as {$impersonatedUser->name}");
         }
-        if ($user->hasRole('field_agent')) {
+        if ($impersonatedUser->hasRole('field_agent')) {
             return redirect()->route('agent.dashboard')
-                ->with('success', "Now impersonating as {$user->name}");
+                ->with('success', "Now impersonating as {$impersonatedUser->name}");
         }
-        if ($user->hasRole('front_office')) {
+        if ($impersonatedUser->hasRole('front_office')) {
             return redirect()->route('frontoffice.dashboard')
-                ->with('success', "Now impersonating as {$user->name}");
+                ->with('success', "Now impersonating as {$impersonatedUser->name}");
         }
-        if ($user->hasRole('farmer')) {
+        if ($impersonatedUser->hasRole('farmer')) {
             return redirect()->route('user.dashboard')
-                ->with('success', "Now impersonating as {$user->name}");
+                ->with('success', "Now impersonating as {$impersonatedUser->name}");
         }
 
         // Default redirect
         return redirect()->route('admin.dashboard')
-            ->with('success', "Now impersonating as {$user->name}");
+            ->with('success', "Now impersonating as {$impersonatedUser->name}");
     }
 
     /**
@@ -136,13 +167,16 @@ class ImpersonationController extends Controller
         if (!$request->session()->has('impersonation.original_user_id')) {
             // If not impersonating, redirect based on user's role
             $user = Auth::user();
-            if ($user && $user->hasRole('superadmin')) {
-                return redirect()->route('admin.users.index')
-                    ->with('error', 'You are not currently impersonating any user.');
-            }
-            if ($user && $user->hasRole('admin')) {
-                return redirect()->route('admin.dashboard')
-                    ->with('error', 'You are not currently impersonating any user.');
+            if ($user) {
+                $user->load('roles');
+                if ($user->hasRole('superadmin')) {
+                    return redirect()->route('admin.users.index')
+                        ->with('error', 'You are not currently impersonating any user.');
+                }
+                if ($user->hasRole('admin')) {
+                    return redirect()->route('admin.dashboard')
+                        ->with('error', 'You are not currently impersonating any user.');
+                }
             }
             return redirect()->route('login')
                 ->with('error', 'You are not currently impersonating any user.');
@@ -153,9 +187,19 @@ class ImpersonationController extends Controller
 
         // Restore original user session
         Auth::loginUsingId($originalUserId, true);
+        
+        // Get fresh user instance with roles loaded from database
+        $originalUser = User::with('roles')->find($originalUserId);
+        
+        // Ensure the authenticated user has roles loaded
+        if (Auth::user()) {
+            Auth::user()->load('roles');
+        }
+        
+        // Save session to ensure it's persisted
+        $request->session()->save();
 
         // Update profile session if exists
-        $originalUser = User::find($originalUserId);
         if ($originalUser) {
             $profile = profileModel::where('user_id', $originalUser->id)->first();
             if ($profile) {
