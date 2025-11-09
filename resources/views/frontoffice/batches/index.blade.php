@@ -5,11 +5,11 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">All batches</h3>
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-stack me-2"></i>All batches</h3>
                         <div class="card-tools">
-                            <a href="{{ route('frontoffice.batches') }}" class="btn btn-primary">
-                                <i class="fas fa-plus"></i> Create New Batch
+                            <a href="{{ route('frontoffice.batches') }}" class="btn btn-dark">
+                                <i class="bi bi-plus-circle me-2"></i> Create New Batch
                             </a>
                         </div>
                     </div>

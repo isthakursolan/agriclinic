@@ -4,9 +4,9 @@
     <div class="content-wrapper pt-4">
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-edit"></i> Edit Task</h3>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-pencil-square me-2"></i> Edit Task</h3>
                     </div>
                     <form action="{{ route('admin.field-agents.update-task', $task->id) }}" method="POST">
                         @csrf
@@ -15,7 +15,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="field_agent_id">Field Agent <span class="text-danger">*</span></label>
+                                        <label for="field_agent_id">Field Agent <span style="color: #777777;">*</span></label>
                                         <select name="field_agent_id" id="field_agent_id" class="form-control" required>
                                             @foreach($agents as $agent)
                                                 <option value="{{ $agent->id }}" {{ $task->field_agent_id == $agent->id ? 'selected' : '' }}>
@@ -27,13 +27,13 @@
                                             @endforeach
                                         </select>
                                         @error('field_agent_id')
-                                            <span class="text-danger">{{ $message }}</span>
+                                            <span style="color: #777777;">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="status">Task Status <span class="text-danger">*</span></label>
+                                        <label for="status">Task Status <span style="color: #777777;">*</span></label>
                                         <select name="status" id="status" class="form-control" required>
                                             <option value="pending" {{ $task->status == 'pending' ? 'selected' : '' }}>Pending</option>
                                             <option value="in_progress" {{ $task->status == 'in_progress' ? 'selected' : '' }}>In Progress</option>
@@ -41,7 +41,7 @@
                                             <option value="cancelled" {{ $task->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                                         </select>
                                         @error('status')
-                                            <span class="text-danger">{{ $message }}</span>
+                                            <span style="color: #777777;">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
@@ -59,7 +59,7 @@
                                             @endforeach
                                         </select>
                                         @error('farmer_id')
-                                            <span class="text-danger">{{ $message }}</span>
+                                            <span style="color: #777777;">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
@@ -78,7 +78,7 @@
                                             @endforeach
                                         </select>
                                         @error('field_id')
-                                            <span class="text-danger">{{ $message }}</span>
+                                            <span style="color: #777777;">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
@@ -86,21 +86,21 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="title">Task Title <span class="text-danger">*</span></label>
+                                        <label for="title">Task Title <span style="color: #777777;">*</span></label>
                                         <input type="text" name="title" id="title" class="form-control"
                                                value="{{ $task->title }}" required>
                                         @error('title')
-                                            <span class="text-danger">{{ $message }}</span>
+                                            <span style="color: #777777;">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="due_date">Due Date <span class="text-danger">*</span></label>
+                                        <label for="due_date">Due Date <span style="color: #777777;">*</span></label>
                                         <input type="date" name="due_date" id="due_date" class="form-control"
                                                value="{{ $task->due_date ? $task->due_date->format('Y-m-d') : '' }}" required>
                                         @error('due_date')
-                                            <span class="text-danger">{{ $message }}</span>
+                                            <span style="color: #777777;">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
@@ -108,22 +108,24 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="description">Task Description <span class="text-danger">*</span></label>
+                                        <label for="description">Task Description <span style="color: #777777;">*</span></label>
                                         <textarea name="description" id="description" class="form-control" rows="4" required>{{ $task->description }}</textarea>
                                         @error('description')
-                                            <span class="text-danger">{{ $message }}</span>
+                                            <span style="color: #777777;">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-success">
-                                <i class="fas fa-save"></i> Update Task
-                            </button>
-                            <a href="{{ route('admin.field-agents.tasks', $task->field_agent_id) }}" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left"></i> Back
-                            </a>
+                        <div class="card-footer bg-light">
+                            <div class="d-flex justify-content-start gap-2">
+                                <button type="submit" class="btn btn-dark">
+                                    <i class="bi bi-save me-1"></i> Update Task
+                                </button>
+                                <a href="{{ route('admin.field-agents.tasks', $task->field_agent_id) }}" class="btn btn-secondary">
+                                    <i class="bi bi-x-circle me-1"></i> Cancel
+                                </a>
+                            </div>
                         </div>
                     </form>
                 </div>

@@ -4,8 +4,8 @@
 <div class="content-wrapper pt-4">
     <section class="content">
         <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Edit Sample {{ $sample->sample_id }}</h3>
+            <div class="card-header text-white" style="background-color: #777777;">
+                <h3 class="card-title mb-0 text-white"><i class="bi bi-pencil-square me-2"></i>Edit Sample {{ $sample->sample_id }}</h3>
             </div>
             <form action="{{ route('sample.update', $sample->id) }}" method="POST" id="sampleForm">
                 @csrf
@@ -91,8 +91,10 @@
                     </div>
                 </div>
                 <div class="card-footer text-right">
-                    <button type="submit" class="btn btn-success">Save Changes</button>
-                    <a href="{{ route('samples.index') }}" class="btn btn-secondary">Cancel</a>
+                    <div style="padding: 15px;">
+                        <button type="submit" class="btn btn-dark">Save Changes</button>
+                        <a href="{{ route('samples.index') }}" class="btn btn-secondary">Cancel</a>
+                    </div>
                 </div>
             </form>
         </div>

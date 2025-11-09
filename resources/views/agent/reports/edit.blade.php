@@ -4,9 +4,9 @@
     <div class="content-wrapper pt-4">
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-warning">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-edit"></i> Edit Report</h3>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-pencil-square me-2"></i> Edit Report</h3>
                     </div>
                     <div class="row">
                         <div class="col text-end m-1">
@@ -34,7 +34,7 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header bg-info text-white">
-                                            <h5 class="card-title mb-0"><i class="fas fa-tasks"></i> Task Information</h5>
+                                            <h5 class="card-title mb-0"><i class="bi bi-list-task me-2"></i> Task Information</h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
@@ -84,12 +84,12 @@
                             <div class="row mt-3">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="notes">Report Notes <span class="text-danger">*</span></label>
+                                        <label for="notes">Report Notes <span style="color: #777777;">*</span></label>
                                         <textarea name="notes" id="notes" class="form-control" rows="8"
                                                   placeholder="Describe what was done, observations made, any issues encountered, recommendations for future..." required>{{ old('notes', $report->notes) }}</textarea>
                                         <small class="form-text text-muted">Minimum 10 characters required.</small>
                                         @error('notes')
-                                            <span class="text-danger">{{ $message }}</span>
+                                            <span style="color: #777777;">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header bg-secondary text-white">
-                                            <h6 class="card-title mb-0"><i class="fas fa-paperclip"></i> Current Attachments</h6>
+                                            <h6 class="card-title mb-0"><i class="bi bi-paperclip me-2"></i> Current Attachments</h6>
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
@@ -155,7 +155,7 @@
                                             <br>New attachments will be added to existing ones.
                                         </small>
                                         @error('attachments.*')
-                                            <span class="text-danger">{{ $message }}</span>
+                                            <span style="color: #777777;">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>

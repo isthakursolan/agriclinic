@@ -5,11 +5,11 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Manage Farmers</h3>
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-people me-2"></i>Manage Farmers</h3>
                         <div class="card-tools">
-                            <a href="{{ route('frontoffice.farmers.create') }}" class="btn btn-primary">
-                                <i class="fas fa-plus"></i> Add New Farmer
+                            <a href="{{ route('frontoffice.farmers.create') }}" class="btn btn-dark">
+                                <i class="bi bi-plus-circle me-2"></i> Add New Farmer
                             </a>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                                         <td>{{ $farmer->contact }}</td>
                                         <td>
                                             <a href="{{ route('frontoffice.farmers.edit', $farmer->id) }}"
-                                                class="btn btn-sm btn-info"><i class="fas fa-edit"></i> Edit</a>
+                                                class="btn btn-sm btn-info"><i class="bi bi-pencil-square me-2"></i> Edit</a>
                                             {{-- <a href="{{ route('frontoffice.farmers.destroy', $farmer->id) }}"
                                                 class="btn btn-sm btn-danger"
                                                 onclick="return confirm('Are you sure you want to delete this farmer?');"><i

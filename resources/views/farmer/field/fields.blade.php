@@ -4,14 +4,14 @@
     <div class="content-wrapper pt-4">
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-map-marked-alt"></i> Fields</h3>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-geo-alt me-2"></i> Fields</h3>
                     </div>
                     <div class="row">
                         <div class="col text-end m-1">
-                            <a href="{{ route('user.add.field') }}" class="btn btn-primary">
-                                Add Field
+                            <a href="{{ route('user.add.field') }}" class="btn btn-dark mb-3">
+                                <i class="bi bi-plus-circle me-2"></i>Add Field
                             </a>
                         </div>
                     </div>

@@ -50,7 +50,7 @@
 
                 <hr>
                 <p class="mb-0 text-center">
-                    <a href="{{ route('register') }}" class="text-primary">Register a new membership</a>
+                    <a href="{{ route('register') }}" style="color: #777777;">Register a new membership</a>
                 </p>
             </div>
         </div>

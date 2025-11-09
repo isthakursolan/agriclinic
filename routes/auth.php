@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\agentFarmerController;
 use App\Http\Controllers\admin\casesController;
 use App\Http\Controllers\admin\CropController;
 use App\Http\Controllers\admin\roleController;
+use App\Http\Controllers\admin\ImpersonationController;
 use App\Http\Controllers\analyst\analystController;
 use App\Http\Controllers\auth\forgetPassController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,7 @@ use App\Http\Controllers\fieldAgent\fieldagentController;
 use App\Http\Controllers\fieldAgent\farmerAgentController;
 use App\Http\Controllers\frontoffice\frontofficeController;
 use App\Http\Controllers\labscientist\scientictController;
+use App\Http\Controllers\ProfileController;
 
 // Route::get('form', function () {
 //     return view('farmer.profile');
@@ -44,33 +46,48 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/reset-password', [forgetPassController::class, 'reset'])->name('password.update');
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/logout', [loginController::class, 'logout'])->name('logout');
-    // Admin Field Agent Management Routes
-    Route::middleware(['auth', 'role:admin|superadmin'])->group(function () {
-        Route::prefix('admin')->name('admin.')->group(function () {
-            Route::get('/dashboard', [adminController::class, 'index'])->name('dashboard');
+    Route::middleware('auth')->group(function () {
+        Route::get('/logout', [loginController::class, 'logout'])->name('logout');
+        
+        // Universal Profile Routes (for all authenticated users)
+        Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+        
+        // Stop impersonation route - accessible even when impersonating (no role check, but must be authenticated)
+        Route::match(['get', 'post'], '/admin/impersonate/stop', [ImpersonationController::class, 'stop'])->name('admin.impersonate.stop');
+        
+        // Admin Field Agent Management Routes
+        Route::middleware(['auth', 'role:admin|superadmin'])->group(function () {
+            Route::prefix('admin')->name('admin.')->group(function () {
+                Route::get('/dashboard', [adminController::class, 'index'])->name('dashboard');
 
-            Route::get('/crop-cat', [CropController::class, 'indexCategory'])->name('crop.cat');
-            Route::get('/crop-cat/create', [CropController::class, 'createCategory'])->name('crop.cat.create');
-            Route::post('/crop-cat/store', [CropController::class, 'storeCategory'])->name('crop.cat.store');
-            Route::get('/crop-cat/edit/{cat_id}', [CropController::class, 'editCategory'])->name('crop.cat.edit');
-            Route::post('/crop-cat/update/{cat_id}', [CropController::class, 'updateCategory'])->name('crop.cat.update');
-            Route::get('/crop-cat/destroy/{cat_id}', [CropController::class, 'destroyCategory'])->name('crop.cat.destroy');
+                // Impersonation Routes (Superadmin Only)
+                Route::middleware(['role:superadmin'])->group(function () {
+                    Route::get('/users', [ImpersonationController::class, 'index'])->name('users.index');
+                    Route::get('/users/{user}', [ImpersonationController::class, 'show'])->name('users.show');
+                    Route::post('/impersonate/{user}', [ImpersonationController::class, 'impersonate'])->name('impersonate.start');
+                });
 
-            Route::get('/crop-type', [CropController::class, 'indexType'])->name('crop.type');
-            Route::get('/crop-type/create', [CropController::class, 'createType'])->name('crop.type.create');
-            Route::post('/crop-type/store', [CropController::class, 'storeType'])->name('crop.type.store');
-            Route::get('/crop-type/edit/{type}', [CropController::class, 'editType'])->name('crop.type.edit');
-            Route::post('/crop-type/update/{type}', [CropController::class, 'updateType'])->name('crop.type.update');
-            Route::get('/crop-type/destroy/{type}', [CropController::class, 'destroyType'])->name('crop.type.destroy');
+            Route::get('/crop-categories', [CropController::class, 'indexCategory'])->name('crop.categories');
+            Route::get('/crop-categories/create', [CropController::class, 'createCategory'])->name('crop.categories.create');
+            Route::post('/crop-categories/store', [CropController::class, 'storeCategory'])->name('crop.categories.store');
+            Route::get('/crop-categories/edit/{cat_id}', [CropController::class, 'editCategory'])->name('crop.categories.edit');
+            Route::post('/crop-categories/update/{cat_id}', [CropController::class, 'updateCategory'])->name('crop.categories.update');
+            Route::get('/crop-categories/destroy/{cat_id}', [CropController::class, 'destroyCategory'])->name('crop.categories.destroy');
 
-            Route::get('/crop', [CropController::class, 'index'])->name('crop');
-            Route::get('/crop/create', [CropController::class, 'create'])->name('crop.create');
-            Route::post('/crop/store', [CropController::class, 'store'])->name('crop.store');
-            Route::get('/crop/edit/{id}', [CropController::class, 'edit'])->name('crop.edit');
-            Route::post('/crop/update/{id}', [CropController::class, 'update'])->name('crop.update');
-            Route::get('/crop/destroy/{id}', [CropController::class, 'destroy'])->name('crop.destroy');
+            Route::get('/crop-types', [CropController::class, 'indexType'])->name('crop.types');
+            Route::get('/crop-types/create', [CropController::class, 'createType'])->name('crop.types.create');
+            Route::post('/crop-types/store', [CropController::class, 'storeType'])->name('crop.types.store');
+            Route::get('/crop-types/edit/{type}', [CropController::class, 'editType'])->name('crop.types.edit');
+            Route::post('/crop-types/update/{type}', [CropController::class, 'updateType'])->name('crop.types.update');
+            Route::get('/crop-types/destroy/{type}', [CropController::class, 'destroyType'])->name('crop.types.destroy');
+
+            Route::get('/crops', [CropController::class, 'index'])->name('crops');
+            Route::get('/crops/create', [CropController::class, 'create'])->name('crops.create');
+            Route::post('/crops/store', [CropController::class, 'store'])->name('crops.store');
+            Route::get('/crops/edit/{id}', [CropController::class, 'edit'])->name('crops.edit');
+            Route::post('/crops/update/{id}', [CropController::class, 'update'])->name('crops.update');
+            Route::get('/crops/destroy/{id}', [CropController::class, 'destroy'])->name('crops.destroy');
 
             Route::get('/variety', [CropController::class, 'indexVariety'])->name('variety');
             Route::get('/variety/create', [CropController::class, 'createVariety'])->name('variety.create');
@@ -88,12 +105,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/rootstock/destroy/{id}', [CropController::class, 'destroyRootstock'])->name('rootstock.destroy');
             Route::delete('rootstock/delete-one/{id}', [CropController::class, 'destroySingleRoot'])->name('rootstock.destroySingle');
 
-            Route::get('/crops', [CropController::class, 'indexCrops'])->name('crops');
-            Route::get('/crops/create', [CropController::class, 'createCrops'])->name('crops.create');
-            Route::post('/crops/store', [CropController::class, 'storeCrops'])->name('crops.store');
-            Route::get('/crops/edit/{id}', [CropController::class, 'editCrops'])->name('crops.edit');
-            Route::post('/crops/update/{id}', [CropController::class, 'updateCrops'])->name('crops.update');
-            Route::get('/crops/destroy/{id}', [CropController::class, 'destroyCrops'])->name('crops.destroy');
+            Route::get('/crop-varieties', [CropController::class, 'indexCrops'])->name('crop-varieties');
+            Route::get('/crop-varieties/create', [CropController::class, 'createCrops'])->name('crop-varieties.create');
+            Route::post('/crop-varieties/store', [CropController::class, 'storeCrops'])->name('crop-varieties.store');
+            Route::get('/crop-varieties/edit/{id}', [CropController::class, 'editCrops'])->name('crop-varieties.edit');
+            Route::post('/crop-varieties/update/{id}', [CropController::class, 'updateCrops'])->name('crop-varieties.update');
+            Route::get('/crop-varieties/destroy/{id}', [CropController::class, 'destroyCrops'])->name('crop-varieties.destroy');
 
             // Route::get('/farmer', [farmerController::class, 'farmerIndex'])->name('farmers');
             // Route::get('/farmer/create', [farmerController::class, 'farmerCreate'])->name('farmer.create');
@@ -102,26 +119,26 @@ Route::middleware('auth')->group(function () {
             // Route::post('/farmer/update/{id}', [farmerController::class, 'farmerUpdate'])->name('farmer.update');
             // Route::get('/farmer/destroy/{id}', [farmerController::class, 'farmerDestroy'])->name('farmer.destroy');
 
-            Route::get('/sampleType', [casesController::class, 'typeIndex'])->name('sampleType');
-            Route::get('/sampleType/create', [casesController::class, 'typeCreate'])->name('sampleType.create');
-            Route::post('/sampleType/store', [casesController::class, 'typeStore'])->name('sampleType.store');
-            Route::get('/sampleType/edit/{id}', [casesController::class, 'typeEdit'])->name('sampleType.edit');
-            Route::post('/sampleType/update/{id}', [casesController::class, 'typeUpdate'])->name('sampleType.update');
-            Route::get('/sampleType/destroy/{id}', [casesController::class, 'typeDestroy'])->name('sampleType.destroy');
+            Route::get('/sample-types', [casesController::class, 'typeIndex'])->name('sample-types');
+            Route::get('/sample-types/create', [casesController::class, 'typeCreate'])->name('sample-types.create');
+            Route::post('/sample-types/store', [casesController::class, 'typeStore'])->name('sample-types.store');
+            Route::get('/sample-types/edit/{id}', [casesController::class, 'typeEdit'])->name('sample-types.edit');
+            Route::post('/sample-types/update/{id}', [casesController::class, 'typeUpdate'])->name('sample-types.update');
+            Route::get('/sample-types/destroy/{id}', [casesController::class, 'typeDestroy'])->name('sample-types.destroy');
 
-            Route::get('/singlePara', [casesController::class, 'individualIndex'])->name('singlePara');
-            Route::get('/singlePara/create', [casesController::class, 'individualCreate'])->name('singlePara.create');
-            Route::post('/singlePara/store', [casesController::class, 'individualStore'])->name('singlePara.store');
-            Route::get('/singlePara/edit/{id}', [casesController::class, 'individualEdit'])->name('singlePara.edit');
-            Route::post('/singlePara/update/{id}', [casesController::class, 'individualUpdate'])->name('singlePara.update');
-            Route::get('/singlePara/destroy/{id}', [casesController::class, 'individualDestroy'])->name('singlePara.destroy');
+            Route::get('/test-parameters', [casesController::class, 'individualIndex'])->name('test-parameters');
+            Route::get('/test-parameters/create', [casesController::class, 'individualCreate'])->name('test-parameters.create');
+            Route::post('/test-parameters/store', [casesController::class, 'individualStore'])->name('test-parameters.store');
+            Route::get('/test-parameters/edit/{id}', [casesController::class, 'individualEdit'])->name('test-parameters.edit');
+            Route::post('/test-parameters/update/{id}', [casesController::class, 'individualUpdate'])->name('test-parameters.update');
+            Route::get('/test-parameters/destroy/{id}', [casesController::class, 'individualDestroy'])->name('test-parameters.destroy');
 
-            Route::get('/packages', [casesController::class, 'packagesIndex'])->name('packages');
-            Route::get('/packages/create', [casesController::class, 'packagesCreate'])->name('packages.create');
-            Route::post('/packages/store', [casesController::class, 'packagesStore'])->name('packages.store');
-            Route::get('/packages/edit/{id}', [casesController::class, 'packagesEdit'])->name('packages.edit');
-            Route::post('/packages/update/{id}', [casesController::class, 'packagesUpdate'])->name('packages.update');
-            Route::get('/packages/destroy/{id}', [casesController::class, 'packagesDestroy'])->name('packages.destroy');
+            Route::get('/test-packages', [casesController::class, 'packagesIndex'])->name('test-packages');
+            Route::get('/test-packages/create', [casesController::class, 'packagesCreate'])->name('test-packages.create');
+            Route::post('/test-packages/store', [casesController::class, 'packagesStore'])->name('test-packages.store');
+            Route::get('/test-packages/edit/{id}', [casesController::class, 'packagesEdit'])->name('test-packages.edit');
+            Route::post('/test-packages/update/{id}', [casesController::class, 'packagesUpdate'])->name('test-packages.update');
+            Route::get('/test-packages/destroy/{id}', [casesController::class, 'packagesDestroy'])->name('test-packages.destroy');
 
             Route::get('/roles', [roleController::class, 'index'])->name('roles');
             Route::get('/roles/{user}/edit', [roleController::class, 'edit'])->name('roles.edit');

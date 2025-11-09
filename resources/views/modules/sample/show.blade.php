@@ -4,9 +4,9 @@
     <div class="content-wrapper pt-4">
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-map-marked-alt"></i> Samples</h3>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-geo-alt me-2"></i> Samples</h3>
                     </div>
 {{--
 <h2>Sample #{{ $sample->id }}</h2>

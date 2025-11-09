@@ -19,166 +19,47 @@
         <div class="container-fluid">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h3>Welcome, {{ Auth::user()->name }} 👨‍🌾</h3>
-                    <p class="text-muted">Here's an overview of activities.</p>
-
-
-                    <div class="row">
-                        <!-- User Statistics -->
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                <div class="card-header bg-primary text-white d-flex justify-content-between">
-                                    <span><i class="fas fa-users"></i> Users</span>
-                                    <a href="{{ route('admin.roles') }}" class="text-white"><i
-                                            class="fas fa-external-link-alt"></i></a>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-4 text-center">
-                                            <div class="stat-value">{{ $stats['users']['total'] }}</div>
-                                            <div class="stat-label">Total</div>
-                                        </div>
-                                        <div class="col-4 text-center">
-                                            <div class="stat-value">{{ $stats['users']['farmers'] }}</div>
-                                            <div class="stat-label">Farmers</div>
-                                        </div>
-                                        <div class="col-4 text-center">
-                                            <div class="stat-value">{{ $stats['users']['agents'] }}</div>
-                                            <div class="stat-label">Agents</div>
-                                        </div>
-                                    </div>
+                    <div style="padding: 15px;">
+                        <h3>Welcome, {{ Auth::user()->name }} 👨‍🌾</h3>
+                        <p class="text-muted">Here's an overview of  activities.</p>
+                        <div class="row">
+                        <div class="col-md-3">
+                            <div class="card text-white mb-3 border-0 shadow-lg" style="background: linear-gradient(135deg, #15803d 0%, #0f5d2a 100%); transition: transform 0.3s ease;">
+                                <div class="card-body px-4 py-4">
+                                    <h5 class="card-title mb-4 fw-semibold text-start" style="font-size: 0.95rem; opacity: 0.95; letter-spacing: 0.5px;">My Plots</h5>
+                                    <p class="card-text fw-bold mb-0 text-end" style="font-size: 3rem; line-height: 1.2;"> 10 </p>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Active Crops -->
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                <div class="card-header bg-success text-white d-flex justify-content-between">
-                                    <span><i class="fas fa-seedling"></i> Active Crops</span>
-                                    <a href="{{ route('admin.crops') }}" class="text-white"><i
-                                            class="fas fa-external-link-alt"></i></a>
-                                </div>
-                                <div class="card-body text-center">
-                                    <div class="stat-value">{{ $stats['active_crops'] }}</div>
-                                    <div class="stat-label">Currently Active</div>
+                        <div class="col-md-3">
+                            <div class="card text-white mb-3 border-0 shadow-lg" style="background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); transition: transform 0.3s ease;">
+                                <div class="card-body px-4 py-4">
+                                    <h5 class="card-title mb-4 fw-semibold text-start" style="font-size: 0.95rem; opacity: 0.95; letter-spacing: 0.5px;">Crops</h5>
+                                    <p class="card-text fw-bold mb-0 text-end" style="font-size: 3rem; line-height: 1.2;"> 10 </p>
+                                    {{-- <p class="card-text fw-bold mb-0" style="font-size: 2.5rem; line-height: 1.2;">{{ $crops_count }}</p> --}}
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Fields -->
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                <div class="card-header bg-info text-white d-flex justify-content-between">
-                                    <span><i class="fas fa-map-marked-alt"></i> Fields</span>
-                                    <a href="#" class="text-white"><i class="fas fa-external-link-alt"></i></a>
+                        <div class="col-md-3">
+                            <div class="card text-white mb-3 border-0 shadow-lg" style="background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); transition: transform 0.3s ease;">
+                                <div class="card-body px-4 py-4">
+                                    <h5 class="card-title mb-4 fw-semibold text-start" style="font-size: 0.95rem; opacity: 0.95; letter-spacing: 0.5px;">Test Requests</h5>
+                                    <p class="card-text fw-bold mb-0 text-end" style="font-size: 3rem; line-height: 1.2;"> 10 </p>
+                                    {{-- <p class="card-text fw-bold mb-0" style="font-size: 2.5rem; line-height: 1.2;">{{ $tests_count }}</p> --}}
                                 </div>
-                                <div class="card-body text-center">
-                                    <div class="stat-value">{{ $stats['fields'] }}</div>
-                                    <div class="stat-label">Registered Fields</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-white mb-3 border-0 shadow-lg" style="background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); transition: transform 0.3s ease;">
+                                <div class="card-body px-4 py-4">
+                                    <h5 class="card-title mb-4 fw-semibold text-start" style="font-size: 0.95rem; opacity: 0.95; letter-spacing: 0.5px;">Pending Payments</h5>
+                                    <p class="card-text fw-bold mb-0 text-end" style="font-size: 3rem; line-height: 1.2;"> 10 </p>
+                                    {{-- <p class="card-text fw-bold mb-0" style="font-size: 2.5rem; line-height: 1.2;">{{ $pending_payments }}</p> --}}
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Second Row -->
-                    <div class="row">
-                        <!-- Samples -->
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                <div class="card-header bg-warning text-white d-flex justify-content-between">
-                                    <span><i class="fas fa-flask"></i> Samples</span>
-                                    <a href="{{ route('sample') }}" class="text-white"><i
-                                            class="fas fa-external-link-alt"></i></a>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-4 text-center">
-                                            <div class="stat-value">{{ $stats['samples']['total'] }}</div>
-                                            <div class="stat-label">Total</div>
-                                        </div>
-                                        <div class="col-4 text-center">
-                                            <div class="stat-value">{{ $stats['samples']['pending'] }}</div>
-                                            <div class="stat-label">Pending</div>
-                                        </div>
-                                        <div class="col-4 text-center">
-                                            <div class="stat-value">{{ $stats['samples']['completed'] }}</div>
-                                            <div class="stat-label">Completed</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Payments -->
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                <div class="card-header bg-danger text-white d-flex justify-content-between">
-                                    <span><i class="fas fa-money-bill-wave"></i> Payments</span>
-                                    <a href="{{ route('payments.show') }}" class="text-white"><i
-                                            class="fas fa-external-link-alt"></i></a>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-4 text-center">
-                                            <div class="stat-value">{{ number_format($stats['payments']['total'], 2) }}
-                                            </div>
-                                            <div class="stat-label">Total</div>
-                                        </div>
-                                        <div class="col-4 text-center">
-                                            <div class="stat-value">{{ number_format($stats['payments']['pending'], 2) }}
-                                            </div>
-                                            <div class="stat-label">Pending</div>
-                                        </div>
-                                        <div class="col-4 text-center">
-                                            <div class="stat-value">{{ number_format($stats['payments']['completed'], 2) }}
-                                            </div>
-                                            <div class="stat-label">Completed</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Reports -->
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                <div class="card-header bg-secondary text-white d-flex justify-content-between">
-                                    <span><i class="fas fa-file-alt"></i> Reports</span>
-                                    {{-- <a href="{{ route('field-agents.reports') }}" class="text-white"><i class="fas fa-external-link-alt"></i></a> --}}
-                                </div>
-                                <div class="card-body text-center">
-                                    <div class="stat-value">{{ $stats['reports'] }}</div>
-                                    <div class="stat-label">Field Agent Reports</div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-
-                    <!-- Quick Actions -->
-                    <div class="row mt-4">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <i class="fas fa-bolt"></i> Quick Actions
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex flex-wrap gap-2">
-                                        <a href="{{ route('admin.crop') }}" class="btn btn-outline-primary">
-                                            <i class="fas fa-seedling"></i> Manage Crops
-                                        </a>
-                                        <a href="{{ route('sample') }}" class="btn btn-outline-warning">
-                                            <i class="fas fa-flask"></i> View Samples
-                                        </a>
-                                        <a href="{{ route('admin.roles') }}" class="btn btn-outline-secondary">
-                                            <i class="fas fa-users-cog"></i> Manage Users
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
 

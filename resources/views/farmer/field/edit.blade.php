@@ -4,9 +4,9 @@
     <div class="content-wrapper pt-4">
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-edit"></i> Update Plot</h3>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-pencil-square me-2"></i> Update Plot</h3>
                     </div>
                     <form action="{{ route('user.update.field', $field->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -144,8 +144,10 @@
                         </div>
 
                         <div class="card-footer text-right">
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Update</button>
-                            <a href="{{ route('user.field') }}" class="btn btn-secondary">Cancel</a>
+                            <div style="padding: 15px;">
+                                <button type="submit" class="btn btn-dark"><i class="fas fa-save"></i> Update</button>
+                                <a href="{{ route('user.field') }}" class="btn btn-secondary">Cancel</a>
+                            </div>
                         </div>
                     </form>
                 </div>

@@ -8,33 +8,33 @@
                     @csrf
 
                     <!-- Login Credentials -->
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">Login Credentials</h3>
+                    <div class="card">
+                        <div class="card-header text-white" style="background-color: #777777;">
+                            <h3 class="card-title mb-0 text-white"><i class="bi bi-key me-2"></i>Login Credentials</h3>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label>Full Name <span class="text-danger">*</span></label>
+                                        <label>Full Name <span style="color: #777777;">*</span></label>
                                         <input type="text" name="fullname" class="form-control" value="{{ old('fullname', $farmer->profile->fullname ?? $farmer->name) }}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label>Username <span class="text-danger">*</span></label>
+                                        <label>Username <span style="color: #777777;">*</span></label>
                                         <input type="text" name="username" class="form-control" value="{{ old('username', $farmer->username) }}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label>Email <span class="text-danger">*</span></label>
+                                        <label>Email <span style="color: #777777;">*</span></label>
                                         <input type="email" name="email" class="form-control" value="{{ old('email', $farmer->email) }}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label>Contact Number <span class="text-danger">*</span></label>
+                                        <label>Contact Number <span style="color: #777777;">*</span></label>
                                         <input type="text" name="contact" class="form-control" value="{{ old('contact', $farmer->contact) }}" required>
                                     </div>
                                 </div>
@@ -50,8 +50,8 @@
 
                     <!-- Personal Information -->
                     <div class="card card-info">
-                        <div class="card-header">
-                            <h3 class="card-title">Personal Information</h3>
+                        <div class="card-header text-white" style="background-color: #777777;">
+                            <h3 class="card-title mb-0 text-white"><i class="bi bi-person me-2"></i>Personal Information</h3>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -90,8 +90,8 @@
 
                     <!-- Address Details -->
                     <div class="card card-secondary">
-                        <div class="card-header">
-                            <h3 class="card-title">Address Details</h3>
+                        <div class="card-header text-white" style="background-color: #777777;">
+                            <h3 class="card-title mb-0 text-white"><i class="bi bi-geo-alt me-2"></i>Address Details</h3>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -130,9 +130,9 @@
                     </div>
 
                     <!-- Farming Information -->
-                    <div class="card card-success">
-                        <div class="card-header">
-                            <h3 class="card-title">Farming Information</h3>
+                    <div class="card">
+                        <div class="card-header text-white" style="background-color: #777777;">
+                            <h3 class="card-title mb-0 text-white"><i class="bi bi-flower1 me-2"></i>Farming Information</h3>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -195,8 +195,10 @@
                     </div>
 
                     <div class="card-footer text-right">
-                        <a href="{{ route('frontoffice.farmers.index') }}" class="btn btn-secondary">Cancel</a>
-                        <button type="submit" class="btn btn-primary">Update Farmer</button>
+                        <div style="padding: 15px;">
+                            <a href="{{ route('frontoffice.farmers.index') }}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-dark">Update Farmer</button>
+                        </div>
                     </div>
                 </form>
             </div>

@@ -4,9 +4,9 @@
 <div class="content-wrapper pt-4">
     <section class="content">
         <div class="container-fluid">
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-vial"></i> Register Samples</h3>
+            <div class="card">
+                <div class="card-header text-white" style="background-color: #777777;">
+                    <h3 class="card-title mb-0 text-white"><i class="bi bi-vial me-2"></i>Register Samples</h3>
                 </div>
                 <form action="{{ route('frontoffice.samples.store') }}" method="POST" enctype="multipart/form-data" id="sampleForm">
                     @csrf
@@ -14,7 +14,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="farmer_id">Farmer <span class="text-danger">*</span></label>
+                                    <label for="farmer_id">Farmer <span style="color: #777777;">*</span></label>
                                     <select name="farmer_id" id="farmer_id" class="form-control" required>
                                         <option value="">-- Select a Farmer --</option>
                                         @foreach ($farmers as $farmer)
@@ -34,7 +34,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="sample_type_id">Sample Type <span class="text-danger">*</span></label>
+                                    <label for="sample_type_id">Sample Type <span style="color: #777777;">*</span></label>
                                     <select id="sample_type_id" name="sample_type_id" class="form-control" required>
                                         <option value="">-- Select Sample Type --</option>
                                         @foreach ($sampleTypes as $type)
@@ -91,17 +91,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer text-right bg-white">
-                            <button type="button" id="addSampleBtn" class="btn btn-primary"><i class="fas fa-plus"></i> Add Sample to List</button>
-                            <button type="button" id="paymentBtn" class="btn btn-success" disabled><i class="fas fa-credit-card"></i> Proceed to Payment</button>
+                        <div class="card-footer text-right">
+                            <div style="padding: 15px;">
+                                <button type="button" id="addSampleBtn" class="btn btn-primary"><i class="bi bi-plus-circle me-2"></i> Add Sample to List</button>
+                                <button type="button" id="paymentBtn" class="btn btn-success" disabled><i class="fas fa-credit-card"></i> Proceed to Payment</button>
+                            </div>
                         </div>
                     </div>
                 </form>
                 <hr>
 
                 <div id="samplesListCard" class="card mt-4" style="display:none;">
-                    <div class="card-header">
-                        <h4 class="card-title">Samples Added for Payment</h4>
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h4 class="card-title mb-0 text-white"><i class="bi bi-cart-check me-2"></i>Samples Added for Payment</h4>
                     </div>
                     <div class="card-body">
                         <table id="samplesTable" class="table table-striped table-bordered">

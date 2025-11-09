@@ -1,27 +1,44 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="content-wrapper pt-4">
-        <section class="content">
-            <div class="container-fluid">
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Update Package</h3>
-                    </div>
-                    <form action="{{ route('admin.packages.update', $package->id) }}" method="POST">
+    <div class="app-content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2 class="text-2xl font-bold mb-0">Update Package</h2>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-end mb-0">
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Test Configuration</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.test-packages') }}">Test Packages</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="app-content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header text-white" style="background-color: #777777;">
+                    <h3 class="card-title mb-0 text-white"><i class="bi bi-pencil-square me-2"></i>Update Package</h3>
+                </div>
+                    <form action="{{ route('admin.test-packages.update', $package->id) }}" method="POST">
                         @csrf
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label>Package Name</label>
-                                        <input type="text" name="package_name" class="form-control"
-                                            value="{{ old('package_name', $package->package_name) }}" required>
+                            <div style="padding: 15px;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Package Name <span style="color: #777777;">*</span></label>
+                                            <input type="text" name="package_name" class="form-control"
+                                                value="{{ old('package_name', $package->package_name) }}" required>
+                                        </div>
                                     </div>
-                                </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label>Sample Type</label>
+                                        <label class="form-label fw-semibold">Sample Type <span style="color: #777777;">*</span></label>
                                         <select name="sample_type" class="form-select" required>
                                             <option value="">-- Select Sample Type --</option>
                                             @foreach ($sampleTypes as $type)
@@ -35,21 +52,21 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label>Price</label>
+                                        <label class="form-label fw-semibold">Price <span style="color: #777777;">*</span></label>
                                         <input type="number" name="price" class="form-control"
                                             value="{{ old('price', $package->price) }}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label>Reporting Time</label>
+                                        <label class="form-label fw-semibold">Reporting Time</label>
                                         <input type="text" name="reporting_time" class="form-control"
                                             value="{{ old('reporting_time', $package->reporting_time) }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label>Parameters</label>
+                                        <label class="form-label fw-semibold">Parameters</label>
                                         <select id="paramSelect" class="form-select">
                                             <option value="">-- Select Parameter --</option>
                                             @foreach ($parameters as $param)
@@ -60,37 +77,51 @@
                                                 @endif
                                             @endforeach
                                         </select>
+                                        <small class="text-muted">Click to select parameters</small>
                                     </div>
                                     <div class="col-md-6">
-                                        <div id="selectedParams" class="mt-2">
-                                            @foreach (json_decode($package->parameters) as $paramId)
-                                                @php
-                                                    $paramObj = $parameters->firstWhere('id', $paramId);
-                                                @endphp
-                                                @if ($paramObj)
-                                                    <span class="badge bg-success m-1" data-id="{{ $paramObj->id }}">
-                                                        {{ $paramObj->parameter }}
-                                                        <button type="button"
-                                                            class="btn-close btn-close-white btn-sm removeParam"></button>
-                                                    </span>
-                                                @endif
-                                            @endforeach
-                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Selected Parameters:</label>
+                                            <div id="selectedParams" class="border p-2" style="min-height:50px;">
+                                                @foreach (json_decode($package->parameters) as $paramId)
+                                                    @php
+                                                        $paramObj = $parameters->firstWhere('id', $paramId);
+                                                    @endphp
+                                                    @if ($paramObj)
+                                                        <span class="badge bg-success m-1" data-id="{{ $paramObj->id }}">
+                                                            {{ $paramObj->parameter }}
+                                                            <button type="button"
+                                                                class="btn-close btn-close-white btn-sm removeParam"></button>
+                                                        </span>
+                                                    @endif
+                                                @endforeach
+                                            </div>
 
-                                        <input type="hidden" name="parameters" id="parametersInput"
-                                            value="{{ $package->parameters }}">
+                                            <input type="hidden" name="parameters" id="parametersInput"
+                                                value="{{ $package->parameters }}">
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
                             </div>
                         </div>
 
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary">Update Package</button>
+                            <div style="padding: 15px;">
+                                <div class="d-flex justify-content-start gap-2">
+                                    <button type="submit" class="btn btn-dark">
+                                        <i class="bi bi-save me-1"></i> Update Package
+                                    </button>
+                                    <a href="{{ route('admin.test-packages') }}" class="btn btn-secondary">
+                                        <i class="bi bi-x-circle me-1"></i> Cancel
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 
     <script>

@@ -4,9 +4,9 @@
 <div class="content-wrapper pt-4">
     <section class="content">
         <div class="container-fluid">
-            <div class="card card-success">
+            <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h3 class="card-title"><i class="fas fa-seedling"></i> Update Crop</h3>
+                    <h3 class="card-title mb-0 text-white"><i class="bi bi-flower1 me-2"></i> Update Crop</h3>
                 </div>
 
                 <form action="{{ route('user.update.crop', $cropReg->id) }}" method="POST" enctype="multipart/form-data">
@@ -110,8 +110,9 @@
                     </div>
 
                     <div class="card-footer text-right">
-                        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Update Crop</button>
-                        <a href="{{ route('user.crop') }}" class="btn btn-secondary">Cancel</a>
+                        <div style="padding: 15px;">
+                            <button type="submit" class="btn btn-dark"><i class="fas fa-save"></i> Update Crop</button>
+                        </div>
                     </div>
                 </form>
             </div>

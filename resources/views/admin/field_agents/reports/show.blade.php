@@ -4,9 +4,9 @@
     <div class="content-wrapper pt-4">
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-file-alt"></i> Report Details - #{{ $report->id }}</h3>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-file-text me-2"></i> Report Details - #{{ $report->id }}</h3>
                     </div>
                     <div class="row">
                         <div class="col text-end m-1">
@@ -23,8 +23,8 @@
                         <div class="row">
                             <!-- Report Information -->
                             <div class="col-md-6">
-                                <h5><i class="fas fa-info-circle"></i> Report Information</h5>
-                                <table class="datatable table table-bordered">
+                                <h5><i class="bi bi-info-circle me-2"></i> Report Information</h5>
+                                <table class="table table-bordered">
                                     <tr>
                                         <td><strong>Report ID:</strong></td>
                                         <td>#{{ $report->id }}</td>
@@ -50,8 +50,8 @@
 
                             <!-- Field Agent Information -->
                             <div class="col-md-6">
-                                <h5><i class="fas fa-user"></i> Field Agent Information</h5>
-                                <table class="datatable table table-bordered">
+                                <h5><i class="bi bi-person me-2"></i> Field Agent Information</h5>
+                                <table class="table table-bordered">
                                     <tr>
                                         <td><strong>Agent Name:</strong></td>
                                         <td>{{ $report->fieldAgent->name }}</td>
@@ -77,8 +77,8 @@
                         <div class="row mt-4">
                             <!-- Task Information -->
                             <div class="col-md-6">
-                                <h5><i class="fas fa-tasks"></i> Task Information</h5>
-                                <table class="datatable table table-bordered">
+                                <h5><i class="bi bi-list-task me-2"></i> Task Information</h5>
+                                <table class="table table-bordered">
                                     <tr>
                                         <td><strong>Task Title:</strong></td>
                                         <td>{{ $report->task->title }}</td>
@@ -101,14 +101,14 @@
 
                             <!-- Farmer & Field Information -->
                             <div class="col-md-6">
-                                <h5><i class="fas fa-seedling"></i> Farmer & Field Information</h5>
-                                <table class="datatable table table-bordered">
+                                <h5><i class="bi bi-flower1 me-2"></i> Farmer & Field Information</h5>
+                                <table class="table table-bordered">
                                     <tr>
                                         <td><strong>Farmer:</strong></td>
                                         <td>
                                             @if($report->task->farmer)
                                                 {{ $report->task->farmer->fullname }}
-                                                <br><small class="text-success">{{ $report->task->farmer->contact }}</small>
+                                                <br><small style="color: #777777;">{{ $report->task->farmer->contact }}</small>
                                             @else
                                                 <span class="text-muted">No farmer assigned</span>
                                             @endif
@@ -134,7 +134,7 @@
                         <!-- Report Notes -->
                         <div class="row mt-4">
                             <div class="col-md-12">
-                                <h5><i class="fas fa-sticky-note"></i> Report Notes</h5>
+                                <h5><i class="bi bi-sticky me-2"></i> Report Notes</h5>
                                 <div class="card">
                                     <div class="card-body">
                                         @if($report->notes)
@@ -151,7 +151,7 @@
                         @if($report->attachments)
                         <div class="row mt-4">
                             <div class="col-md-12">
-                                <h5><i class="fas fa-paperclip"></i> Attachments</h5>
+                                <h5><i class="bi bi-paperclip me-2"></i> Attachments</h5>
                                 <div class="row">
                                     @foreach(json_decode($report->attachments, true) as $attachment)
                                         <div class="col-md-3">

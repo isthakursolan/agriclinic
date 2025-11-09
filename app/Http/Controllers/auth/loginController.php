@@ -67,18 +67,20 @@ class loginController extends Controller
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
-        $loginInput = $request->login;
-        $password = $request->password;
+        
         // Find the user by email, username, or contact
+        $loginInput = $request->email;
         $user = User::where('email', $loginInput)
             ->orWhere('username', $loginInput)
             ->orWhere('contact', $loginInput)
             ->first();
-        if (Auth::attempt($request->only('email', 'password'))) {
-            // if ($user && Auth::attempt(['id' => $user->id, 'password' => $password])) {
+        
+        if ($user && Auth::attempt(['email' => $user->email, 'password' => $request->password])) {
             $user = Auth::user();
             $profile = profileModel::where('user_id', $user->id)->first();
-            $request->session()->put(['id' => $profile->id]);
+            if ($profile) {
+                $request->session()->put(['id' => $profile->id]);
+            }
             // Route to role-specific views or reuse one view with conditional widgets
             if ($user->hasRole(['admin', 'superadmin'])) {
                 return redirect()->route('admin.dashboard');
@@ -120,6 +122,29 @@ class loginController extends Controller
 
     public function logout(Request $request)
     {
+        // Check if user is impersonating
+        if ($request->session()->has('impersonation.original_user_id')) {
+            // Restore original user
+            $originalUserId = $request->session()->get('impersonation.original_user_id');
+            Auth::loginUsingId($originalUserId);
+            
+            // Update profile session if exists
+            $originalUser = \App\Models\User::find($originalUserId);
+            if ($originalUser) {
+                $profile = \App\Models\profileModel::where('user_id', $originalUser->id)->first();
+                if ($profile) {
+                    $request->session()->put('id', $profile->id);
+                }
+            }
+            
+            // Clear impersonation session
+            $request->session()->forget('impersonation');
+            
+            return redirect()->route('admin.dashboard')
+                ->with('success', 'Impersonation stopped. Returned to your account.');
+        }
+        
+        // Normal logout
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

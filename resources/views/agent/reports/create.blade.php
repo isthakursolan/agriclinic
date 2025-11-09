@@ -21,21 +21,21 @@
 
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-file-alt"></i> Report for: {{ $task->title }}</h3>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-file-text me-2"></i> Report for: {{ $task->title }}</h3>
                     </div>
                     <form method="POST" action="{{ route('agent.reports.store', $task->id) }}" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
                             <div class="alert alert-info">
-                                <i class="fas fa-info-circle"></i> You are completing the task: <strong>{{ $task->title }}</strong>.
+                                <i class="bi bi-info-circle me-2"></i> You are completing the task: <strong>{{ $task->title }}</strong>.
                                 <br>
                                 Please provide detailed notes and any relevant attachments.
                             </div>
 
                             <div class="form-group">
-                                <label for="notes">Task Completion Notes <span class="text-danger">*</span></label>
+                                <label for="notes">Task Completion Notes <span style="color: #777777;">*</span></label>
                                 <textarea name="notes" id="notes" class="form-control @error('notes') is-invalid @enderror" rows="6"
                                           placeholder="Describe what was done, observations made, any issues encountered, recommendations for the future..." required>{{ old('notes') }}</textarea>
                                 @error('notes')

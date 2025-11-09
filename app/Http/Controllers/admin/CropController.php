@@ -28,7 +28,7 @@ class CropController extends Controller
     {
         $request->validate(['e_cat' => 'required|unique:crop_cat,e_cat']);
         cropcatModel::create($request->only('e_cat'));
-        return redirect()->route('admin.crop.cat')->with('success', 'Category created.');
+        return redirect()->route('admin.crop.categories')->with('success', 'Category created.');
     }
 
     public function editCategory($id)
@@ -46,14 +46,14 @@ class CropController extends Controller
         $cropCat->update([
             'e_cat' => $request->e_cat,
         ]);
-        return redirect()->route('admin.crop.cat')->with('success', 'Category updated.');
+        return redirect()->route('admin.crop.categories')->with('success', 'Category updated.');
     }
 
     public function destroyCategory($id)
     {
         $cropCat = cropcatModel::findOrFail($id);
         $cropCat->delete();
-        return redirect()->route('admin.crop.cat')->with('success', 'Category deleted.');
+        return redirect()->route('admin.crop.categories')->with('success', 'Category deleted.');
     }
 
     // ----- Crop Types -----
@@ -74,7 +74,7 @@ class CropController extends Controller
             'e_type' => 'required|unique:crop_type,e_type',
         ]);
         croptypeModel::create($request->only('e_type'));
-        return redirect()->route('admin.crop.type')->with('success', 'Type created.');
+        return redirect()->route('admin.crop.types')->with('success', 'Type created.');
     }
 
     public function editType($id)
@@ -92,14 +92,14 @@ class CropController extends Controller
         $type->update([
             'e_type' => $request->e_type,
         ]);
-        return redirect()->route('admin.crop.type')->with('success', 'Type updated.');
+        return redirect()->route('admin.crop.types')->with('success', 'Type updated.');
     }
 
     public function destroyType($id)
     {
         $cropType = croptypeModel::findOrFail($id);
         $cropType->delete();
-        return redirect()->route('admin.crop.type')->with('success', 'Type deleted.');
+        return redirect()->route('admin.crop.types')->with('success', 'Type deleted.');
     }
 
     // ----- Crops -----
@@ -127,7 +127,7 @@ class CropController extends Controller
             'aging' => 'nullable',
         ]);
         cropModel::create($request->only('crop', 'cat', 'type', 'variety', 'rootstock', 'aging'));
-        return redirect()->route('admin.crop')->with('success', 'Crop created.');
+        return redirect()->route('admin.crops')->with('success', 'Crop created.');
     }
 
     public function edit($id)
@@ -152,14 +152,14 @@ class CropController extends Controller
         ]);
         $crop = cropModel::findOrFail($id);
         $crop->update($request->only('crop', 'cat', 'type', 'variety', 'rootstock', 'aging'));
-        return redirect()->route('admin.crop')->with('success', 'Crop updated.');
+        return redirect()->route('admin.crops')->with('success', 'Crop updated.');
     }
 
     public function destroy($id)
     {
         $crop = cropModel::findOrFail($id);
         $crop->delete();
-        return redirect()->route('admin.crop')->with('success', 'Crop deleted.');
+        return redirect()->route('admin.crops')->with('success', 'Crop deleted.');
     }
 
     // ----- Varieties -----
@@ -383,7 +383,7 @@ class CropController extends Controller
             }
         }
 
-        return redirect()->route('admin.crops')->with('success', 'Relations added successfully!');
+        return redirect()->route('admin.crop-varieties')->with('success', 'Relations added successfully!');
     }
 
     public function editCrops($id)
@@ -424,7 +424,7 @@ class CropController extends Controller
             }
         }
 
-        return redirect()->route('admin.crops')->with('success', 'Relations updated successfully!');
+        return redirect()->route('admin.crop-varieties')->with('success', 'Relations updated successfully!');
     }
 
     public function destroyCrops($id)
@@ -433,7 +433,7 @@ class CropController extends Controller
         $crop->varieties()->delete();
         $crop->rootstocks()->delete();
 
-        return redirect()->route('admin.crops')->with('success', 'Relations deleted successfully!');
+        return redirect()->route('admin.crop-varieties')->with('success', 'Relations deleted successfully!');
     }
 
 

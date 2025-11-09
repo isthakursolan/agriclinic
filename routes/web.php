@@ -19,13 +19,13 @@ require __DIR__ . '/farmer.php';
 require __DIR__ . '/labScientist.php';
 require __DIR__ . '/analyst.php';
 
-Route::group(['middleware' => ['role:admin|field_agent|front_office|consultant']], function () {
-    Route::get('/farmer', [farmerController::class, 'farmerIndex'])->name('farmers');
-    Route::get('/farmer/create', [farmerController::class, 'farmerCreate'])->name('farmer.create');
-    Route::post('/farmer/store', [farmerController::class, 'farmerStore'])->name('farmer.store');
-    Route::get('/farmer/edit/{id}', [farmerController::class, 'farmerEdit'])->name('farmer.edit');
-    Route::post('/farmer/update/{id}', [farmerController::class, 'farmerUpdate'])->name('farmer.update');
-    Route::get('/farmer/destroy/{id}', [farmerController::class, 'farmerDestroy'])->name('farmer.destroy');
+Route::group(['middleware' => ['role:admin|superadmin|field_agent|front_office|consultant']], function () {
+    Route::get('/farmers', [farmerController::class, 'farmerIndex'])->name('farmers');
+    Route::get('/farmers/create', [farmerController::class, 'farmerCreate'])->name('farmer.create');
+    Route::post('/farmers/store', [farmerController::class, 'farmerStore'])->name('farmer.store');
+    Route::get('/farmers/edit/{id}', [farmerController::class, 'farmerEdit'])->name('farmer.edit');
+    Route::post('/farmers/update/{id}', [farmerController::class, 'farmerUpdate'])->name('farmer.update');
+    Route::get('/farmers/destroy/{id}', [farmerController::class, 'farmerDestroy'])->name('farmer.destroy');
 
     Route::get('/sample', [sampleController::class, 'index'])->name('sample');
     Route::get('/sample/create', [sampleController::class, 'create'])->name('sample.create');

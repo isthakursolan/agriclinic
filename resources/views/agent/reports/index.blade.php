@@ -4,9 +4,9 @@
     <div class="content-wrapper pt-4">
         <section class="content">
             <div class="container-fluid">
-                <div class="card card-success">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-file-alt"></i> My Reports</h3>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #777777;">
+                        <h3 class="card-title mb-0 text-white"><i class="bi bi-file-text me-2"></i> My Reports</h3>
                     </div>
                     <div class="row">
                         <div class="col text-end m-1">
@@ -71,12 +71,12 @@
                                                     {{-- Allow editing if the report is pending or has been rejected --}}
                                                     @if($report->status == 'pending_review' || $report->status == 'rejected')
                                                         <a href="{{ route('agent.reports.edit', $report->id) }}" class="btn btn-sm btn-warning" title="Edit Report">
-                                                            <i class="fas fa-edit"></i> Edit
+                                                            <i class="bi bi-pencil-square me-2"></i> Edit
                                                         </a>
                                                     @endif
                                                 </div>
                                                 @if($report->status == 'rejected' && $report->rejection_reason)
-                                                    <div class="text-danger mt-1" data-toggle="tooltip" title="Reason for rejection">
+                                                    <div style="color: #777777;" data-toggle="tooltip" title="Reason for rejection">
                                                         <small><i class="fas fa-exclamation-circle"></i> {{ $report->rejection_reason }}</small>
                                                     </div>
                                                 @endif
@@ -87,7 +87,7 @@
                             </table>
                         @else
                             <div class="alert alert-info">
-                                <i class="fas fa-info-circle"></i> You haven't submitted any reports yet.
+                                <i class="bi bi-info-circle me-2"></i> You haven't submitted any reports yet.
                             </div>
                         @endif
                     </div>
