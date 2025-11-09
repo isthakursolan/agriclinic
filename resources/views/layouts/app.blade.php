@@ -52,6 +52,9 @@
             <strong>&copy; {{ date('Y') }} Agri Clinic.</strong>
             All rights reserved.
         </footer>
+        
+        <!-- Impersonation Widget -->
+        @include('layouts.impersonation-widget')
     </div>
 
     <!-- jQuery (needed by DataTables) -->
