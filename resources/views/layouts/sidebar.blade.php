@@ -11,7 +11,7 @@
         <nav class="mt-2">
             <ul class="nav sidebar-menu flex-column" data-accordion="false" id="navigation">
 
-                @role('admin|superadmin')
+                @role('admin')
                     <!-- Farmers -->
                     <li class="nav-item">
                         <a href="{{ route('farmers') }}"
@@ -20,17 +20,6 @@
                             <p>Farmers</p>
                         </a>
                     </li>
-
-                    @role('superadmin')
-                    <!-- All Users (Superadmin Only) -->
-                    <li class="nav-item">
-                        <a href="{{ route('admin.users.index') }}"
-                            class="nav-link {{ request()->routeIs('admin.users*') || request()->routeIs('admin.impersonate*') ? 'active' : '' }}">
-                            <i class="nav-icon bi bi-people"></i>
-                            <p>All Users</p>
-                        </a>
-                    </li>
-                    @endrole
 
                     <!-- Crops Menu -->
                     <li
@@ -148,6 +137,17 @@
                                 </a>
                             </li>
                         </ul>
+                    </li>
+                @endrole
+
+                @role('superadmin')
+                    <!-- All Users (Superadmin Only) -->
+                    <li class="nav-item">
+                        <a href="{{ route('admin.users.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.users*') || request()->routeIs('admin.impersonate*') ? 'active' : '' }}">
+                            <i class="nav-icon bi bi-people"></i>
+                            <p>All Users</p>
+                        </a>
                     </li>
                 @endrole
 

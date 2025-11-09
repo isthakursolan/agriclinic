@@ -19,7 +19,7 @@ require __DIR__ . '/farmer.php';
 require __DIR__ . '/labScientist.php';
 require __DIR__ . '/analyst.php';
 
-Route::group(['middleware' => ['role:admin|superadmin|field_agent|front_office|consultant']], function () {
+Route::group(['middleware' => ['role:admin|field_agent|front_office|consultant']], function () {
     Route::get('/farmers', [farmerController::class, 'farmerIndex'])->name('farmers');
     Route::get('/farmers/create', [farmerController::class, 'farmerCreate'])->name('farmer.create');
     Route::post('/farmers/store', [farmerController::class, 'farmerStore'])->name('farmer.store');

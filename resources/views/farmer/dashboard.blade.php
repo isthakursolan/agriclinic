@@ -95,7 +95,7 @@
                                     <div class="text-center py-4">
                                         <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
                                         <p class="text-muted">No recent samples found</p>
-                                        <a href="{{ route('farmer.samples.create') }}" class="btn btn-primary">
+                                        <a href="{{ route('user.sample.create') }}" class="btn btn-primary">
                                             Submit Your First Sample
                                         </a>
                                     </div>

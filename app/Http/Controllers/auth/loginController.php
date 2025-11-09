@@ -82,7 +82,10 @@ class loginController extends Controller
                 $request->session()->put(['id' => $profile->id]);
             }
             // Route to role-specific views or reuse one view with conditional widgets
-            if ($user->hasRole(['admin', 'superadmin'])) {
+            if ($user->hasRole('superadmin')) {
+                return redirect()->route('admin.users.index');
+            }
+            if ($user->hasRole('admin')) {
                 return redirect()->route('admin.dashboard');
             }
             if ($user->hasRole('consultant')) {
@@ -139,6 +142,12 @@ class loginController extends Controller
             
             // Clear impersonation session
             $request->session()->forget('impersonation');
+            
+            // Redirect based on original user's role
+            if ($originalUser && $originalUser->hasRole('superadmin')) {
+                return redirect()->route('admin.users.index')
+                    ->with('success', 'Impersonation stopped. Returned to your account.');
+            }
             
             return redirect()->route('admin.dashboard')
                 ->with('success', 'Impersonation stopped. Returned to your account.');

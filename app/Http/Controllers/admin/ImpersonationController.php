@@ -136,7 +136,11 @@ class ImpersonationController extends Controller
         if (!$request->session()->has('impersonation.original_user_id')) {
             // If not impersonating, redirect based on user's role
             $user = Auth::user();
-            if ($user && $user->hasRole(['admin', 'superadmin'])) {
+            if ($user && $user->hasRole('superadmin')) {
+                return redirect()->route('admin.users.index')
+                    ->with('error', 'You are not currently impersonating any user.');
+            }
+            if ($user && $user->hasRole('admin')) {
                 return redirect()->route('admin.dashboard')
                     ->with('error', 'You are not currently impersonating any user.');
             }
@@ -161,6 +165,12 @@ class ImpersonationController extends Controller
 
         // Clear impersonation session data
         $request->session()->forget('impersonation');
+
+        // Redirect based on original user's role
+        if ($originalUser && $originalUser->hasRole('superadmin')) {
+            return redirect()->route('admin.users.index')
+                ->with('success', 'Impersonation stopped. Returned to your account.');
+        }
 
         return redirect()->route('admin.dashboard')
             ->with('success', 'Impersonation stopped. Returned to your account.');
